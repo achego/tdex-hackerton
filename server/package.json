@@ -7,6 +7,7 @@
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts"
   },
+  "type": "module",
   "keywords": [
     "tbdex",
     "web5",
@@ -15,6 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tbdex/http-client": "^1.1.0",
+    "@tbdex/http-server": "^1.1.0",
+    "@web5/credentials": "^1.0.3",
+    "@web5/dids": "^1.1.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "zod": "^3.23.8"
