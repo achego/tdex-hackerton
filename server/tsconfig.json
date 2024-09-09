@@ -1,14 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
-    "outDir": "dist",
+    "module": "ESNext",
     "esModuleInterop": true,
+    "target": "ES2016",
+    "moduleResolution": "Node",
+    "outDir": "dist",
     "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": false,
     "strict": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "useUnknownInCatchVariables": false,
+    "inlineSourceMap": true
   },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "lib": ["esnext"],
   "include": ["src/**/*"]
 }

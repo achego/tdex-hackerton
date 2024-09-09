@@ -1,13 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import catchError from "../../core/utils/error_handler";
 import customResponse from "../data/models/custom_response";
-import * as httpServer from "@tbdex/http-server";
+import { TbdexHttpClient } from "@tbdex/http-client";
 
-const pfiDid = "3fkz5ssfxbriwks3iy5nwys3q5kyx64ettp9wfn1yfekfkiguj1y";
+const pfiDid = "did:dht:zkp5gbsqgzn69b3y5dtt5nnpjtdq6sxyukpzo68npsf79bmtb9zy";
 
 const getOfferings = catchError(
   async (req: Request, res: Response, next: NextFunction) => {
-    const offerings = await httpServer.TbdexHttpClient.getOfferings({ pfiDid: pfiDid });
+    const offerings = await TbdexHttpClient.getOfferings({
+      pfiDid: pfiDid,
+    });
     return customResponse(res, { message: "Hello", data: offerings });
   }
 );

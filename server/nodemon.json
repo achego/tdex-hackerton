@@ -1,0 +1,6 @@
+{
+  "exec": "npx tsx",
+  "ext": "ts,tsx",
+  "watch": ["src"],
+  "ignore": ["dist"]
+}
