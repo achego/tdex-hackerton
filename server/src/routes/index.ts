@@ -1,9 +1,11 @@
 import Strings from "../core/values/strings";
 import baseRoutes from "./base_routes";
 import { express } from "../global_exports";
+import authRoutes from "./auth_routes";
 
 const useAllRoutes = (app: express.Express) => {
   useApp(app, "", baseRoutes);
+  useApp(app, "auth", authRoutes);
 };
 
 const useApp = (app: express.Express, path: string, router: express.Router) => {

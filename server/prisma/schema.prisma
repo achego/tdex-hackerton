@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String        @id @default(uuid())
+  bearer_did String        @unique // This is the json stringified version of did
+  full_name  String        @db.VarChar(50)
+  country    String        @db.VarChar(30)
+  email      String        @unique @db.VarChar(30)
+  password   String
+  created_at DateTime      @default(now())
+  updated_at DateTime      @updatedAt
+  deleted_at DateTime?
+  balances   UserBalance[]
+}
+
+model UserBalance {
+  id            Int             @id @default(autoincrement())
+  balance       String          @default("0")
+  type          BalanceType
+  currency      BalanceCurrency
+  user_currency String          @unique
+  user          User            @relation(fields: [user_id], references: [id])
+  user_id       String          @unique
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  deleted_at    DateTime?
+}
+
+// Emums
+enum BalanceType {
+  fiat
+  crypto
+}
+
+enum BalanceCurrency {
+  usd
+}

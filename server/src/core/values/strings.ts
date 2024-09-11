@@ -3,7 +3,7 @@ class ErrorText {
 }
 
 class Strings {
-  static API_BASE: string = "";
+  static API_BASE: string = "/";
   static success: string = "success";
   static failed: string = "failed";
 
