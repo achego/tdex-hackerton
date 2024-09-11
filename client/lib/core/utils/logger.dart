@@ -148,40 +148,6 @@ enum RqLoggerColorEffect {
   }
 }
 
-// Custom Colors
-// .
-// \x1b[38;2;r;g;bm - foreground eg \x1b[38;2;0;255;0m == green
-// \x1b[48;2;r;g;bm - background
-
-// void logger(dynamic text, [dynamic title, int maxChars = 3000]) {
-//   if (kDebugMode) {
-//     String trace = StackTrace.current.toString().split('\n')[1];
-//     if (trace.contains('>')) {
-//       if (trace.split('>').length >= 2) {
-//         trace = trace.split('>')[1];
-//       }
-//     }
-//     final now = DateTime.now();
-//     final time = '${now.hour}:${now.minute}:${now.second}';
-
-//     if (title != null) {
-//       log(
-//         'bPanther: \x1B[35m$time\x1B[0m - \x1B[31m${title.toString().toUpperCase()}\x1B[0m === \x1b[33m${text.toString().length > maxChars ? text.toString().substring(0, maxChars) : text.toString()}\x1B[0m \x1b[2m$trace\x1B[0m',
-//       );
-//       if ((text.toString().length + title.toString().length) >= 500) {
-//         log('bPanther: \x1b[31m$trace\x1B[0m');
-//       }
-//     } else {
-//       log(
-//         'bPanther: \x1B[35m$time\x1B[0m - \x1b[33m${text.toString().length > maxChars ? text.toString().substring(0, maxChars) : text.toString()}\x1B[0m \x1b[2m$trace\x1B[0m',
-//       );
-//       if ((text.toString().length + title.toString().length) >= 500) {
-//         log('bPanther: \x1b[31m$trace\x1B[0m');
-//       }
-//     }
-//   }
-// }
-
 void loggerR() {
   if (kDebugMode) {
     String trace = StackTrace.current.toString().split('\n')[1];

@@ -15,16 +15,19 @@ datasource db {
 }
 
 model User {
-  id         String        @id @default(uuid())
-  bearer_did String        @unique // This is the json stringified version of did
-  full_name  String        @db.VarChar(50)
-  country    String        @db.VarChar(30)
-  email      String        @unique @db.VarChar(30)
-  password   String
-  created_at DateTime      @default(now())
-  updated_at DateTime      @updatedAt
-  deleted_at DateTime?
-  balances   UserBalance[]
+  id          String        @id @default(uuid())
+  bearer_did  String        @unique // This is the json stringified version of did
+  full_name   String        @db.VarChar(50)
+  user_name   String        @unique @db.VarChar(20)
+  phone       String        @unique @db.VarChar(15)
+  country     String        @db.VarChar(30)
+  email       String        @unique @db.VarChar(30)
+  password    String
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  deleted_at  DateTime?
+  balances    UserBalance[]
+  Transaction Transaction[]
 }
 
 model UserBalance {
@@ -40,7 +43,56 @@ model UserBalance {
   deleted_at    DateTime?
 }
 
+model Transaction {
+  id               Int                  @id @default(autoincrement())
+  type             TransactionType
+  amount           Float
+  sell_price       Float?
+  direction        TransactionDirection
+  title            String
+  sub_title        String?              @default("")
+  from             String
+  to               String
+  provider         String?
+  privider_logo    String?
+  fail_description String?
+  description      String
+  third_party_data String?
+  balance_before   Float
+  balance_after    Float
+  fee              Float                @default(0)
+  currency         BalanceCurrency?     @default(usd)
+  completed_at     DateTime?
+  reversed_at      DateTime?
+  ref_id           String?
+  customer_ref     String?
+  status           TransactionStatus    @default(pending)
+  user             User                 @relation(fields: [user_id], references: [id])
+  user_id          String
+  created_at       DateTime             @default(now())
+  updated_at       DateTime             @updatedAt
+  deleted_at       DateTime?
+}
+
 // Emums
+enum TransactionStatus {
+  pending
+  in_progress
+  completed
+  failed
+  cancelled
+}
+
+enum TransactionDirection {
+  credit
+  debit
+}
+
+enum TransactionType {
+  pfi
+  username_transfer
+}
+
 enum BalanceType {
   fiat
   crypto

@@ -17,6 +17,8 @@ const signUp = catchError(
       password: string;
       full_name: string;
       country: string;
+      user_name: string;
+      phone: string;
     } = req.body;
 
     const userDid = await DidDht.create({

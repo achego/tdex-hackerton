@@ -1,6 +1,6 @@
 class AppStrings {
-  final _isDevMode = false;
-  String get appTitle => "Panther";
+  final _isDevMode = true;
+  String get appTitle => "Igbigi";
 
   String get success => "Success";
 
