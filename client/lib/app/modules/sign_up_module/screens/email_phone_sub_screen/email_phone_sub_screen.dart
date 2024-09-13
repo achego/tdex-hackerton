@@ -1,6 +1,8 @@
 import 'package:client/app/components/textfield_success_error_component.dart';
 import 'package:client/app/modules/sign_up_module/sign_up_controller.dart';
+import 'package:client/core/utils/app_styles.dart';
 import 'package:client/global_exports.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 
 class EmailShoneSubScreen extends StatelessWidget {
   const EmailShoneSubScreen({super.key});
@@ -55,6 +57,28 @@ class EmailShoneSubScreen extends StatelessWidget {
                 hintText: 'Enter your phone number ',
                 controller: emailPhoneSubController.phone,
                 keyboardType: TextInputType.phone,
+                leading: CountryCodePicker(
+                  onChanged: (value) {
+                    emailPhoneSubController.selectedCountry = {
+                      "name": value.name,
+                      "code": value.code,
+                      "dail_code": value.dialCode,
+                    };
+                  },
+                  initialSelection: '+234',
+                  favorite: const ['+254', '+234', '+233', '+1'],
+                  showCountryOnly: false,
+
+                  showOnlyCountryWhenClosed: false,
+                  textStyle: TextStyles.base(),
+                  boxDecoration: BoxDecoration(color: AppColors.color.border),
+                  dialogTextStyle: TextStyles.base(),
+                  backgroundColor: AppColors.color.background,
+                  barrierColor: AppColors.color.background.withOpacity(0.1),
+
+                  // optional. aligns the flag and the Text left
+                  alignLeft: false,
+                ),
                 validator: (value) {
                   final validator = Validator.validatePhoneNumber(value);
                   if (validator != null) {

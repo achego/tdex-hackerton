@@ -26,19 +26,10 @@ class FullnameUsernameSubScreen extends StatelessWidget {
               ),
               spaceh(40),
               CustomTextFormField(
-                labelText: 'First name  ',
-                hintText: 'Enter your first name',
-                controller: fullnameUsernameSubController.firstName,
-                keyboardType: TextInputType.emailAddress,
-                validator: Validator.validateSingleName,
-              ),
-              spaceh(25),
-              CustomTextFormField(
-                labelText: 'Last name  ',
-                hintText: 'Enter your last name',
-                controller: fullnameUsernameSubController.lastName,
-                keyboardType: TextInputType.emailAddress,
-                validator: Validator.validateSingleName,
+                labelText: 'Full Name',
+                hintText: 'Enter your full name',
+                controller: fullnameUsernameSubController.fullName,
+                validator: Validator.validateFullName,
               ),
               spaceh(25),
               CustomTextFormField(

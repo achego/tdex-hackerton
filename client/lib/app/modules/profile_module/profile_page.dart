@@ -1,4 +1,3 @@
-
 import 'package:client/app/modules/profile_module/profile_controller.dart';
 import 'package:client/global_exports.dart';
 
@@ -154,7 +153,7 @@ class UserProfilePaddedCard extends StatelessWidget {
                             style: TextStyles.subHeading(fontSizeDiff: -2),
                           ),
                           Text(
-                            '${user.firstName.capitalize} ${user.lastName.capitalize}',
+                            '${user.fullName?.split(' ').first.capitalize} ${user.fullName?.split(' ').last.capitalize}',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyles.subHeading().copyWith(
                               color: AppColors.color.white,

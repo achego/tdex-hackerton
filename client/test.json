@@ -1,0 +1,6 @@
+{
+  "status": "failed",
+  "is_ok": false,
+  "message": "An unknown error occured ",
+  "sever_dev_message": "\nInvalid `prisma.user.create()` invocation in\n/Users/belema/Documents/Projects/Web 5/tdex-hackerton/server/src/app/repos/user_repo.ts:17:37\n\n  14 ): Promise<Prisma.UserCreateInput> => {\n  15   const omit = { ...globalOmit };\n  16 \n→ 17   const newuser = await prisma.user.create(\nThe provided value for the column is too long for the column's type. Column: (not available)"
+}

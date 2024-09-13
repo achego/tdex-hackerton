@@ -1,7 +1,3 @@
-
-
-
-import 'package:client/core/utils/app_notifications.dart';
 import 'package:client/global_exports.dart';
 
 class LoginArguments {
@@ -76,7 +72,7 @@ class LogInController extends GetxController {
     AppNotifications.showModal(
       title: 'Login successfull',
       subTitle:
-          'Welcome back ${user.firstName.capitalizeFirst} ${user.lastName.capitalizeFirst} Please continue to your dashboard',
+          'Welcome back ${user.fullName?.capitalizeFirst}Please continue to your dashboard',
       type: NotificationType.success,
       btnTitle: 'Go to dashboard',
       onPressed: () {
@@ -84,6 +80,4 @@ class LogInController extends GetxController {
       },
     );
   }
-
-
 }

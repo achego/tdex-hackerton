@@ -21,17 +21,19 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserModel {
   @JsonKey(name: 'id')
-  String get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'first_name')
-  String get firstName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'last_name')
-  String get lastName => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bearer_did')
+  String? get bearerDid => throw _privateConstructorUsedError;
+  @JsonKey(name: 'full_name')
+  String? get fullName => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_name')
-  String get userName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'email')
-  String get email => throw _privateConstructorUsedError;
+  String? get userName => throw _privateConstructorUsedError;
   @JsonKey(name: 'phone')
-  String get phone => throw _privateConstructorUsedError;
+  String? get phone => throw _privateConstructorUsedError;
+  @JsonKey(name: 'country')
+  String? get country => throw _privateConstructorUsedError;
+  @JsonKey(name: 'email')
+  String? get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
@@ -49,12 +51,13 @@ abstract class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') String id,
-      @JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'last_name') String lastName,
-      @JsonKey(name: 'user_name') String userName,
-      @JsonKey(name: 'email') String email,
-      @JsonKey(name: 'phone') String phone,
+      {@JsonKey(name: 'id') String? id,
+      @JsonKey(name: 'bearer_did') String? bearerDid,
+      @JsonKey(name: 'full_name') String? fullName,
+      @JsonKey(name: 'user_name') String? userName,
+      @JsonKey(name: 'phone') String? phone,
+      @JsonKey(name: 'country') String? country,
+      @JsonKey(name: 'email') String? email,
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt});
 }
@@ -72,40 +75,45 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? firstName = null,
-    Object? lastName = null,
-    Object? userName = null,
-    Object? email = null,
-    Object? phone = null,
+    Object? id = freezed,
+    Object? bearerDid = freezed,
+    Object? fullName = freezed,
+    Object? userName = freezed,
+    Object? phone = freezed,
+    Object? country = freezed,
+    Object? email = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
-      userName: null == userName
+              as String?,
+      bearerDid: freezed == bearerDid
+          ? _value.bearerDid
+          : bearerDid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fullName: freezed == fullName
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      phone: null == phone
+              as String?,
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      country: freezed == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -127,12 +135,13 @@ abstract class _$$UserModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') String id,
-      @JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'last_name') String lastName,
-      @JsonKey(name: 'user_name') String userName,
-      @JsonKey(name: 'email') String email,
-      @JsonKey(name: 'phone') String phone,
+      {@JsonKey(name: 'id') String? id,
+      @JsonKey(name: 'bearer_did') String? bearerDid,
+      @JsonKey(name: 'full_name') String? fullName,
+      @JsonKey(name: 'user_name') String? userName,
+      @JsonKey(name: 'phone') String? phone,
+      @JsonKey(name: 'country') String? country,
+      @JsonKey(name: 'email') String? email,
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt});
 }
@@ -148,40 +157,45 @@ class __$$UserModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? firstName = null,
-    Object? lastName = null,
-    Object? userName = null,
-    Object? email = null,
-    Object? phone = null,
+    Object? id = freezed,
+    Object? bearerDid = freezed,
+    Object? fullName = freezed,
+    Object? userName = freezed,
+    Object? phone = freezed,
+    Object? country = freezed,
+    Object? email = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_$UserModelImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
-      userName: null == userName
+              as String?,
+      bearerDid: freezed == bearerDid
+          ? _value.bearerDid
+          : bearerDid // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fullName: freezed == fullName
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      phone: null == phone
+              as String?,
+      phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      country: freezed == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -198,12 +212,13 @@ class __$$UserModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   const _$UserModelImpl(
-      {@JsonKey(name: 'id') this.id = '',
-      @JsonKey(name: 'first_name') this.firstName = '',
-      @JsonKey(name: 'last_name') this.lastName = '',
-      @JsonKey(name: 'user_name') this.userName = '',
-      @JsonKey(name: 'email') this.email = '',
-      @JsonKey(name: 'phone') this.phone = '',
+      {@JsonKey(name: 'id') this.id,
+      @JsonKey(name: 'bearer_did') this.bearerDid,
+      @JsonKey(name: 'full_name') this.fullName,
+      @JsonKey(name: 'user_name') this.userName,
+      @JsonKey(name: 'phone') this.phone,
+      @JsonKey(name: 'country') this.country,
+      @JsonKey(name: 'email') this.email,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'updated_at') this.updatedAt});
 
@@ -212,22 +227,25 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 
   @override
   @JsonKey(name: 'id')
-  final String id;
+  final String? id;
   @override
-  @JsonKey(name: 'first_name')
-  final String firstName;
+  @JsonKey(name: 'bearer_did')
+  final String? bearerDid;
   @override
-  @JsonKey(name: 'last_name')
-  final String lastName;
+  @JsonKey(name: 'full_name')
+  final String? fullName;
   @override
   @JsonKey(name: 'user_name')
-  final String userName;
-  @override
-  @JsonKey(name: 'email')
-  final String email;
+  final String? userName;
   @override
   @JsonKey(name: 'phone')
-  final String phone;
+  final String? phone;
+  @override
+  @JsonKey(name: 'country')
+  final String? country;
+  @override
+  @JsonKey(name: 'email')
+  final String? email;
   @override
   @JsonKey(name: 'created_at')
   final String? createdAt;
@@ -237,7 +255,7 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserModel(id: $id, firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, phone: $phone, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'UserModel(id: $id, bearerDid: $bearerDid, fullName: $fullName, userName: $userName, phone: $phone, country: $country, email: $email, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -246,11 +264,12 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
     properties
       ..add(DiagnosticsProperty('type', 'UserModel'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('firstName', firstName))
-      ..add(DiagnosticsProperty('lastName', lastName))
+      ..add(DiagnosticsProperty('bearerDid', bearerDid))
+      ..add(DiagnosticsProperty('fullName', fullName))
       ..add(DiagnosticsProperty('userName', userName))
-      ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('phone', phone))
+      ..add(DiagnosticsProperty('country', country))
+      ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
@@ -261,14 +280,15 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
         (other.runtimeType == runtimeType &&
             other is _$UserModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
+            (identical(other.bearerDid, bearerDid) ||
+                other.bearerDid == bearerDid) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
-            (identical(other.email, email) || other.email == email) &&
             (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -277,8 +297,8 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, firstName, lastName,
-      userName, email, phone, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, bearerDid, fullName,
+      userName, phone, country, email, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -296,12 +316,13 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 
 abstract class _UserModel implements UserModel {
   const factory _UserModel(
-      {@JsonKey(name: 'id') final String id,
-      @JsonKey(name: 'first_name') final String firstName,
-      @JsonKey(name: 'last_name') final String lastName,
-      @JsonKey(name: 'user_name') final String userName,
-      @JsonKey(name: 'email') final String email,
-      @JsonKey(name: 'phone') final String phone,
+      {@JsonKey(name: 'id') final String? id,
+      @JsonKey(name: 'bearer_did') final String? bearerDid,
+      @JsonKey(name: 'full_name') final String? fullName,
+      @JsonKey(name: 'user_name') final String? userName,
+      @JsonKey(name: 'phone') final String? phone,
+      @JsonKey(name: 'country') final String? country,
+      @JsonKey(name: 'email') final String? email,
       @JsonKey(name: 'created_at') final String? createdAt,
       @JsonKey(name: 'updated_at') final String? updatedAt}) = _$UserModelImpl;
 
@@ -310,22 +331,25 @@ abstract class _UserModel implements UserModel {
 
   @override
   @JsonKey(name: 'id')
-  String get id;
+  String? get id;
   @override
-  @JsonKey(name: 'first_name')
-  String get firstName;
+  @JsonKey(name: 'bearer_did')
+  String? get bearerDid;
   @override
-  @JsonKey(name: 'last_name')
-  String get lastName;
+  @JsonKey(name: 'full_name')
+  String? get fullName;
   @override
   @JsonKey(name: 'user_name')
-  String get userName;
-  @override
-  @JsonKey(name: 'email')
-  String get email;
+  String? get userName;
   @override
   @JsonKey(name: 'phone')
-  String get phone;
+  String? get phone;
+  @override
+  @JsonKey(name: 'country')
+  String? get country;
+  @override
+  @JsonKey(name: 'email')
+  String? get email;
   @override
   @JsonKey(name: 'created_at')
   String? get createdAt;

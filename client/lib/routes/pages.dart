@@ -7,6 +7,8 @@ import 'package:client/app/modules/my_profile_module/my_profile_binding.dart';
 import 'package:client/app/modules/my_profile_module/my_profile_page.dart';
 import 'package:client/app/modules/onboarding_module/onboarding_binding.dart';
 import 'package:client/app/modules/onboarding_module/onboarding_page.dart';
+import 'package:client/app/modules/send_method_module/send_method_binding.dart';
+import 'package:client/app/modules/send_method_module/send_method_page.dart';
 import 'package:client/app/modules/sign_up_module/sign_up_binding.dart';
 import 'package:client/app/modules/sign_up_module/sign_up_page.dart';
 import 'package:client/app/modules/splash_module/splash_binding.dart';
@@ -18,7 +20,11 @@ import 'package:client/app/modules/transaction_success_module/transaction_succes
 import 'package:get/get.dart';
 
 import '../app/modules/dashboard_module/dashboard_binding.dart';
-part './route_paths.dart';
+    import '../app/modules/send_by_pfi_module/send_by_pfi_page.dart'; 
+
+    import '../app/modules/send_by_pfi_module/send_by_pfi_binding.dart'; 
+ part
+     './route_paths.dart';
 
 abstract class AppPages {
   static final List<GetPage> pages = [
@@ -67,5 +73,16 @@ abstract class AppPages {
       page: () => const TransactionSuccessPage(),
       binding: TransactionSuccessBinding(),
     ),
-  ];
+    GetPage(
+      name: RoutePaths.sendMethod,
+      page: () => const SendMethodPage(),
+      binding: SendMethodBinding(),
+    ),
+        GetPage(
+        name: RoutePaths.sendByPfi,
+        page: () => const SendByPfiPage(),
+        binding:SendByPfiBinding(),
+      ), 
+ ]
+      ;
 }

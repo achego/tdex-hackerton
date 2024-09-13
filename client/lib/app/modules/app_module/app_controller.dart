@@ -6,6 +6,7 @@ import 'package:client/global_exports.dart';
 class AppController extends GetxController {
   final user = const UserModel().obs;
   final userBalances = <BalanceModel>[].obs;
+  final selectedBalance = BalanceModel.init().obs;
   // final userBalannces = BalanceModel.init().obs;
 
   final isBalanceShown = localStorage.isBalanceShown.obs;
@@ -54,5 +55,10 @@ class AppController extends GetxController {
     await localStorage.setCurrentUser(null);
     await localStorage.auth.setToken('');
     Nav.offAllNamed(RoutePaths.logIn);
+  }
+
+  commingSoon() async {
+    AppNotifications.snackbar(message: 'Comming soon');
+    return;
   }
 }

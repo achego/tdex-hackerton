@@ -20,7 +20,7 @@ model User {
   full_name   String        @db.VarChar(50)
   user_name   String        @unique @db.VarChar(20)
   phone       String        @unique @db.VarChar(15)
-  country     String        @db.VarChar(30)
+  country     String
   email       String        @unique @db.VarChar(30)
   password    String
   created_at  DateTime      @default(now())

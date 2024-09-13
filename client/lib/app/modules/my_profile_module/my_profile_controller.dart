@@ -5,9 +5,11 @@ class MyProfileController extends GetxController {
   List<KeyValueModel> get myProfileItems => [
         KeyValueModel(itemKey: 'Username', value: '@${user.userName}'),
         KeyValueModel(
-            itemKey: 'Firstname', value: '${user.firstName.capitalizeFirst}'),
+            itemKey: 'Firstname',
+            value: '${user.fullName?.split(' ').first.capitalizeFirst}'),
         KeyValueModel(
-            itemKey: 'Lastname', value: '${user.lastName.capitalizeFirst}'),
+            itemKey: 'Lastname',
+            value: '${user.fullName?.split(' ').last.capitalizeFirst}'),
         KeyValueModel(itemKey: 'Email', value: user.email),
         KeyValueModel(itemKey: 'Phone', value: user.phone),
         KeyValueModel(

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:client/app/data/models/user_model/user_model.dart';
 import 'package:client/global_exports.dart';
 
@@ -36,11 +38,11 @@ class SignUpController extends GetxController {
     showLoading();
     final resp = await AuthProvider.signUp(
       email: signUpData.email ?? '',
-      firstName: signUpData.firstName ?? '',
-      lastName: signUpData.lastName ?? '',
+      fullName: signUpData.fullName ?? '',
       password: signUpData.password ?? "",
       phone: signUpData.phone ?? '',
       userName: signUpData.userName ?? '',
+      country: signUpData.country ?? '',
     );
     await appWait(2000);
     isLoading(false);
@@ -82,21 +84,30 @@ class SignUpController extends GetxController {
       case 0:
         await emailPhoneSubController.handleContinue();
         final c = emailPhoneSubController;
+        
         localStorage.auth.setSignupData(localStorage.auth.signUpDto.copyWith(
             currentStep: 1,
-            data: localStorage.auth.signUpDto.data
-                .copyWith(email: c.email.lTrim, phone: c.phone.lTrim)));
+            data: localStorage.auth.signUpDto.data.copyWith(
+                email: c.email.lTrim,
+                phone: c.phone.lTrim,
+                country: jsonEncode(c.selectedCountry))));
         logger(localStorage.auth.signUpDto.toJson(), 'Datata');
         break;
       case 1:
-        localStorage.auth.setSignupData(
-            localStorage.auth.signUpDto.copyWith(currentStep: 2));
-        navigate();
+        await fullnameUsernameSubController.handleContinue();
+        final c = fullnameUsernameSubController;
+        localStorage.auth.setSignupData(localStorage.auth.signUpDto.copyWith(
+            currentStep: 4,
+            data: localStorage.auth.signUpDto.data.copyWith(
+                fullName: c.fullName.lTrim, userName: c.userName.lTrim)));
         break;
       case 2:
-        localStorage.auth.setSignupData(
-            localStorage.auth.signUpDto.copyWith(currentStep: 3));
-        navigate();
+        await passwordSubController.handleContinue();
+        final c = passwordSubController;
+        localStorage.auth.setSignupData(localStorage.auth.signUpDto.copyWith(
+            currentStep: 5,
+            data: localStorage.auth.signUpDto.data
+                .copyWith(password: c.password.trimedText)));
         break;
       case 3:
         await fullnameUsernameSubController.handleContinue();
@@ -104,9 +115,7 @@ class SignUpController extends GetxController {
         localStorage.auth.setSignupData(localStorage.auth.signUpDto.copyWith(
             currentStep: 4,
             data: localStorage.auth.signUpDto.data.copyWith(
-                firstName: c.firstName.lTrim,
-                lastName: c.lastName.lTrim,
-                userName: c.userName.lTrim)));
+                fullName: c.fullName.lTrim, userName: c.userName.lTrim)));
 
         break;
       case 4:

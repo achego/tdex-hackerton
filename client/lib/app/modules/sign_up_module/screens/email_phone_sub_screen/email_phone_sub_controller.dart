@@ -6,6 +6,8 @@ class EmailPhoneSubController extends GetxController {
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
 
+  Map selectedCountry = {};
+
   GlobalKey<FormState> emailFormKey = GlobalKey<FormState>();
 
   final debouncer = CustomDebouncer(milliseconds: 1000);
@@ -74,6 +76,11 @@ class EmailPhoneSubController extends GetxController {
 
   Future<void> handleContinue() async {
     if (!emailFormKey.currentState!.validate()) {
+      return;
+    }
+
+    if (selectedCountry.keys.isEmpty) {
+      AppNotifications.snackbar(message: "Please select a country to continue");
       return;
     }
 

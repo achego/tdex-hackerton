@@ -28,20 +28,20 @@ class AuthProvider {
   }
 
   static Future<CustomResponse<Map<String, dynamic>>> signUp({
-    required String firstName,
-    required String lastName,
+    required String fullName,
     required String userName,
     required String email,
     required String phone,
     required String password,
+    required String country,
   }) async {
     final resp =
         await _authClient.request<Map<String, dynamic>, Map<String, dynamic>>(
       path: 'auth/sign-up',
       method: MethodType.post,
       payload: {
-        "first_name": firstName,
-        "last_name": lastName,
+        "country": country,
+        "full_name": fullName,
         "user_name": userName,
         "email": email,
         "phone": phone,

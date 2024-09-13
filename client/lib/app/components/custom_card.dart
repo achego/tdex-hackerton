@@ -13,6 +13,7 @@ class CustomCard extends StatelessWidget {
     this.borderColor,
     super.key,
     this.alignment,
+    this.clipBehavior,
   });
   final double? height;
   final double? width;
@@ -24,6 +25,7 @@ class CustomCard extends StatelessWidget {
   final Widget? child;
   final BoxBorder? border;
   final AlignmentGeometry? alignment;
+  final Clip? clipBehavior;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class CustomCard extends StatelessWidget {
       width: width,
       padding: padding,
       margin: margin,
+      clipBehavior: clipBehavior ?? Clip.none,
       alignment: alignment,
       decoration: BoxDecoration(
         color: backgroundColor ?? AppColors.color.grey400,

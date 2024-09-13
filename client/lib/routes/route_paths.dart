@@ -10,4 +10,6 @@ abstract class RoutePaths {
   static const confirmTransaction = "/confirm_transaction";
   static const transactionDetail = "/transaction_detail";
   static const transactionSuccess = "/transaction_success";
-}
+  static const sendMethod = "/send_method";
+  static const sendByPfi = "/send_by_pfi"; 
+ }

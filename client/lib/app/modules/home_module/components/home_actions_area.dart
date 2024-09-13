@@ -1,4 +1,5 @@
 import 'package:client/app/components/balance_visibility_toogle.dart';
+import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_controller.dart';
 import 'package:client/app/modules/transactions_module/transactions_controller.dart';
 import 'package:client/global_exports.dart';
 
@@ -20,6 +21,7 @@ class _HomeActionAreaState extends State<HomeActionArea> {
     appController.updateUser();
     appController.updateUserBalances();
     transactionsController.getTransactions();
+    Get.put(SendByPfiController()).getOfferings();
   }
 
   @override
@@ -56,7 +58,7 @@ class _HomeActionAreaState extends State<HomeActionArea> {
                       ],
                     ),
                     MoneyAndCurrencyText(
-                      amount: appController.userBalances.first.balance,
+                      amount: 0,
                       obscureAmount: !appController.isBalanceShown.value,
                       style: TextStyles.heading()
                           .copyWith(fontWeight: FontWeight.w600, fontSize: 30),
@@ -68,9 +70,10 @@ class _HomeActionAreaState extends State<HomeActionArea> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 _buildActionButton(
-                  'Receive',
+                  'Deposit',
                   iconPath: AppIconSvgs.receive,
                   onPressed: () {
+                    appController.commingSoon();
                     // Nav.toNamed(RoutePaths.receiveMethod);
                   },
                 ),
@@ -79,7 +82,7 @@ class _HomeActionAreaState extends State<HomeActionArea> {
                   'Send',
                   iconPath: AppIconSvgs.send,
                   onPressed: () {
-                    // Nav.toNamed(RoutePaths.sendMethod);
+                    Nav.toNamed(RoutePaths.sendMethod);
                   },
                 ),
               ],

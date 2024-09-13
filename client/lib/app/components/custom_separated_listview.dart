@@ -18,6 +18,7 @@ class CustomSeparatedListView extends StatelessWidget {
     this.label,
     this.labelStyle,
     this.headerBoxChild,
+    this.clipBehavior,
   });
 
   final int itemCount;
@@ -33,6 +34,7 @@ class CustomSeparatedListView extends StatelessWidget {
   final double headerBoxSize;
   final String? label;
   final TextStyle? labelStyle;
+  final Clip? clipBehavior;
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +70,7 @@ class CustomSeparatedListView extends StatelessWidget {
               children: [
                 if (showHeaderBox) spaceh(headerBoxSize / 2),
                 CustomCard(
+                  clipBehavior: clipBehavior,
                   padding: padding ?? EdgeInsets.symmetric(horizontal: 15.w),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

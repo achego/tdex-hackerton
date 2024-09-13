@@ -3,8 +3,7 @@ import 'package:client/app/modules/sign_up_module/sign_up_controller.dart';
 import 'package:client/global_exports.dart';
 
 class FullnameUsernameSubController extends GetxController {
-  TextEditingController firstName = TextEditingController();
-  TextEditingController lastName = TextEditingController();
+  TextEditingController fullName = TextEditingController();
   TextEditingController userName = TextEditingController();
 
   GlobalKey<FormState> signupDetailsFormKey = GlobalKey<FormState>();

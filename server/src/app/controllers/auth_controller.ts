@@ -26,6 +26,15 @@ const signUp = catchError(
         publish: true,
       },
     });
+
+    // const mes = {
+    //   country: "NG",
+    //   full_name: "fullName",
+    //   user_name: "userName",
+    //   email: "email",
+    //   phone: "phone",
+    //   password: "password",
+    // };
     const body: Prisma.UserCreateInput = {
       bearer_did: JSON.stringify(userDid),
       ...requ,
@@ -69,9 +78,51 @@ const login = catchError(
   }
 );
 
+const verifyUniqueAvailability = catchError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const body: {
+      email: string;
+      user_name: string;
+      phone: string;
+    } = req.body;
+
+    const isBodyEmpty =
+      body == null ||
+      Object.values(body).every(
+        (val, ind) => val === null || val === undefined
+      );
+
+    if (isBodyEmpty) {
+      throw new CustomError("Failed to get user data", StatusCode.badRequest, {
+        dev_message: "The payload is empty",
+      });
+    }
+    var response = {} as any;
+
+    if (body.email) {
+      // const form = new Form({ email: body.email });
+
+      const user = await userRepository.findByEmail(body.email);
+
+      user ? (response.email = true) : (response.email = false);
+    }
+    if (body.phone) {
+      const user = await userRepository.findByPhone(body.phone);
+      user ? (response.phone = true) : (response.phone = false);
+    }
+    if (body.user_name) {
+      const user = await userRepository.findByUsername(body.user_name);
+      user ? (response.user_name = true) : (response.user_name = false);
+    }
+
+    customResponse(res, { data: response });
+  }
+);
+
 const authController = {
   signUp,
   login,
+  verifyUniqueAvailability,
 };
 
 export default authController;

@@ -40,58 +40,58 @@ class SignUpDto {
 }
 
 class SignUpDtoData {
-  final String? firstName;
-  final String? lastName;
+  final String? fullName;
   final String? userName;
   final String? email;
   final String? phone;
   final String? password;
+  final String? country;
   SignUpDtoData({
-    this.firstName,
-    this.lastName,
+    this.fullName,
     this.userName,
     this.email,
     this.phone,
     this.password,
+    this.country,
   });
 
   SignUpDtoData copyWith({
-    String? firstName,
-    String? lastName,
+    String? fullName,
     String? userName,
     String? email,
     String? phone,
     String? password,
+    String? country,
   }) {
     return SignUpDtoData(
-      firstName: firstName ?? this.firstName,
-      lastName: lastName ?? this.lastName,
+      fullName: fullName ?? this.fullName,
       userName: userName ?? this.userName,
       email: email ?? this.email,
       phone: phone ?? this.phone,
       password: password ?? this.password,
+      country: country ?? this.country,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'firstName': firstName,
-      'lastName': lastName,
+      'fullName': fullName,
       'userName': userName,
       'email': email,
       'phone': phone,
       'password': password,
+      'country': country,
     };
   }
 
   factory SignUpDtoData.fromMap(Map<String, dynamic> map) {
     return SignUpDtoData(
-      firstName: map['firstName'] != null ? map['firstName'] as String : null,
-      lastName: map['lastName'] != null ? map['lastName'] as String : null,
+      fullName: map['fullName'] != null ? map['fullName'] as String : null,
       userName: map['userName'] != null ? map['userName'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,
       password: map['password'] != null ? map['password'] as String : null,
+      country: map['country'] != null ? map['country'] as String : null,
     );
   }
 
@@ -99,4 +99,32 @@ class SignUpDtoData {
 
   factory SignUpDtoData.fromJson(String source) =>
       SignUpDtoData.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'SignUpDtoData(fullName: $fullName, userName: $userName, email: $email, phone: $phone, password: $password, country: $country)';
+  }
+
+  @override
+  bool operator ==(covariant SignUpDtoData other) {
+    if (identical(this, other)) return true;
+  
+    return 
+      other.fullName == fullName &&
+      other.userName == userName &&
+      other.email == email &&
+      other.phone == phone &&
+      other.password == password &&
+      other.country == country;
+  }
+
+  @override
+  int get hashCode {
+    return fullName.hashCode ^
+      userName.hashCode ^
+      email.hashCode ^
+      phone.hashCode ^
+      password.hashCode ^
+      country.hashCode;
+  }
 }

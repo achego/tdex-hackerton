@@ -62,7 +62,7 @@ class HomeTopBar extends StatelessWidget {
                             .copyWith(color: AppColors.color.textLight),
                       ),
                       Text(
-                        user.firstName.capitalizeFirst ?? "",
+                        user.fullName?.split(' ').first.capitalizeFirst ?? "",
                         style: TextStyles.subHeading().copyWith(
                           color: AppColors.color.white,
                         ),

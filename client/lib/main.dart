@@ -1,7 +1,5 @@
 import 'package:client/app/components/dismiss_keyboard.dart';
 import 'package:client/core/utils/app_initializations.dart';
-import 'package:client/core/utils/globals.dart';
-import 'package:client/core/utils/logger.dart';
 import 'package:client/global_exports.dart';
 
 void main() async {

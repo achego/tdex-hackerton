@@ -12,15 +12,12 @@ const createUser = async <K extends keyof Prisma.UserOmit>(
   user: Prisma.UserCreateInput,
   option?: OmitIncudeParams<K>
 ): Promise<Prisma.UserCreateInput> => {
-  const omit = { ...globalOmit };
-  option?.include?.forEach((key) => {
-    delete omit[key];
-  });
+  // const omit = { ...globalOmit };
+
   const newuser = await prisma.user.create({
     data: user,
-    //TODO: Try to see if you could this this instead of   await balancerepository.createUserBalance(newuser.id)
-    // data: { ...user, balance: { create: {} } },
-    omit: { ...omit },
+
+    // omit: { ...omit },
   });
 
   await balancerepository.createUserBalance(newuser.id);
@@ -60,10 +57,48 @@ const findByEmail = async <K extends keyof Prisma.UserOmit>(
   return user;
 };
 
+const findByPhone = async <K extends keyof Prisma.UserOmit>(
+  phone: string,
+  option?: OmitIncudeParams<K>
+): Promise<Prisma.UserCreateInput | null> => {
+  const omit = { ...globalOmit };
+  option?.include?.forEach((key) => {
+    delete omit[key];
+  });
+  const user = await prisma.user.findUnique({
+    where: { phone },
+    omit,
+  });
+
+  return user;
+};
+const findByUsername = async <K extends keyof Prisma.UserOmit>(
+  user_name: string,
+
+  option?: OmitIncudeParams<K>,
+  extra?: {
+    onlyUser?: boolean;
+  }
+): Promise<Prisma.UserCreateInput | null> => {
+  const omit = { ...globalOmit };
+  option?.include?.forEach((key) => {
+    delete omit[key];
+  });
+  const onlyUser = extra?.onlyUser ?? true;
+  const user = await prisma.user.findUnique({
+    where: { user_name },
+    omit,
+  });
+
+  return user;
+};
+
 const userRepository = {
   createUser,
   findById,
   findByEmail,
+  findByPhone,
+  findByUsername,
 };
 
 export default userRepository;

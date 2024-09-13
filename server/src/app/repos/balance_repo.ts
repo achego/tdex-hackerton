@@ -27,8 +27,33 @@ const createUserBalance = async <K extends keyof Prisma.UserBalanceOmit>(
   return balance;
 };
 
+const getUserBalances = async <K extends keyof Prisma.UserBalanceOmit>(
+  id: string,
+  option?: OmitIncudeParams<K>
+): Promise<Prisma.UserBalanceUncheckedCreateInput[] | null> => {
+  const omit: Prisma.UserBalanceOmit = {
+    created_at: true,
+    id: true,
+    user_id: true,
+  };
+  option?.include?.forEach((key) => {
+    delete omit[key];
+  });
+  option?.omit?.forEach((key) => {
+    omit[key] = true;
+  });
+
+  const balance = await prisma.userBalance.findMany({
+    where: { user_id: id },
+    omit: omit,
+  });
+
+  return balance;
+};
+
 const balancerepository = {
   createUserBalance,
+  getUserBalances,
 };
 
 export default balancerepository;

@@ -32,10 +32,11 @@ class TextStyles {
   ///```
   static TextStyle base({
     double? fontSizeDiff,
+    bool primary = true,
   }) {
     final double fontSize = 14.sp;
     return TextStyle(
-      color: AppColors.color.white,
+      color: primary ? AppColors.color.white : AppColors.color.textLight,
       fontSize: fontSizeDiff != null ? fontSize + fontSizeDiff.sp : fontSize,
       fontWeight: FontWeight.w500,
     );
