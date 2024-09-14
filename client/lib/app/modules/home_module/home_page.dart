@@ -8,7 +8,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger(localStorage.auth.token, 'Token');
     return CustomScaffold(
       body: Column(
         children: [

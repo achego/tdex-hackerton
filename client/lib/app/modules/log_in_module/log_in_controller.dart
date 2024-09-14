@@ -52,7 +52,6 @@ class LogInController extends GetxController {
       return;
     }
     localStorage.auth.setToken(resp.data ?? '');
-    logger(localStorage.auth.token, 'Token');
 
     await appController.updateUserBalances(token: localStorage.auth.token);
     final user = await appController.updateUser(token: localStorage.auth.token);

@@ -89,21 +89,11 @@ class RequiredPaymentDetailsModel with _$RequiredPaymentDetailsModel {
     @JsonKey(name: 'type') String? type,
     @JsonKey(name: 'required') List<String>? required,
     @JsonKey(name: 'additionalProperties') bool? additionalProperties,
-    @JsonKey(name: 'properties') PropertiesModel? properties,
+    @JsonKey(name: 'properties') Map<String, AddressModel>? properties,
   }) = _RequiredPaymentDetailsModel;
 
   factory RequiredPaymentDetailsModel.fromJson(Map<String, Object?> json) =>
       _$RequiredPaymentDetailsModelFromJson(json);
-}
-
-@freezed
-class PropertiesModel with _$PropertiesModel {
-  const factory PropertiesModel({
-    @JsonKey(name: 'address') AddressModel? address,
-  }) = _PropertiesModel;
-
-  factory PropertiesModel.fromJson(Map<String, Object?> json) =>
-      _$PropertiesModelFromJson(json);
 }
 
 @freezed

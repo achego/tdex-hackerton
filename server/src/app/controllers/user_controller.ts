@@ -9,6 +9,8 @@ import userRepository from "../repos/user_repo";
 import customResponse from "../data/models/custom_response";
 import transactionRepository from "../repos/transaction_repository";
 import balancerepository from "../repos/balance_repo";
+import { logger } from "../../global_exports";
+import { prisma } from "../../core/globals";
 
 const getMe = catchError(
   async (req: CustomRequest, res: Response, next: NextFunction) => {
@@ -110,11 +112,73 @@ const getTransactions = catchError(
     });
   }
 );
+const createAndSaveCredential = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const userParam = req.user;
+    if (!userParam || !userParam.id) {
+      throw new CustomError("Authorization failed", StatusCode.unauthorized);
+    }
+
+    const body: { issuer: string; type: string } = req.body;
+    const userDid = JSON.parse(req.user?.bearer_did ?? "").uri;
+    const user = req.user;
+    const credential = await fetch(
+      `https://mock-idv.tbddev.org/kcc?name=${"user?.full_name"}&country=${
+        JSON.parse(user?.country ?? "").code
+      }&did=${userDid}`
+    );
+    const cred = await credential.text();
+
+    const resp = await prisma.userCredentials.create({
+      data: {
+        issuer: body.issuer,
+        credential: cred,
+        userId: userParam.id,
+        type: body.type,
+      },
+    });
+
+    // if (!resp) {
+    //   throw new CustomError("An error occured", StatusCode.internalServerError);
+    // }
+
+    customResponse(res, {
+      message: "credential saved",
+      data: resp,
+    });
+  }
+);
+const getCredentials = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const userParam = req.user;
+    if (!userParam || !userParam.id) {
+      throw new CustomError("Authorization failed", StatusCode.unauthorized);
+    }
+
+    const resp = await prisma.userCredentials.findMany({
+      where: {
+        userId: userParam.id,
+      },
+    });
+
+    if (!resp) {
+      throw new CustomError("An error occured", StatusCode.internalServerError);
+    }
+
+    customResponse(res, {
+      message: "credential gotten",
+      data: resp,
+    });
+  }
+);
+
 const userController = {
   getMe,
   getUserBalances,
   getTransactions,
   getUserfromUsername,
+  createAndSaveCredential,
+  getCredentials,
 };
 
 export default userController;

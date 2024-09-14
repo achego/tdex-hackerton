@@ -77,10 +77,10 @@ class Validator {
   }
 
   static String? validateAmount(String? value, {num? minAmount}) {
-    if (value == null || !value.isNumericOnly) {
+    if (value == null || double.tryParse(value) == null) {
       return 'Enter a valid amount';
     }
-    if ((double.tryParse(value) ?? 0) < (minAmount ?? 50)) {
+    if ((double.tryParse(value) ?? 0) <= (minAmount ?? 0)) {
       return 'Amount is too small';
     }
     return null;

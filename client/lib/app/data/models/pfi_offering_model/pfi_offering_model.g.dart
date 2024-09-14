@@ -111,10 +111,9 @@ _$RequiredPaymentDetailsModelImpl _$$RequiredPaymentDetailsModelImplFromJson(
           ?.map((e) => e as String)
           .toList(),
       additionalProperties: json['additionalProperties'] as bool?,
-      properties: json['properties'] == null
-          ? null
-          : PropertiesModel.fromJson(
-              json['properties'] as Map<String, dynamic>),
+      properties: (json['properties'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, AddressModel.fromJson(e as Map<String, dynamic>)),
+      ),
     );
 
 Map<String, dynamic> _$$RequiredPaymentDetailsModelImplToJson(
@@ -126,20 +125,6 @@ Map<String, dynamic> _$$RequiredPaymentDetailsModelImplToJson(
       'required': instance.required,
       'additionalProperties': instance.additionalProperties,
       'properties': instance.properties,
-    };
-
-_$PropertiesModelImpl _$$PropertiesModelImplFromJson(
-        Map<String, dynamic> json) =>
-    _$PropertiesModelImpl(
-      address: json['address'] == null
-          ? null
-          : AddressModel.fromJson(json['address'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$$PropertiesModelImplToJson(
-        _$PropertiesModelImpl instance) =>
-    <String, dynamic>{
-      'address': instance.address,
     };
 
 _$AddressModelImpl _$$AddressModelImplFromJson(Map<String, dynamic> json) =>

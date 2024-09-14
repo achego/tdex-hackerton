@@ -1,54 +1,108 @@
-import 'dart:math';
-
-import 'package:client/app/data/models/pfi_offering_model/pfi_offering_model.dart';
+import 'package:client/app/components/custom_switcher.dart';
+import 'package:client/app/modules/enter_pfi_send_amount_module/enter_pfi_send_amount_controller.dart';
 import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_binding.dart';
 import 'package:client/global_exports.dart';
+import 'package:flutter/widgets.dart';
 
-class EnterPfiSendAmountPage extends StatelessWidget {
-  const EnterPfiSendAmountPage({super.key, required this.offering});
+class EnterPfiSendAmountPage extends StatefulWidget {
+  const EnterPfiSendAmountPage({super.key});
 
-  final PfiOfferingModel offering;
+  @override
+  State<EnterPfiSendAmountPage> createState() => _EnterPfiSendAmountPageState();
+}
+
+class _EnterPfiSendAmountPageState extends State<EnterPfiSendAmountPage> {
+  final controller = Get.put(EnterPfiSendAmountController());
+  @override
+  void initState() {
+    super.initState();
+    controller.setpayoutDetails();
+    controller.calculate();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(
-      appBar: const CustomAppBar(title: 'Send By PFI'),
-      bottomNavigationBar: BottomNavContainer(
-        child: CustomButton(
-          onPressed: sendByPfiController.handleProceed,
-          title: 'Proceed',
+    return Obx(
+      () => CustomScaffold(
+        appBar: const CustomAppBar(title: 'Enter Transaction Details'),
+        bottomNavigationBar: BottomNavContainer(
+          child: CustomButton(
+            onPressed: controller.handleProceed,
+            title: 'Place Quote',
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Form(
+            key: controller.transKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                    decoration: BoxDecoration(
+                        color: AppColors.color.border,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Text(
+                      'Rate: ${controller.offering.data?.payoutUnitsPerPayinUnit} ${controller.offering.data?.payin?.currencyCode} to 1 ${controller.offering.data?.payout?.currencyCode}',
+                      style: TextStyles.base()
+                          .copyWith(color: AppColors.color.primary),
+                    ),
+                  ),
+                ),
+                spaceh(20),
+                CustomTextFormField(
+                  hintText: 'Enter Amount',
+                  labelText: 'Amount to send',
+                  controller: controller.amount,
+                  onChanged: (value) {
+                    controller.calculate();
+                  },
+                  keyboardType: TextInputType.number,
+                  leadingIcon: Text(
+                    '${controller.offering.data?.payin?.currencyCode ?? ''} ',
+                    style: TextStyles.base()
+                        .copyWith(color: AppColors.color.primary),
+                  ),
+                  validator: (value) => Validator.validateAmount(value),
+                ),
+                spaceh(25),
+                CustomTextFormField(
+                  hintText: '0',
+                  readOnly: true,
+                  controller: controller.theyGet,
+                  labelText: 'They recieve',
+                  leadingIcon: Text(
+                    '${controller.offering.data?.payout?.currencyCode ?? ''} ',
+                    style: TextStyles.base()
+                        .copyWith(color: AppColors.color.primary),
+                  ),
+                  keyboardType: TextInputType.number,
+                  validator: Validator.validateFieldNotEmpty,
+                ),
+                spaceh(24),
+                Text(
+                  'Payout Methods',
+                  style: TextStyles.base(fontSizeDiff: 5),
+                ),
+                spaceh(10),
+                CustomSwitcher(
+                  tabs: controller.payoutMethods,
+                  activeIndex: controller.selectedMethods.value,
+                  onChanged: (value) {
+                    controller.changePayoutMethod(value);
+                  },
+                ),
+                spaceh(25),
+                ...controller.getpayoutDetails,
+                spaceh(60),
+              ],
+            ),
+          ).defPadX,
         ),
       ),
-      body: Form(
-        key: sendByPfiController.sendPfiKey,
-        child: Column(
-          children: [
-            spaceh(20),
-            CustomTextFormField(
-              hintText: 'Select a currency you want to send from',
-              labelText: 'Send from',
-              readOnly: true,
-              onTap: sendByPfiController.pickFromCurrency,
-              controller: sendByPfiController.from,
-              validator: Validator.validateFieldNotEmpty,
-              trailling: Transform.rotate(
-                  angle: pi / 2, child: const Icon(Icons.chevron_right)),
-            ),
-            spaceh(35),
-            CustomTextFormField(
-              hintText: 'Select a currency you want to send to',
-              labelText: 'Send to',
-              readOnly: true,
-              onTap: sendByPfiController.pickToCurrency,
-              controller: sendByPfiController.to,
-              validator: Validator.validateFieldNotEmpty,
-              trailling: Transform.rotate(
-                  angle: pi / 2, child: const Icon(Icons.chevron_right)),
-            ),
-            spaceh(60),
-          ],
-        ),
-      ).defPadX,
     );
   }
 }

@@ -1,13 +1,15 @@
 import 'package:client/app/data/models/balance_model.dart';
+import 'package:client/app/data/models/credential_model/credential_model.dart';
 import 'package:client/app/data/models/user_model/user_model.dart';
+import 'package:client/app/data/providers/user_provider.dart';
 import 'package:client/app/modules/log_in_module/log_in_controller.dart';
 import 'package:client/global_exports.dart';
 
 class AppController extends GetxController {
   final user = const UserModel().obs;
   final userBalances = <BalanceModel>[].obs;
+  final userCredentials = <CredentialModel>[].obs;
   final selectedBalance = BalanceModel.init().obs;
-  // final userBalannces = BalanceModel.init().obs;
 
   final isBalanceShown = localStorage.isBalanceShown.obs;
   Future<void> toogleBalanceMode() async {
@@ -24,6 +26,18 @@ class AppController extends GetxController {
       return userResp.data;
     }
     if (userResp.data == null) {
+      return null;
+    }
+    return null;
+  }
+
+  Future<List<CredentialModel>?> updateCredentials({String? token}) async {
+    final credResp = await UserProvider.getCredentials();
+    if (credResp.isOk && credResp.data != null) {
+      userCredentials.value = credResp.data ?? [];
+      return credResp.data;
+    }
+    if (credResp.data == null) {
       return null;
     }
     return null;

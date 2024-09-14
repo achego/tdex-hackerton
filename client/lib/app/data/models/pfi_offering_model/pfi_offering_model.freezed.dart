@@ -1238,7 +1238,8 @@ mixin _$RequiredPaymentDetailsModel {
   @JsonKey(name: 'additionalProperties')
   bool? get additionalProperties => throw _privateConstructorUsedError;
   @JsonKey(name: 'properties')
-  PropertiesModel? get properties => throw _privateConstructorUsedError;
+  Map<String, AddressModel>? get properties =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1260,9 +1261,7 @@ abstract class $RequiredPaymentDetailsModelCopyWith<$Res> {
       @JsonKey(name: 'type') String? type,
       @JsonKey(name: 'required') List<String>? required,
       @JsonKey(name: 'additionalProperties') bool? additionalProperties,
-      @JsonKey(name: 'properties') PropertiesModel? properties});
-
-  $PropertiesModelCopyWith<$Res>? get properties;
+      @JsonKey(name: 'properties') Map<String, AddressModel>? properties});
 }
 
 /// @nodoc
@@ -1310,20 +1309,8 @@ class _$RequiredPaymentDetailsModelCopyWithImpl<$Res,
       properties: freezed == properties
           ? _value.properties
           : properties // ignore: cast_nullable_to_non_nullable
-              as PropertiesModel?,
+              as Map<String, AddressModel>?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $PropertiesModelCopyWith<$Res>? get properties {
-    if (_value.properties == null) {
-      return null;
-    }
-
-    return $PropertiesModelCopyWith<$Res>(_value.properties!, (value) {
-      return _then(_value.copyWith(properties: value) as $Val);
-    });
   }
 }
 
@@ -1342,10 +1329,7 @@ abstract class _$$RequiredPaymentDetailsModelImplCopyWith<$Res>
       @JsonKey(name: 'type') String? type,
       @JsonKey(name: 'required') List<String>? required,
       @JsonKey(name: 'additionalProperties') bool? additionalProperties,
-      @JsonKey(name: 'properties') PropertiesModel? properties});
-
-  @override
-  $PropertiesModelCopyWith<$Res>? get properties;
+      @JsonKey(name: 'properties') Map<String, AddressModel>? properties});
 }
 
 /// @nodoc
@@ -1390,9 +1374,9 @@ class __$$RequiredPaymentDetailsModelImplCopyWithImpl<$Res>
           : additionalProperties // ignore: cast_nullable_to_non_nullable
               as bool?,
       properties: freezed == properties
-          ? _value.properties
+          ? _value._properties
           : properties // ignore: cast_nullable_to_non_nullable
-              as PropertiesModel?,
+              as Map<String, AddressModel>?,
     ));
   }
 }
@@ -1408,8 +1392,9 @@ class _$RequiredPaymentDetailsModelImpl
       @JsonKey(name: 'type') this.type,
       @JsonKey(name: 'required') final List<String>? required,
       @JsonKey(name: 'additionalProperties') this.additionalProperties,
-      @JsonKey(name: 'properties') this.properties})
-      : _required = required;
+      @JsonKey(name: 'properties') final Map<String, AddressModel>? properties})
+      : _required = required,
+        _properties = properties;
 
   factory _$RequiredPaymentDetailsModelImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -1438,9 +1423,16 @@ class _$RequiredPaymentDetailsModelImpl
   @override
   @JsonKey(name: 'additionalProperties')
   final bool? additionalProperties;
+  final Map<String, AddressModel>? _properties;
   @override
   @JsonKey(name: 'properties')
-  final PropertiesModel? properties;
+  Map<String, AddressModel>? get properties {
+    final value = _properties;
+    if (value == null) return null;
+    if (_properties is EqualUnmodifiableMapView) return _properties;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -1471,8 +1463,8 @@ class _$RequiredPaymentDetailsModelImpl
             const DeepCollectionEquality().equals(other._required, _required) &&
             (identical(other.additionalProperties, additionalProperties) ||
                 other.additionalProperties == additionalProperties) &&
-            (identical(other.properties, properties) ||
-                other.properties == properties));
+            const DeepCollectionEquality()
+                .equals(other._properties, _properties));
   }
 
   @JsonKey(ignore: true)
@@ -1484,7 +1476,7 @@ class _$RequiredPaymentDetailsModelImpl
       type,
       const DeepCollectionEquality().hash(_required),
       additionalProperties,
-      properties);
+      const DeepCollectionEquality().hash(_properties));
 
   @JsonKey(ignore: true)
   @override
@@ -1510,7 +1502,8 @@ abstract class _RequiredPaymentDetailsModel
       @JsonKey(name: 'required') final List<String>? required,
       @JsonKey(name: 'additionalProperties') final bool? additionalProperties,
       @JsonKey(name: 'properties')
-      final PropertiesModel? properties}) = _$RequiredPaymentDetailsModelImpl;
+      final Map<String, AddressModel>?
+          properties}) = _$RequiredPaymentDetailsModelImpl;
 
   factory _RequiredPaymentDetailsModel.fromJson(Map<String, dynamic> json) =
       _$RequiredPaymentDetailsModelImpl.fromJson;
@@ -1532,180 +1525,11 @@ abstract class _RequiredPaymentDetailsModel
   bool? get additionalProperties;
   @override
   @JsonKey(name: 'properties')
-  PropertiesModel? get properties;
+  Map<String, AddressModel>? get properties;
   @override
   @JsonKey(ignore: true)
   _$$RequiredPaymentDetailsModelImplCopyWith<_$RequiredPaymentDetailsModelImpl>
       get copyWith => throw _privateConstructorUsedError;
-}
-
-PropertiesModel _$PropertiesModelFromJson(Map<String, dynamic> json) {
-  return _PropertiesModel.fromJson(json);
-}
-
-/// @nodoc
-mixin _$PropertiesModel {
-  @JsonKey(name: 'address')
-  AddressModel? get address => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $PropertiesModelCopyWith<PropertiesModel> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PropertiesModelCopyWith<$Res> {
-  factory $PropertiesModelCopyWith(
-          PropertiesModel value, $Res Function(PropertiesModel) then) =
-      _$PropertiesModelCopyWithImpl<$Res, PropertiesModel>;
-  @useResult
-  $Res call({@JsonKey(name: 'address') AddressModel? address});
-
-  $AddressModelCopyWith<$Res>? get address;
-}
-
-/// @nodoc
-class _$PropertiesModelCopyWithImpl<$Res, $Val extends PropertiesModel>
-    implements $PropertiesModelCopyWith<$Res> {
-  _$PropertiesModelCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? address = freezed,
-  }) {
-    return _then(_value.copyWith(
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as AddressModel?,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AddressModelCopyWith<$Res>? get address {
-    if (_value.address == null) {
-      return null;
-    }
-
-    return $AddressModelCopyWith<$Res>(_value.address!, (value) {
-      return _then(_value.copyWith(address: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$PropertiesModelImplCopyWith<$Res>
-    implements $PropertiesModelCopyWith<$Res> {
-  factory _$$PropertiesModelImplCopyWith(_$PropertiesModelImpl value,
-          $Res Function(_$PropertiesModelImpl) then) =
-      __$$PropertiesModelImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({@JsonKey(name: 'address') AddressModel? address});
-
-  @override
-  $AddressModelCopyWith<$Res>? get address;
-}
-
-/// @nodoc
-class __$$PropertiesModelImplCopyWithImpl<$Res>
-    extends _$PropertiesModelCopyWithImpl<$Res, _$PropertiesModelImpl>
-    implements _$$PropertiesModelImplCopyWith<$Res> {
-  __$$PropertiesModelImplCopyWithImpl(
-      _$PropertiesModelImpl _value, $Res Function(_$PropertiesModelImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? address = freezed,
-  }) {
-    return _then(_$PropertiesModelImpl(
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as AddressModel?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$PropertiesModelImpl
-    with DiagnosticableTreeMixin
-    implements _PropertiesModel {
-  const _$PropertiesModelImpl({@JsonKey(name: 'address') this.address});
-
-  factory _$PropertiesModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PropertiesModelImplFromJson(json);
-
-  @override
-  @JsonKey(name: 'address')
-  final AddressModel? address;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PropertiesModel(address: $address)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PropertiesModel'))
-      ..add(DiagnosticsProperty('address', address));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$PropertiesModelImpl &&
-            (identical(other.address, address) || other.address == address));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, address);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$PropertiesModelImplCopyWith<_$PropertiesModelImpl> get copyWith =>
-      __$$PropertiesModelImplCopyWithImpl<_$PropertiesModelImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PropertiesModelImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _PropertiesModel implements PropertiesModel {
-  const factory _PropertiesModel(
-          {@JsonKey(name: 'address') final AddressModel? address}) =
-      _$PropertiesModelImpl;
-
-  factory _PropertiesModel.fromJson(Map<String, dynamic> json) =
-      _$PropertiesModelImpl.fromJson;
-
-  @override
-  @JsonKey(name: 'address')
-  AddressModel? get address;
-  @override
-  @JsonKey(ignore: true)
-  _$$PropertiesModelImplCopyWith<_$PropertiesModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 AddressModel _$AddressModelFromJson(Map<String, dynamic> json) {

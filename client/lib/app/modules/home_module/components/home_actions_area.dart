@@ -20,6 +20,7 @@ class _HomeActionAreaState extends State<HomeActionArea> {
     super.initState();
     appController.updateUser();
     appController.updateUserBalances();
+    appController.updateCredentials();
     transactionsController.getTransactions();
     Get.put(SendByPfiController()).getOfferings();
   }

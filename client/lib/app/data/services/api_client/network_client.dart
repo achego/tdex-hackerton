@@ -121,7 +121,8 @@ class NetworkClient implements ApiClient {
     dynamic decodedData = response.data;
 
     if (![200, 201, 202].contains(response.statusCode)) {
-      throw AppException(message: decodedData['message'] ?? "");
+      throw AppException(
+          message: decodedData['message'] ?? "", data: decodedData);
     }
     // logger(decodedData['data'], '===');
 

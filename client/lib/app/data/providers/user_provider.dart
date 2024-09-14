@@ -1,3 +1,4 @@
+import 'package:client/app/data/models/credential_model/credential_model.dart';
 import 'package:client/app/data/models/transaction_model/transaction_model.dart';
 import 'package:client/app/data/services/api_client/aaexp.clients.dart';
 import 'package:client/global_exports.dart';
@@ -39,5 +40,29 @@ class UserProvider {
       totalPages: data['total_pages'],
       transactions: transactions
     ));
+  }
+
+  static Future<CustomResponse> saveCredentials(String pfiDid,
+      {String type = 'KnownCustomerCredential'}) async {
+    final resp = await _userClient.request(
+        path: 'user/save-credential',
+        payload: {"issuer": pfiDid, "type": type},
+        method: MethodType.post,
+        headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+    return resp;
+  }
+
+  static Future<CustomResponse<List<CredentialModel>>> getCredentials() async {
+    final resp = _userClient.request<List<CredentialModel>, List<dynamic>>(
+        path: 'user/credential',
+        method: MethodType.get,
+        fromJson: (json) =>
+            json.map((e) => CredentialModel.fromJson(e)).toList(),
+        headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+    return resp;
   }
 }

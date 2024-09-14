@@ -21,11 +21,13 @@ const signUp = catchError(
       phone: string;
     } = req.body;
 
-    const userDid = await DidDht.create({
+    const userDidCreate = await DidDht.create({
       options: {
         publish: true,
       },
     });
+
+    const userDid = await userDidCreate.export();
 
     // const mes = {
     //   country: "NG",

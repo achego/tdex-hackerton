@@ -11,9 +11,6 @@ class SplashController extends GetxController {
     final user = localStorage.currentUser;
     final token = localStorage.auth.token;
 
-    logger(user, 'User');
-    logger(token, 'Token');
-
     await appWait(3000);
 
     if (user == null || token.isEmpty) {
