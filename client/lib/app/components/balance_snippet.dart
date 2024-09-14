@@ -44,7 +44,10 @@ class BalanceSnippetContainer extends StatelessWidget {
                     ),
                     spacew(2),
                     MoneyAndCurrencyText(
-                      amount: appController.selectedBalance.value.balance,
+                      amount: double.tryParse(
+                              appController.selectedBalance.value.balance ??
+                                  '') ??
+                          0,
                       obscureAmount: !appController.isBalanceShown.value,
                       style: TextStyles.base(fontSizeDiff: -2)
                           .copyWith(fontWeight: FontWeight.w600),

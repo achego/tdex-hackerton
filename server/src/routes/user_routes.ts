@@ -21,6 +21,14 @@ userRoutes
   .post(authMiddleWares.checkAuth, pfiController.requestQuote);
 userRoutes
   .route("/get-exchanges")
-  .post(authMiddleWares.checkAuth, pfiController.getExchanges);
+  .get(authMiddleWares.checkAuth, pfiController.getExchanges);
+
+userRoutes
+  .route("/close-quote")
+  .post(authMiddleWares.checkAuth, pfiController.closeQuote);
+
+userRoutes
+  .route("/place-order")
+  .post(authMiddleWares.checkAuth, pfiController.placeOrder);
 
 export default userRoutes;

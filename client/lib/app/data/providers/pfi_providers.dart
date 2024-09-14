@@ -1,4 +1,5 @@
 import 'package:client/app/data/local/local_storage.dart';
+import 'package:client/app/data/models/quote_model/quote_model.dart';
 import 'package:client/app/data/services/api_client/api_client.dart';
 import 'package:client/app/data/services/api_client/custom_response.dart';
 import 'package:client/app/data/services/api_client/enums.dart';
@@ -18,7 +19,7 @@ class PfiProvider {
     return resp;
   }
 
-  static Future<CustomResponse> requestQuote({
+  static Future<CustomResponse<QuoteModel>> requestQuote({
     required String pfiDid,
     required String offeringId,
     required String amount,
@@ -27,18 +28,22 @@ class PfiProvider {
     required String payouKind,
     required Map<String, dynamic> payoutDetails,
   }) async {
-    final resp = await _pfiClient
-        .request(path: 'user/request-quote', method: MethodType.post, payload: {
-      "pfiDid": pfiDid,
-      "offeringId": offeringId,
-      "amount": amount,
-      "payin_kind": payinKind,
-      "payin_details": payinDetails,
-      "payout_kind": payouKind,
-      "payout_details": payoutDetails,
-    }, headers: {
-      NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
-    });
+    final resp = await _pfiClient.request(
+        path: 'user/request-quote',
+        method: MethodType.post,
+        payload: {
+          "pfiDid": pfiDid,
+          "offeringId": offeringId,
+          "amount": amount,
+          "payin_kind": payinKind,
+          "payin_details": payinDetails,
+          "payout_kind": payouKind,
+          "payout_details": payoutDetails,
+        },
+        fromJson: QuoteModel.fromJson,
+        headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
     return resp;
   }
 }

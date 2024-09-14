@@ -1,5 +1,6 @@
-import 'package:client/app/data/models/balance_model.dart';
+import 'package:client/app/data/models/balance_model/balance_model.dart';
 import 'package:client/app/data/models/credential_model/credential_model.dart';
+import 'package:client/app/data/models/currency_rate_model/currency_rate_model.dart';
 import 'package:client/app/data/models/user_model/user_model.dart';
 import 'package:client/app/data/providers/user_provider.dart';
 import 'package:client/app/modules/log_in_module/log_in_controller.dart';
@@ -9,7 +10,8 @@ class AppController extends GetxController {
   final user = const UserModel().obs;
   final userBalances = <BalanceModel>[].obs;
   final userCredentials = <CredentialModel>[].obs;
-  final selectedBalance = BalanceModel.init().obs;
+  final selectedBalance = const BalanceModel().obs;
+  final currencyRates = const <CurrencyRateModel>[].obs;
 
   final isBalanceShown = localStorage.isBalanceShown.obs;
   Future<void> toogleBalanceMode() async {
@@ -20,7 +22,6 @@ class AppController extends GetxController {
   Future<UserModel?> updateUser({String? token}) async {
     final userResp = await AuthProvider.getMe(token: token);
     if (userResp.isOk && userResp.data != null) {
-      logger(userResp.data, 'THE GOTTEN USER +++++++');
       user.value = userResp.data!;
       localStorage.setCurrentUser(userResp.data);
       return userResp.data;
@@ -29,6 +30,15 @@ class AppController extends GetxController {
       return null;
     }
     return null;
+  }
+
+  Future<List<CurrencyRateModel>> updateCurrencyrates({String? token}) async {
+    final resp = await UserProvider.getCurrencyRates();
+    if (!resp.isOk) {
+      return [];
+    }
+    currencyRates.value = resp.data ?? [];
+    return currencyRates;
   }
 
   Future<List<CredentialModel>?> updateCredentials({String? token}) async {
@@ -44,10 +54,14 @@ class AppController extends GetxController {
   }
 
   Future<List<BalanceModel>?> updateUserBalances({String? token}) async {
+    updateCurrencyrates();
     final balanceresp = await AuthProvider.getAllBalance(token: token);
+    logger(balanceresp, 'THe balance resp');
     if (balanceresp.isOk && balanceresp.data != null) {
       logger(balanceresp.data, 'Balance Gotten');
       userBalances.value = balanceresp.data!;
+      selectedBalance.value =
+          balanceresp.data!.where((element) => element.currency == 'usd').first;
       // localStorage.setCurrentUser(balanceresp.data);
       return balanceresp.data;
     }

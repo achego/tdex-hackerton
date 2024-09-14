@@ -1,8 +1,6 @@
 import 'package:client/app/components/custom_switcher.dart';
 import 'package:client/app/modules/enter_pfi_send_amount_module/enter_pfi_send_amount_controller.dart';
-import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_binding.dart';
 import 'package:client/global_exports.dart';
-import 'package:flutter/widgets.dart';
 
 class EnterPfiSendAmountPage extends StatefulWidget {
   const EnterPfiSendAmountPage({super.key});
@@ -28,7 +26,10 @@ class _EnterPfiSendAmountPageState extends State<EnterPfiSendAmountPage> {
         bottomNavigationBar: BottomNavContainer(
           child: CustomButton(
             onPressed: controller.handleProceed,
-            title: 'Place Quote',
+            title:
+                controller.enterPaymentDetailController.paymentDetails.isEmpty
+                    ? 'Request Quote'
+                    : 'Proceed',
           ),
         ),
         body: SingleChildScrollView(

@@ -59,7 +59,10 @@ class _HomeActionAreaState extends State<HomeActionArea> {
                       ],
                     ),
                     MoneyAndCurrencyText(
-                      amount: 0,
+                      amount: double.tryParse(
+                              appController.selectedBalance.value.balance ??
+                                  "") ??
+                          0,
                       obscureAmount: !appController.isBalanceShown.value,
                       style: TextStyles.heading()
                           .copyWith(fontWeight: FontWeight.w600, fontSize: 30),

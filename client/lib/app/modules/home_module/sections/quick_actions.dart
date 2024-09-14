@@ -25,7 +25,7 @@ class QuickActionSection extends StatelessWidget {
           crossAxisCount: 3,
           children: [
             _buildAction(
-              'Buy \nAirtime',
+              'Swap \nCurrency',
               // iconPath: AppIconSvgs.buyAirtime,
               // onPressed: () => Nav.toNamed(RoutePaths.buyAirtime),
             ),

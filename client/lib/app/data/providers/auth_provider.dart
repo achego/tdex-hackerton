@@ -1,5 +1,5 @@
 import 'package:client/app/data/local/local_storage.dart';
-import 'package:client/app/data/models/balance_model.dart';
+import 'package:client/app/data/models/balance_model/balance_model.dart';
 import 'package:client/app/data/models/user_model/user_model.dart';
 import 'package:client/app/data/services/api_client/api_client.dart';
 import 'package:client/app/data/services/api_client/custom_response.dart';
@@ -66,15 +66,13 @@ class AuthProvider {
 
   static Future<CustomResponse<List<BalanceModel>>> getAllBalance(
       {String? token}) async {
-    final resp = await _authClient
-        .request<List<BalanceModel>, Map<String, dynamic>>(
-            path: 'user/balance',
-            method: MethodType.get,
-            fromJson: (json) {
-              // BalanceModel.fromMap
-              return [];
-            },
-            headers: {
+    final resp = await _authClient.request<List<BalanceModel>, List<dynamic>>(
+        path: 'user/balances',
+        method: MethodType.get,
+        fromJson: (json) {
+          return json.map((e) => BalanceModel.fromJson(e)).toList();
+        },
+        headers: {
           NetworkHeader.authorization:
               'Bearer ${token ?? localStorage.auth.token}'
         });

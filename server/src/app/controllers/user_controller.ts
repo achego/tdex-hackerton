@@ -12,6 +12,46 @@ import balancerepository from "../repos/balance_repo";
 import { logger } from "../../global_exports";
 import { prisma } from "../../core/globals";
 
+interface CurrencyRate {
+  symbol: string;
+  title: string;
+  rate: number;
+  icon: string;
+}
+
+const currencyRates: CurrencyRate[] = [
+  {
+    symbol: "ngn",
+    title: "Nigerian Naira",
+    rate: 1220,
+    icon: "NGN",
+  },
+  {
+    symbol: "usd",
+    title: "United States Dollar",
+    rate: 1,
+    icon: "$",
+  },
+  {
+    symbol: "gbp",
+    title: "British Pound Sterling",
+    rate: 0.84,
+    icon: "£",
+  },
+  {
+    symbol: "eur",
+    title: "European Euro",
+    rate: 0.96,
+    icon: "€",
+  },
+  {
+    symbol: "ghs",
+    title: "Ghanaian Cedi",
+    rate: 13.3,
+    icon: "GHC",
+  },
+];
+
 const getMe = catchError(
   async (req: CustomRequest, res: Response, next: NextFunction) => {
     const userParam = req.user;
@@ -172,6 +212,15 @@ const getCredentials = catchError(
   }
 );
 
+const getCurrencyrates = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    customResponse(res, {
+      message: "Currency rates gotten",
+      data: currencyRates,
+    });
+  }
+);
+
 const userController = {
   getMe,
   getUserBalances,
@@ -179,6 +228,7 @@ const userController = {
   getUserfromUsername,
   createAndSaveCredential,
   getCredentials,
+  getCurrencyrates,
 };
 
 export default userController;

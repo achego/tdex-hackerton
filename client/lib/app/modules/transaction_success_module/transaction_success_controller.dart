@@ -1,4 +1,4 @@
-
+import 'package:client/app/modules/transactions_module/transactions_controller.dart';
 import 'package:client/global_exports.dart';
 
 class TransactionSuccessArgs {
@@ -24,6 +24,9 @@ class TransactionSuccessController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    appController.updateUserBalances();
+    transactionsController.getTransactions();
+
     if ((Get.arguments == null || Get.arguments is! TransactionSuccessArgs)) {
       throw Exception(
           'TransactionSuccessPage recieves and argument of TransactionSuccessController\n\nuse==>> Nav.toNamed(RoutePaths.transactionSuccess, arguments: TransactionSuccessArgs() )\n');

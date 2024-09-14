@@ -24,7 +24,7 @@ class SendMethodPage extends StatelessWidget {
             spaceh(30),
             ReceiveMethodItem(
               onPressed: () {
-                // Nav.toNamed(RoutePaths.sendToUsername);
+                appController.commingSoon();
               },
               title: 'By username',
               subtitle:
@@ -34,7 +34,7 @@ class SendMethodPage extends StatelessWidget {
             spaceh(24),
             ReceiveMethodItem(
               onPressed: () {
-                // Nav.toNamed(RoutePaths.sendToUsername);
+                Nav.toNamed(RoutePaths.sendFromWallet);
               },
               title: 'From wallet balance',
               subtitle:

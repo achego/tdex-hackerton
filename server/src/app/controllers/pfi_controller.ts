@@ -1,7 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import catchError from "../../core/utils/error_handler";
 import customResponse from "../data/models/custom_response";
-import { Balance, Offering, Rfq, TbdexHttpClient } from "@tbdex/http-client";
+import {
+  Balance,
+  Close,
+  Message,
+  MessageData,
+  Offering,
+  Order,
+  Rfq,
+  TbdexHttpClient,
+} from "@tbdex/http-client";
 import { BearerDid, DidDht } from "@web5/dids";
 import {
   PresentationDefinitionV2,
@@ -44,6 +53,7 @@ interface SelectedPFI {
   uri: string;
   name: string;
   description?: string;
+  imageUrl?: string;
 }
 
 const selectedPFIs: SelectedPFI[] = [
@@ -58,6 +68,10 @@ const selectedPFIs: SelectedPFI[] = [
   {
     uri: "did:dht:enwguxo8uzqexq14xupe4o9ymxw3nzeb9uug5ijkj9rhfbf1oy5y",
     name: "🏦 Vertex Liquid Assets",
+  },
+  {
+    uri: "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o",
+    name: " 🏦 Titanium Trust",
   },
 ];
 
@@ -152,11 +166,12 @@ const requestQuote = catchError(
     await TbdexHttpClient.createExchange(rfq);
 
     return customResponse(res, {
-      message: "Offerreings retrieved successfullty",
+      message: "Offerreings retrieved successfully",
       data: rfq,
     });
   }
 );
+
 const getExchanges = catchError(
   async (req: CustomRequest, res: Response, next: NextFunction) => {
     const body: {
@@ -164,15 +179,78 @@ const getExchanges = catchError(
       rfq_exchange_id: string;
     } = req.body;
     const user = req.user;
+    const portableDid = JSON.parse(user?.bearer_did ?? "");
+    const userDid = await DidDht.import({ portableDid: portableDid });
 
-    const exchanges = await TbdexHttpClient.getExchange({
-      did: JSON.parse(user?.bearer_did ?? ""),
-      pfiDid: body.pfiDid,
-      exchangeId: body.rfq_exchange_id,
-    });
+    console.log("Polling exchanges again...");
+    const allExchanges = [];
+    for (const pfi of selectedPFIs) {
+      const exchanges = await getSingleExchanges(userDid, pfi.uri);
+      allExchanges.push(...exchanges);
+    }
     return customResponse(res, {
       message: "Exchanges retrieved successfullty",
-      data: exchanges,
+      data: allExchanges.reverse(),
+    });
+  }
+);
+const closeQuote = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const body: {
+      pfiDid: string;
+      exchange_id: string;
+      reason: string;
+    } = req.body;
+    const user = req.user;
+    const portableDid = JSON.parse(user?.bearer_did ?? "");
+    const userDid = await DidDht.import({ portableDid: portableDid });
+
+    const close = Close.create({
+      metadata: {
+        from: userDid.uri,
+        to: body.pfiDid,
+        exchangeId: body.exchange_id,
+        protocol: "1.0",
+      },
+      data: {
+        reason: `${body.reason}(cancelled)`,
+      },
+    });
+
+    await close.sign(userDid);
+    await TbdexHttpClient.submitClose(close);
+
+    return customResponse(res, {
+      message: "Quote Closed",
+      data: close,
+    });
+  }
+);
+const placeOrder = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const body: {
+      pfiDid: string;
+      exchange_id: string;
+    } = req.body;
+    const user = req.user;
+    const portableDid = JSON.parse(user?.bearer_did ?? "");
+    const userDid = await DidDht.import({ portableDid: portableDid });
+
+    const order = Order.create({
+      metadata: {
+        from: userDid.uri,
+        to: body.pfiDid,
+        exchangeId: body.exchange_id,
+        protocol: "1.0",
+      },
+    });
+
+    await order.sign(userDid);
+    await TbdexHttpClient.submitOrder(order);
+
+    return customResponse(res, {
+      message: "Order Submitted",
+      data: order,
     });
   }
 );
@@ -181,6 +259,78 @@ const pfiController = {
   getOfferings,
   requestQuote,
   getExchanges,
+  closeQuote,
+  placeOrder,
 };
 
 export default pfiController;
+
+const getSingleExchanges = async (userDid: BearerDid, pfiDid: string) => {
+  const exchanges = await TbdexHttpClient.getExchanges({
+    did: userDid,
+    pfiDid: pfiDid,
+  });
+
+  return formatExchangesM(exchanges);
+};
+
+const formatExchangesM = (exchanges: Message[][]) => {
+  const formattedMessages = exchanges.map((exchange) => {
+    const latestMessage = exchange[exchange.length - 1];
+    const rfqMessage = exchange.find((message) => message.kind === "rfq");
+    const quoteMessage = exchange.find((message) => message.kind === "quote");
+
+    const quoteData = quoteMessage?.data as any;
+    const rfqData = rfqMessage?.data as any;
+
+    const status = generateExchangeStatusValues(latestMessage);
+    const fee = quoteData["payin"]?.["fee"];
+    const payinAmount = quoteData["payin"]?.["amount"];
+    const payoutPaymentDetails = (rfqMessage as any).privateData?.payout
+      .paymentDetails as { me: "Hello" };
+    return {
+      id: latestMessage.metadata.exchangeId,
+      fee: fee,
+      payinAmount:
+        (fee
+          ? Number(payinAmount) + Number(fee)
+          : Number(payinAmount)
+        ).toString() || rfqData["payinAmount"],
+      payinCurrency: quoteData["payin"]?.["currencyCode"] ?? null,
+      payoutAmount: quoteData["payout"]?.["amount"] ?? null,
+      payoutCurrency: quoteData["payout"]?.["currencyCode"],
+      status,
+      createdTime: rfqMessage?.createdAt,
+      ...(latestMessage.kind === "quote" && {
+        expirationTime: quoteData["expiresAt"] ?? null,
+      }),
+      from: "You",
+      to: payoutPaymentDetails,
+      pfiDid: rfqMessage?.metadata.to,
+    };
+  });
+
+  return formattedMessages;
+};
+
+const generateExchangeStatusValues = (exchangeMessage: Message): string => {
+  if (exchangeMessage instanceof Close) {
+    if (
+      exchangeMessage.data?.reason?.toLowerCase().includes("complete") ||
+      exchangeMessage.data?.reason?.toLowerCase().includes("success")
+    ) {
+      return "completed";
+    } else if (
+      exchangeMessage.data?.reason?.toLowerCase().includes("expired")
+    ) {
+      return exchangeMessage.data?.reason?.toLowerCase();
+    } else if (
+      exchangeMessage.data?.reason?.toLowerCase().includes("cancelled")
+    ) {
+      return "cancelled";
+    } else {
+      return "failed";
+    }
+  }
+  return "active";
+};

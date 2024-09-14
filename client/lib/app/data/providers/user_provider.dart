@@ -1,4 +1,6 @@
 import 'package:client/app/data/models/credential_model/credential_model.dart';
+import 'package:client/app/data/models/currency_rate_model/currency_rate_model.dart';
+import 'package:client/app/data/models/quoted_transaction_model/quoted_transaction_model.dart';
 import 'package:client/app/data/models/transaction_model/transaction_model.dart';
 import 'package:client/app/data/services/api_client/aaexp.clients.dart';
 import 'package:client/global_exports.dart';
@@ -63,6 +65,74 @@ class UserProvider {
         headers: {
           NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
         });
+    return resp;
+  }
+
+  static Future<CustomResponse<List<QuotedTransactionModel>>>
+      getQuotedTransaction() async {
+    final resp = await _userClient
+        .request<List<QuotedTransactionModel>, List<dynamic>>(
+            path: 'user/get-exchanges',
+            method: MethodType.get,
+            fromJson: (json) {
+              return json
+                  .map((e) => QuotedTransactionModel.fromJson(e))
+                  .toList();
+            },
+            headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+
+    return resp;
+  }
+
+  static Future<CustomResponse> closeQuote({
+    required String pfiDid,
+    required String exchangeId,
+    required String reaso,
+  }) async {
+    final resp = await _userClient.request(
+        path: 'user/close-quote',
+        method: MethodType.post,
+        payload: {
+          "pfiDid": pfiDid,
+          "exchange_id": exchangeId,
+          "reason": reaso
+        },
+        headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+
+    return resp;
+  }
+
+  static Future<CustomResponse> addOrder({
+    required String pfiDid,
+    required String exchangeId,
+  }) async {
+    final resp = await _userClient
+        .request(path: 'user/place-order', method: MethodType.post, payload: {
+      "pfiDid": pfiDid,
+      "exchange_id": exchangeId,
+    }, headers: {
+      NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+    });
+
+    return resp;
+  }
+
+  static Future<CustomResponse<List<CurrencyRateModel>>>
+      getCurrencyRates() async {
+    final resp = await _userClient
+        .request<List<CurrencyRateModel>, List<dynamic>>(
+            path: 'currency-rates',
+            method: MethodType.get,
+            fromJson: (json) =>
+                json.map((e) => CurrencyRateModel.fromJson(e)).toList(),
+            headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+
     return resp;
   }
 }

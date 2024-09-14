@@ -150,7 +150,7 @@ class SendByPfiController extends GetxController {
     if (!resp.isOk) {
       return;
     }
-    logger(resp.data, 'The response datat');
+    logger(resp.data, 'The response datat', maxChars: 1000000);
     try {
       offerings.value = (resp.data['offerings'] as List<dynamic>)
           .map((e) => PfiOfferingModel.fromJson(e))
@@ -207,6 +207,7 @@ class SendByPfiController extends GetxController {
       to.clear();
       selectedto = null;
       matchingofferings.clear();
+      selecetedOffering.value = const PfiOfferingModel();
     }
 
     if (selectedFrom != null && selectedto != null) {
@@ -230,6 +231,7 @@ class SelectCurrencyModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<SendByPfiController>();
     return Obx(
       () => Container(
         // height: 400,
@@ -241,7 +243,7 @@ class SelectCurrencyModal extends StatelessWidget {
             topRight: Radius.circular(16),
           ),
         ),
-        child: sendByPfiController.isGettingOfferings.value
+        child: controller.isGettingOfferings.value
             ? const SizedBox(
                 height: 200,
                 child: Center(

@@ -1,20 +1,26 @@
+import 'package:client/app/data/models/quoted_transaction_model/quoted_transaction_model.dart';
 import 'package:client/app/data/models/transaction_model/transaction_model.dart';
 import 'package:client/app/data/providers/user_provider.dart';
+import 'package:client/core/utils/logger.dart';
 import 'package:client/global_exports.dart';
 
 class TransactionsController extends GetxController {
   final isGettingTransactions = false.obs;
-  final isGettingAirtimeTransactions = false.obs;
-  final isGettingDataTransactions = false.obs;
+  final isGetting = false.obs;
+  final isGettingQuotedTransactions = false.obs;
+
+  final selectedTab = 0.obs;
 
   final transactions = <TransactionModel>[].obs;
-  final airtimeTransactions = <TransactionModel>[].obs;
-  final dataTransactions = <TransactionModel>[].obs;
+  final quotedTransaction = <QuotedTransactionModel>[].obs;
+
+  changeTab(int tab) async {
+    selectedTab(tab);
+  }
 
   getTransactions() async {
     isGettingTransactions(true && transactions.isEmpty);
-    getAirtimeTransaction();
-    getDataTransaction();
+    getQuotedTransaction();
     final resp = await UserProvider.getTransactions();
     // logger(resp.toJson(), 'Resp Json');
     isGettingTransactions(false);
@@ -26,33 +32,18 @@ class TransactionsController extends GetxController {
     transactions.value = resp.data?.transactions ?? [];
   }
 
-  getAirtimeTransaction() async {
-    isGettingAirtimeTransactions(true);
+  getQuotedTransaction() async {
+    isGettingQuotedTransactions(true && quotedTransaction.isEmpty);
 
-    final resp =
-        await UserProvider.getTransactions(type: TransactionType.airtime);
+    final resp = await UserProvider.getQuotedTransaction();
     // logger(resp.toJson(), 'Airtime Json');
-    isGettingAirtimeTransactions(false);
+    isGettingQuotedTransactions(false);
     if (!resp.isOk) {
-      // AppNotifications.snackbar(
-      //     message: 'An error occured getting transactions');
       return;
     }
-    airtimeTransactions.value = resp.data?.transactions ?? [];
-  }
 
-  getDataTransaction() async {
-    isGettingDataTransactions(true);
-
-    final resp = await UserProvider.getTransactions(type: TransactionType.data);
-    logger(resp.toJson(), 'Data Json');
-    isGettingDataTransactions(false);
-    if (!resp.isOk) {
-      // AppNotifications.snackbar(
-      //     message: 'An error occured getting transactions');
-      return;
-    }
-    dataTransactions.value = resp.data?.transactions ?? [];
+    logger(resp.data, 'My Quoted Transaction');
+    quotedTransaction.value = resp.data ?? [];
   }
 }
 

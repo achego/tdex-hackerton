@@ -1,5 +1,6 @@
 import 'package:client/app/data/models/pfi_offering_model/pfi_offering_model.dart';
-import 'package:client/app/data/providers/pfi_providers.dart';
+import 'package:client/app/modules/enter_payment_detail_module/enter_payment_detail_controller.dart';
+import 'package:client/app/modules/enter_payment_detail_module/enter_payment_detail_page.dart';
 import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_binding.dart';
 import 'package:client/global_exports.dart';
 
@@ -8,6 +9,8 @@ class EnterPfiSendAmountController extends GetxController {
   TextEditingController theyGet = TextEditingController();
 
   final transKey = GlobalKey<FormState>();
+
+  final enterPaymentDetailController = Get.put(EnterPaymentDetailController());
 
   final offering = sendByPfiController.selecetedOffering.value;
 
@@ -61,12 +64,13 @@ class EnterPfiSendAmountController extends GetxController {
         'details': element.value
       };
     });
+
+    enterPaymentDetailController.setpayoutDetails();
   }
 
   changePayoutMethod(int val) {
     selectedMethods(val);
-    // setpayoutDetails();
-    logger(details.toString(), 'Details');
+    setpayoutDetails();
   }
 
   calculate() {
@@ -82,24 +86,11 @@ class EnterPfiSendAmountController extends GetxController {
       return;
     }
 
-    showLoading();
-    final payoutDe = details.map((key, value) =>
-        MapEntry(key, (value['controller'] as TextEditingController).text));
-    final resp = await PfiProvider.requestQuote(
-      amount: (double.tryParse(amount.text) ?? 0).toString(),
-      offeringId: offering.metadata?.id ?? "",
-      payinDetails: {"accountNumber": '', "routingNumber": ''},
-      payoutDetails: payoutDe,
-      payinKind: (offering.data?.payin?.methods ?? []).first.kind ?? "",
-      payouKind: payoutMethod.kind ?? "",
-      pfiDid: offering.metadata?.from ?? '',
-    );
-
-    showLoading(show: false);
-    if (!resp.isOk) {
-      AppNotifications.showModal(
-          title: 'An Error occured',
-          subTitle: 'An error occured placing a quote, please tru again later');
+    if (enterPaymentDetailController.paymentDetails.isEmpty) {
+      enterPaymentDetailController.requestQuote();
+      return;
     }
+    Get.to(() => const EnterPaymentDetailPage());
+    // Nav.to(const EnterPaymentDetailPage());
   }
 }

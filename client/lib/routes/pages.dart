@@ -23,7 +23,15 @@ import '../app/modules/dashboard_module/dashboard_binding.dart';
     import '../app/modules/send_by_pfi_module/send_by_pfi_page.dart'; 
 
     import '../app/modules/send_by_pfi_module/send_by_pfi_binding.dart'; 
+     import '../app/modules/send_from_wallet_module/send_from_wallet_page.dart'; 
+
+    import '../app/modules/send_from_wallet_module/send_from_wallet_binding.dart'; 
+     import '../app/modules/wallet_enter_amount_module/wallet_enter_amount_page.dart'; 
+
+    import '../app/modules/wallet_enter_amount_module/wallet_enter_amount_binding.dart'; 
  part
+    
+    
      './route_paths.dart';
 
 abstract class AppPages {
@@ -83,6 +91,18 @@ abstract class AppPages {
         page: () => const SendByPfiPage(),
         binding:SendByPfiBinding(),
       ), 
+       GetPage(
+        name: RoutePaths.sendFromWallet,
+        page: () => const SendFromWalletPage(),
+        binding:SendFromWalletBinding(),
+      ), 
+       GetPage(
+        name: RoutePaths.walletEnterAmount,
+        page: () => const WalletEnterAmountPage(),
+        binding:WalletEnterAmountBinding(),
+      ), 
  ]
+      
+      
       ;
 }

@@ -12,4 +12,6 @@ abstract class RoutePaths {
   static const transactionSuccess = "/transaction_success";
   static const sendMethod = "/send_method";
   static const sendByPfi = "/send_by_pfi"; 
+   static const sendFromWallet = "/send_from_wallet"; 
+   static const walletEnterAmount = "/wallet_enter_amount"; 
  }

@@ -1,4 +1,6 @@
 import 'package:client/app/components/app_divider.dart';
+import 'package:client/app/components/custom_switcher.dart';
+import 'package:client/app/components/quoted_tx_item.dart';
 import 'package:client/app/components/transaction_item.dart';
 import 'package:client/global_exports.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -26,6 +28,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
         () => RefreshIndicator(
           onRefresh: () => transactionsController.getTransactions(),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               spaceh(15),
               Column(
@@ -40,16 +43,54 @@ class _TransactionsPageState extends State<TransactionsPage> {
                 ],
               ).defPadX,
               spaceh(20),
+              Obx(() => CustomSwitcher(
+                    tabs: const ['Quotes', 'Transactions'],
+                    activeIndex: transactionsController.selectedTab.value,
+                    onChanged: transactionsController.changeTab,
+                  )).defPadX,
+              spaceh(20),
               Expanded(
-                  child: transactionsController.isGettingTransactions.value
-                      ? const Center(
-                          child: CupertinoActivityIndicator(),
+                  child: (transactionsController.selectedTab.value == 1
+                          ? transactionsController.isGettingTransactions.value
+                          : transactionsController
+                              .isGettingQuotedTransactions.value)
+                      ? SizedBox(
+                          height: 200.h,
+                          child: const Center(
+                            child: CupertinoActivityIndicator(),
+                          ),
                         )
-                      : const GroupedScrollItems().defPadX)
+                      : SingleChildScrollView(
+                          child: _buildBasedOnTxtype().defPadX))
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildBasedOnTxtype() {
+    if (transactionsController.selectedTab.value == 0) {
+      return CustomSeparatedListView(
+        padding: EdgeInsets.symmetric(horizontal: 15.w),
+        itemBuilder: (conetxt, index) {
+          final transaction = transactionsController.quotedTransaction[index];
+          return QuotedTransactionItem(
+            transaction: transaction,
+          );
+        },
+        itemCount: transactionsController.quotedTransaction.length,
+      );
+    }
+    return CustomSeparatedListView(
+      padding: EdgeInsets.symmetric(horizontal: 15.w),
+      itemBuilder: (conetxt, index) {
+        final transaction = transactionsController.transactions[index];
+        return TransactionItem(
+          transaction: transaction,
+        );
+      },
+      itemCount: transactionsController.transactions.length,
     );
   }
 }

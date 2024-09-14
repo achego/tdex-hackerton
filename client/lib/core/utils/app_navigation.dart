@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class Nav {
   static Future<T?>? to<T>(Widget page) {
-    return Get.to<T>(() => page);
+    return Get.to<T>(page);
   }
 
   static Future? off<T>(T page) {
