@@ -84,6 +84,19 @@ model Transaction {
   deleted_at       DateTime?
 }
 
+model PfiRatings {
+  id         Int       @id @default(autoincrement())
+  rater_id   String
+  rater_name String
+  pfi_did    String
+  rate       Float
+  comment    String?
+  quote_id   String    @unique
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  deleted_at DateTime?
+}
+
 // Emums
 enum TransactionStatus {
   pending

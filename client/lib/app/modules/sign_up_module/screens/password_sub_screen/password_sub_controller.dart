@@ -25,7 +25,7 @@ class PasswordSubController extends GetxController {
       SuccessFailurePage(
         title: 'Congratulations Chief, you made it',
         subTitle:
-            'You have successfully completed your onboarding to panther, you can now access the features',
+            'You have successfully completed your onboarding to ${appStrings.appTitle.toLowerCase()}, you can now access the features',
         actionButtonText: 'Take me to dashboard',
         onActionPressed: () {
           Nav.offAllNamed(RoutePaths.dashboard);

@@ -162,7 +162,7 @@ void loggerR() {
     // if()
     const splitText = '(';
     log(
-      ' \x1b[46m bPantherR: \x1B[35m$time - \x1B[31mRouting To ==>> \x1b[33m${trace.split(splitText)[0]} \x1B[0m \x1b[2m$trace \x1B[0m ',
+      ' \x1b[46m bigbigiR: \x1B[35m$time - \x1B[31mRouting To ==>> \x1b[33m${trace.split(splitText)[0]} \x1B[0m \x1b[2m$trace \x1B[0m ',
     );
   }
 }

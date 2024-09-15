@@ -62,7 +62,7 @@ const updateBalance = async <K extends keyof Prisma.UserBalanceOmit>(
   amount: number,
   currency: $Enums.BalanceCurrency,
   /** of type $Enums.TransactionDirection */
-  type: string,
+  type: $Enums.TransactionDirection,
   option?: {
     tx?: PrismaClient;
     balanceModel?: Prisma.UserBalanceUncheckedUpdateInput;

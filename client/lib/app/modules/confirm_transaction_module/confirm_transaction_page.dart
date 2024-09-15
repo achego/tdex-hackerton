@@ -21,32 +21,34 @@ class ConfirmTransactionPage extends StatelessWidget {
           : BottomNavContainer(
               child: Row(
                 children: [
-                  Expanded(
-                      child: CustomButton(
-                    backgroundColor: AppColors.color.error,
-                    textStyle: (currentStyle) =>
-                        currentStyle.copyWith(color: AppColors.color.white),
-                    onPressed: () {
-                      if (ctr.args.onCancel != null) {
-                        ctr.args.onCancel?.call();
-                        return;
-                      }
-                      ctr.handleCancelTransaction();
-                    },
-                    title: 'Cancel',
-                  )),
+                  if (ctr.args.onCancel != null)
+                    Expanded(
+                        child: CustomButton(
+                      backgroundColor: AppColors.color.error,
+                      textStyle: (currentStyle) =>
+                          currentStyle.copyWith(color: AppColors.color.white),
+                      onPressed: () {
+                        if (ctr.args.onCancel != null) {
+                          ctr.args.onCancel?.call();
+                          return;
+                        }
+                        ctr.handleCancelTransaction();
+                      },
+                      title: 'Cancel',
+                    )),
                   spacew(15),
-                  Expanded(
-                      child: CustomButton(
-                    onPressed: () {
-                      if (ctr.args.onProceed != null) {
-                        ctr.args.onProceed?.call();
-                        return;
-                      }
-                      ctr.handleConfirmTransaction();
-                    },
-                    title: 'Pay Now',
-                  ))
+                  if (ctr.args.onProceed != null)
+                    Expanded(
+                        child: CustomButton(
+                      onPressed: () {
+                        if (ctr.args.onProceed != null) {
+                          ctr.args.onProceed?.call();
+                          return;
+                        }
+                        ctr.handleConfirmTransaction();
+                      },
+                      title: ctr.args.onProceedBtnText ?? 'Pay Now',
+                    ))
                 ],
               ),
             ),

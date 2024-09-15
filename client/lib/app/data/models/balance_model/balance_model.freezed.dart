@@ -169,7 +169,7 @@ class __$$BalanceModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$BalanceModelImpl with DiagnosticableTreeMixin implements _BalanceModel {
+class _$BalanceModelImpl implements _BalanceModel {
   const _$BalanceModelImpl(
       {@JsonKey(name: 'balance') this.balance,
       @JsonKey(name: 'type') this.type,
@@ -201,21 +201,8 @@ class _$BalanceModelImpl with DiagnosticableTreeMixin implements _BalanceModel {
   final String? deletedAt;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'BalanceModel(balance: $balance, type: $type, currency: $currency, userCurrency: $userCurrency, updatedAt: $updatedAt, deletedAt: $deletedAt)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'BalanceModel'))
-      ..add(DiagnosticsProperty('balance', balance))
-      ..add(DiagnosticsProperty('type', type))
-      ..add(DiagnosticsProperty('currency', currency))
-      ..add(DiagnosticsProperty('userCurrency', userCurrency))
-      ..add(DiagnosticsProperty('updatedAt', updatedAt))
-      ..add(DiagnosticsProperty('deletedAt', deletedAt));
   }
 
   @override

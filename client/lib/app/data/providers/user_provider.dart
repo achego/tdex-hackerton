@@ -1,6 +1,7 @@
 import 'package:client/app/data/models/available_currency_model/available_currency_model.dart';
 import 'package:client/app/data/models/credential_model/credential_model.dart';
 import 'package:client/app/data/models/currency_rate_model/currency_rate_model.dart';
+import 'package:client/app/data/models/pfi_rate_model/pfi_rate_model.dart';
 import 'package:client/app/data/models/quoted_transaction_model/quoted_transaction_model.dart';
 import 'package:client/app/data/models/transaction_model/transaction_model.dart';
 import 'package:client/app/data/services/api_client/aaexp.clients.dart';
@@ -165,6 +166,51 @@ class UserProvider {
         payload: {
           'currency': currency
         },
+        headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+
+    return resp;
+  }
+
+  static Future<CustomResponse<List<PfiRateModel>>> getPfiRatings() async {
+    final resp = await _userClient.request<List<PfiRateModel>, List<dynamic>>(
+        path: 'user/pfi-ratings',
+        method: MethodType.get,
+        fromJson: (json) => json.map((e) => PfiRateModel.fromJson(e)).toList(),
+        headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+
+    return resp;
+  }
+
+  static Future<CustomResponse> ratePfi({
+    required String pfiDid,
+    required double rate,
+    String? comment,
+    required String quoteId,
+  }) async {
+    final resp = await _userClient.request(
+        path: 'user/rate-pfi',
+        method: MethodType.post,
+        payload: {
+          "pfi_did": pfiDid,
+          "rate": rate,
+          "quote_id": quoteId,
+          "comment": comment
+        },
+        headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+
+    return resp;
+  }
+
+  static Future<CustomResponse> addfunds() async {
+    final resp = await _userClient.request(
+        path: 'user/add-funds',
+        method: MethodType.get,
         headers: {
           NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
         });

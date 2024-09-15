@@ -286,6 +286,65 @@ const addCurrency = catchError(
   }
 );
 
+const ratePfi = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const user = req.user;
+    const body: {
+      pfi_did: string;
+      rate: number;
+      quote_id: string;
+      comment?: string;
+    } = req.body;
+
+    const resp = await prisma.pfiRatings.create({
+      data: {
+        pfi_did: body.pfi_did,
+        rate: body.rate,
+        rater_id: user?.id ?? "",
+        quote_id: body.quote_id,
+        rater_name: user?.user_name ?? "",
+        comment: body.comment,
+      },
+    });
+
+    customResponse(res, {
+      message: "Rating Success",
+      data: resp,
+    });
+  }
+);
+const getPfiRatings = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const user = req.user;
+
+    const resp = await prisma.pfiRatings.findMany({});
+
+    customResponse(res, {
+      message: "Ratings Gotten",
+      data: resp,
+    });
+  }
+);
+const addDemoFunds = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const user = req.user;
+
+    
+
+    const resp = await balancerepository.updateBalance(
+      user?.id ?? "",
+      100,
+      $Enums.BalanceCurrency.usd,
+      $Enums.TransactionDirection.credit
+    );
+
+    customResponse(res, {
+      message: "Ratings Gotten",
+      data: resp,
+    });
+  }
+);
+
 const userController = {
   getMe,
   getUserBalances,
@@ -296,6 +355,9 @@ const userController = {
   getCurrencyrates,
   getAvailableCurrencies,
   addCurrency,
+  ratePfi,
+  getPfiRatings,
+  addDemoFunds,
 };
 
 export default userController;

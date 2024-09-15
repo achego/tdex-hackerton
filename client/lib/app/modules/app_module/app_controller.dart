@@ -2,6 +2,7 @@ import 'package:client/app/data/models/available_currency_model/available_curren
 import 'package:client/app/data/models/balance_model/balance_model.dart';
 import 'package:client/app/data/models/credential_model/credential_model.dart';
 import 'package:client/app/data/models/currency_rate_model/currency_rate_model.dart';
+import 'package:client/app/data/models/pfi_rate_model/pfi_rate_model.dart';
 import 'package:client/app/data/models/user_model/user_model.dart';
 import 'package:client/app/data/providers/user_provider.dart';
 import 'package:client/app/modules/log_in_module/log_in_controller.dart';
@@ -14,6 +15,7 @@ class AppController extends GetxController {
   final selectedBalance = const BalanceModel().obs;
   final currencyRates = const <CurrencyRateModel>[].obs;
   final availableCurrencies = const <AvailableCurrencyModel>[].obs;
+  final pfiRatings = const <PfiRateModel>[].obs;
 
   final isBalanceShown = localStorage.isBalanceShown.obs;
   Future<void> toogleBalanceMode() async {
@@ -36,12 +38,20 @@ class AppController extends GetxController {
 
   Future<List<CurrencyRateModel>> updateCurrencyrates({String? token}) async {
     updateAvailbleCurrencies();
+    updatePfiratings();
     final resp = await UserProvider.getCurrencyRates();
     if (!resp.isOk) {
       return [];
     }
     currencyRates.value = resp.data ?? [];
     return currencyRates;
+  }
+
+  Future<List<PfiRateModel>> updatePfiratings() async {
+    final resp = await UserProvider.getPfiRatings();
+
+    pfiRatings.value = resp.data ?? [];
+    return pfiRatings;
   }
 
   Future<List<CredentialModel>?> updateCredentials({String? token}) async {

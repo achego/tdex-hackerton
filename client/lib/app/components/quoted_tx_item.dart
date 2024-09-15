@@ -2,7 +2,9 @@ import 'package:client/app/components/custom_cached_network_imge.dart';
 import 'package:client/app/data/models/quoted_transaction_model/quoted_transaction_model.dart';
 import 'package:client/app/data/providers/user_provider.dart';
 import 'package:client/app/modules/transaction_success_module/transaction_success_controller.dart';
+import 'package:client/core/utils/globals.dart';
 import 'package:client/global_exports.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../modules/confirm_transaction_module/confirm_transaction_controller.dart';
 
@@ -18,9 +20,18 @@ class QuotedTransactionItem extends StatelessWidget {
   final bool onPressedDisabled;
   final QuotedTransactionModel transaction;
 
+  TransactionStatus get status =>
+      TransactionStatus.fromString(transaction.status ?? "");
+
+  bool get canRate {
+    final hasRatedList = appController.pfiRatings
+        .where((p0) => p0.raterId == appController.user.value.id)
+        .where((element) => element.quoteId == transaction.id);
+    return status == TransactionStatus.completed && hasRatedList.isEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final status = TransactionStatus.fromString(transaction.status ?? "");
     return CustomGestureDetector(
       onTap: () {
         if (onPressedDisabled) {
@@ -35,12 +46,26 @@ class QuotedTransactionItem extends StatelessWidget {
           RoutePaths.confirmTransaction,
           arguments: ConfirmTransactionArgs(
             isFromQuotes: true,
-            showButtonOptions: status == TransactionStatus.active,
-            onProceed: () => placeOrder(transaction.pfiDid ?? "",
-                transaction.id ?? '', transaction.from ?? {},
-                amount: double.tryParse(transaction.payinAmount ?? '') ?? 0),
-            onCancel: () =>
-                closeOrder(transaction.pfiDid ?? "", transaction.id ?? ''),
+            onProceedBtnText: canRate ? 'Rate Transction' : null,
+            showButtonOptions: [
+                  TransactionStatus.active,
+                ].contains(status) ||
+                canRate,
+            onProceed: canRate
+                ? () => rateTransaction(
+                    pfiDid: transaction.pfiDid ?? '',
+                    quoteId: transaction.id ?? '')
+                : (status != TransactionStatus.active
+                    ? null
+                    : () => placeOrder(transaction.pfiDid ?? "",
+                        transaction.id ?? '', transaction.from ?? {},
+                        amount:
+                            double.tryParse(transaction.payinAmount ?? '') ??
+                                0)),
+            onCancel: status != TransactionStatus.active
+                ? null
+                : () =>
+                    closeOrder(transaction.pfiDid ?? "", transaction.id ?? ''),
             // onCancel: showCloseSkipModal,
             amount: '${transaction.payoutCurrency} ${transaction.payoutAmount}',
             appBarTitle: 'Quote Transaction',
@@ -212,9 +237,12 @@ enum TransactionStatus {
 placeOrder(String pfiDid, String exchangeId, Map payinDetails,
     {required double amount}) async {
   final fee = (1.5 / 100) * amount;
+  final fromWallet = payinDetails.isNotEmpty &&
+      payinDetails.values.first.toString().toLowerCase() == 'wallet';
   if ((double.tryParse(appController.selectedBalance.value.balance ?? "") ??
-          0) <
-      (amount + fee)) {
+              0) <
+          (amount + fee) &&
+      fromWallet) {
     AppNotifications.snackbar(
         message:
             'You dont have sufficient balance on your ${appController.selectedBalance.value.currency?.toUpperCase()} Account');
@@ -278,6 +306,114 @@ closeOrder(String pfiDid, String exchangeId,
   Nav.toNamed<TransactionSuccessArgs>(RoutePaths.transactionSuccess,
       arguments: TransactionSuccessArgs(
           title: 'Success', subTitle: 'Order has been closed successfully'));
+}
+
+rateTransaction({required String pfiDid, required String quoteId}) async {
+  final rateDetails =
+      await Get.dialog<Map<String, dynamic>>(const PfirateDialog());
+
+  if (rateDetails == null) {
+    return;
+  }
+  showLoading();
+  final resp = await UserProvider.ratePfi(
+      pfiDid: pfiDid,
+      quoteId: quoteId,
+      rate: rateDetails['rate'],
+      comment: rateDetails['comment']);
+  showLoading(show: false);
+
+  if (!resp.isOk) {
+    AppNotifications.snackbar(message: 'An error occured rating pfi');
+    return;
+  }
+  appController.updatePfiratings();
+  await AppNotifications.snackbar(
+      message: 'Your response was registered succesfully',
+      type: NotificationType.success);
+  await appWait(300);
+  Get.back();
+}
+
+class PfirateDialog extends StatefulWidget {
+  const PfirateDialog({
+    super.key,
+  });
+
+  @override
+  State<PfirateDialog> createState() => _PfirateDialogState();
+}
+
+class _PfirateDialogState extends State<PfirateDialog> {
+  final formKey = GlobalKey<FormState>();
+  TextEditingController comment = TextEditingController();
+
+  double rate = 1;
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: AppColors.color.grey400,
+      child: Container(
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              spaceh(20),
+              Text(
+                'Rate This Transaction',
+                style: TextStyles.base(fontSizeDiff: 5),
+              ),
+              spaceh(20),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ...List.generate(5, (index) {
+                    final isActive = rate >= index + 1;
+                    return CustomGestureDetector(
+                      onTap: () {
+                        setState(() {
+                          rate = index + 1;
+                        });
+                      },
+                      child: Container(
+                        height: 55,
+                        width: 55,
+                        padding: const EdgeInsets.all(5),
+                        child: FittedBox(
+                            child: Icon(
+                          Icons.star_rate_rounded,
+                          color: isActive ? Colors.amber : Colors.grey,
+                        )),
+                      ),
+                    );
+                  })
+                ],
+              ),
+              spaceh(30),
+              CustomTextFormField(
+                labelText: 'comment',
+                controller: comment,
+              ),
+              spaceh(30),
+              CustomButton(
+                onPressed: () {
+                  if (!formKey.currentState!.validate()) {
+                    return;
+                  }
+                  Nav.back(result: {'rate': rate, 'comment': comment.text});
+                },
+                title: 'Rate',
+              ),
+              spaceh(20),
+            ],
+          ).defPadX,
+        ),
+      ),
+    );
+  }
 }
 
 class CloseResonDialog extends StatelessWidget {

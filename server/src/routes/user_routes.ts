@@ -33,5 +33,14 @@ userRoutes
 userRoutes
   .route("/add-currency")
   .post(authMiddleWares.checkAuth, userController.addCurrency);
+userRoutes
+  .route("/rate-pfi")
+  .post(authMiddleWares.checkAuth, userController.ratePfi);
+userRoutes
+  .route("/pfi-ratings")
+  .get(authMiddleWares.checkAuth, userController.getPfiRatings);
+userRoutes
+  .route("/add-funds")
+  .get(authMiddleWares.checkAuth, userController.addDemoFunds);
 
 export default userRoutes;

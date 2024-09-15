@@ -1,5 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
 
+import 'package:client/app/components/app_divider.dart';
+import 'package:client/app/components/custom_gesture_detector.dart';
 import 'package:client/app/data/models/pfi_offering_model/pfi_offering_model.dart';
 import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_binding.dart';
 import 'package:client/global_exports.dart';
@@ -93,7 +96,7 @@ class _SendByPfiPageState extends State<SendByPfiPage> {
   }
 }
 
-class PFIOfferingItem extends StatelessWidget {
+class PFIOfferingItem extends StatefulWidget {
   const PFIOfferingItem({
     super.key,
     required this.pfi,
@@ -104,29 +107,146 @@ class PFIOfferingItem extends StatelessWidget {
   final bool isSelected;
 
   @override
+  State<PFIOfferingItem> createState() => _PFIOfferingItemState();
+}
+
+class _PFIOfferingItemState extends State<PFIOfferingItem> {
+  bool isCommentsShown = false;
+  @override
   Widget build(BuildContext context) {
+    double totalRate = 0;
+    final pfiRatings = appController.pfiRatings
+        .where((rate) => rate.pfiDid == widget.pfi.metadata?.from)
+        .toList();
+    final ratingWithComments =
+        pfiRatings.where((element) => (element.comment ?? '').isNotEmpty);
+    for (var element in pfiRatings) {
+      totalRate += element.rate ?? 0;
+    }
+    final avRating = totalRate / (pfiRatings.isEmpty ? 1 : pfiRatings.length);
     return AnimatedContainer(
       duration: 300.milliseconds,
-      color: isSelected ? AppColors.color.border : Colors.transparent,
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      color: widget.isSelected ? AppColors.color.border : Colors.transparent,
+      // padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            pfi.getPfidetails?.name ?? '',
-            style: TextStyles.base(fontSizeDiff: 5),
-          ),
-          spaceh(5),
-          Text(
-            pfi.data?.description ?? '',
-            style: TextStyles.base(primary: false),
-          ),
-          spaceh(5),
-          Text(
-            'Rate: ${pfi.data?.payoutUnitsPerPayinUnit} ${pfi.data?.payin?.currencyCode} for 1 ${pfi.data?.payout?.currencyCode} ',
-            style: TextStyles.base(primary: false)
-                .copyWith(color: AppColors.color.primary),
-          )
+          spaceh(10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.pfi.getPfidetails?.name ?? '',
+                style: TextStyles.base(fontSizeDiff: 5),
+              ),
+              spaceh(5),
+              Text(
+                widget.pfi.data?.description ?? '',
+                style: TextStyles.base(primary: false),
+              ),
+              spaceh(5),
+              Text(
+                'Rate: ${widget.pfi.data?.payoutUnitsPerPayinUnit} ${widget.pfi.data?.payin?.currencyCode} for 1 ${widget.pfi.data?.payout?.currencyCode} ',
+                style: TextStyles.base(primary: false)
+                    .copyWith(color: AppColors.color.primary),
+              ),
+              spaceh(5),
+              Row(
+                children: [
+                  ...List.generate(
+                    avRating.round(),
+                    (index) {
+                      if (index == avRating.round() - 1 &&
+                          avRating.round() > avRating) {
+                        return const Icon(
+                          Icons.star_half_rounded,
+                          color: Colors.amber,
+                        );
+                      }
+                      return const Icon(
+                        Icons.star_rounded,
+                        color: Colors.amber,
+                      );
+                    },
+                  )
+                ],
+              ),
+              // Text(
+              //   'Averate rating ${avRating.toStringAsFixed(1)}',
+              //   style: TextStyles.base(primary: false)
+              //       .copyWith(color: AppColors.color.white),
+              // ),
+            ],
+          ).defPadX,
+          spaceh(10),
+          if (ratingWithComments.isNotEmpty)
+            CustomGestureDetector(
+              onTap: () {
+                setState(() {
+                  isCommentsShown = !isCommentsShown;
+                });
+              },
+              child: Container(
+                color: AppColors.color.primary.withOpacity(0.3),
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          isCommentsShown ? 'Hide Comments' : 'Show comments',
+                          style: TextStyles.base(),
+                        ),
+                        spacew(10),
+                        svgAsset(AppIconSvgs.caratRight),
+                      ],
+                    ),
+                    if (isCommentsShown) spaceh(10),
+                    ClipRRect(
+                      child: AnimatedAlign(
+                        alignment: Alignment.centerLeft,
+                        heightFactor: isCommentsShown ? 1 : 0,
+                        duration: 300.milliseconds,
+                        child: Column(children: [
+                          ...ratingWithComments.map((e) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const AppDivider(),
+                                    spaceh(10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          e.raterName ?? "",
+                                          style: TextStyles.base().copyWith(
+                                              color: AppColors.color.primary),
+                                        ),
+                                        Text(e.createdAt.toDate.formatDate),
+                                      ],
+                                    ),
+                                    spaceh(5),
+                                    Text(
+                                      e.comment ?? "",
+                                      style: TextStyles.base().copyWith(),
+                                    ),
+                                    spaceh(10),
+                                    const AppDivider(),
+                                  ],
+                                ),
+                              ))
+                        ]),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
         ],
       ),
     );

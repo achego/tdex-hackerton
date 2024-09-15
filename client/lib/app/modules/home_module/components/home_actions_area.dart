@@ -1,4 +1,5 @@
 import 'package:client/app/components/balance_visibility_toogle.dart';
+import 'package:client/app/data/providers/user_provider.dart';
 import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_controller.dart';
 import 'package:client/app/modules/transactions_module/transactions_controller.dart';
 import 'package:client/global_exports.dart';
@@ -77,8 +78,12 @@ class _HomeActionAreaState extends State<HomeActionArea> {
                   'Deposit',
                   iconPath: AppIconSvgs.receive,
                   onPressed: () {
-                    appController.commingSoon();
-                    // Nav.toNamed(RoutePaths.receiveMethod);
+                    AppNotifications.showModal(
+                        title: 'Request Demo funds',
+                        subTitle:
+                            'Demo funds of \$100 would be added to your dollar account for testing',
+                        btnTitle: 'Give me funds 🙏',
+                        onPressed: sendFunds);
                   },
                 ),
                 spacew(10),
@@ -130,4 +135,16 @@ class _HomeActionAreaState extends State<HomeActionArea> {
       ),
     );
   }
+}
+
+void sendFunds() async {
+  Get.back();
+  showLoading();
+  final resp = await UserProvider.addfunds();
+  showLoading(show: false);
+  if (!resp.isOk) {
+    AppNotifications.snackbar(message: 'An error occured try again later');
+    return;
+  }
+  appController.updateUserBalances();
 }

@@ -67,14 +67,14 @@ const selectedPFIs: SelectedPFI[] = [
     uri: "did:dht:zkp5gbsqgzn69b3y5dtt5nnpjtdq6sxyukpzo68npsf79bmtb9zy",
     name: "🏦 Flowback Financial",
   },
-  {
-    uri: "did:dht:enwguxo8uzqexq14xupe4o9ymxw3nzeb9uug5ijkj9rhfbf1oy5y",
-    name: "🏦 Vertex Liquid Assets",
-  },
-  {
-    uri: "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o",
-    name: " 🏦 Titanium Trust",
-  },
+  // {
+  //   uri: "did:dht:enwguxo8uzqexq14xupe4o9ymxw3nzeb9uug5ijkj9rhfbf1oy5y",
+  //   name: "🏦 Vertex Liquid Assets",
+  // },
+  // {
+  //   uri: "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o",
+  //   name: " 🏦 Titanium Trust",
+  // },
 ];
 
 const getOfferings = catchError(
