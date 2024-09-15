@@ -29,16 +29,8 @@ const signUp = catchError(
 
     const userDid = await userDidCreate.export();
 
-    // const mes = {
-    //   country: "NG",
-    //   full_name: "fullName",
-    //   user_name: "userName",
-    //   email: "email",
-    //   phone: "phone",
-    //   password: "password",
-    // };
     const body: Prisma.UserCreateInput = {
-      bearer_did: JSON.stringify(userDid),
+      bearer_did: authHelpers.encrypt(JSON.stringify(userDid)),
       ...requ,
     };
 

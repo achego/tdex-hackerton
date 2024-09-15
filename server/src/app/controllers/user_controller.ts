@@ -10,7 +10,8 @@ import customResponse from "../data/models/custom_response";
 import transactionRepository from "../repos/transaction_repository";
 import balancerepository from "../repos/balance_repo";
 import { logger } from "../../global_exports";
-import { prisma } from "../../core/globals";
+import { env, prisma } from "../../core/globals";
+import authHelpers from "../helpers/auth_helpers";
 
 interface CurrencyRate {
   symbol: string;
@@ -183,7 +184,9 @@ const createAndSaveCredential = catchError(
     }
 
     const body: { issuer: string; type: string } = req.body;
-    const userDid = JSON.parse(req.user?.bearer_did ?? "").uri;
+    const userDid = JSON.parse(
+      authHelpers.decrypt(req.user?.bearer_did ?? "")
+    ).uri;
     const user = req.user;
     const credential = await fetch(
       `https://mock-idv.tbddev.org/kcc?name=${"user?.full_name"}&country=${
@@ -195,7 +198,7 @@ const createAndSaveCredential = catchError(
     const resp = await prisma.userCredentials.create({
       data: {
         issuer: body.issuer,
-        credential: cred,
+        credential: authHelpers.encrypt(cred),
         userId: userParam.id,
         type: body.type,
       },
@@ -329,8 +332,6 @@ const addDemoFunds = catchError(
   async (req: CustomRequest, res: Response, next: NextFunction) => {
     const user = req.user;
 
-    
-
     const resp = await balancerepository.updateBalance(
       user?.id ?? "",
       100,
@@ -341,6 +342,29 @@ const addDemoFunds = catchError(
     customResponse(res, {
       message: "Ratings Gotten",
       data: resp,
+    });
+  }
+);
+
+const test = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const user = req.user;
+    logger(env.iv, "TH IV");
+    logger(env.encryptionKey, "TH IV");
+    const text = "Helo wold";
+    logger("1", "TH IV");
+    const ecv = authHelpers.encrypt(text);
+    logger("2", "TH IV");
+    const dec = authHelpers.decrypt(ecv);
+    logger("3", "TH IV");
+
+    customResponse(res, {
+      message: "Ratings Gotten",
+      data: {
+        ecv,
+        dec,
+        // dec2,
+      },
     });
   }
 );
@@ -358,6 +382,7 @@ const userController = {
   ratePfi,
   getPfiRatings,
   addDemoFunds,
+  test,
 };
 
 export default userController;

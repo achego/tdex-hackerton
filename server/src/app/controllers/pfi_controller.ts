@@ -22,6 +22,7 @@ import CustomError from "../data/models/custom_error";
 import { StatusCode } from "../../core/utils/enums";
 import balancerepository from "../repos/balance_repo";
 import { $Enums } from "@prisma/client";
+import authHelpers from "../helpers/auth_helpers";
 
 // 🏦 AquaFinance Capital
 
@@ -108,7 +109,7 @@ const requestQuote = catchError(
       payout_details: object;
     } = req.body;
     const user = req.user;
-    const portableDid = JSON.parse(user?.bearer_did ?? "");
+    const portableDid = JSON.parse(authHelpers.decrypt(user?.bearer_did ?? ""));
     const userDid = await DidDht.import({ portableDid: portableDid });
     const offerings = await TbdexHttpClient.getOfferings({
       pfiDid: body.pfiDid,
@@ -129,7 +130,7 @@ const requestQuote = catchError(
     });
 
     const credentialsList = credentials.map((cred) => {
-      return cred.credential;
+      return authHelpers.decrypt(cred.credential);
     });
 
     //  PFI verify credentials
@@ -180,7 +181,7 @@ const getExchanges = catchError(
       rfq_exchange_id: string;
     } = req.body;
     const user = req.user;
-    const portableDid = JSON.parse(user?.bearer_did ?? "");
+    const portableDid = JSON.parse(authHelpers.decrypt(user?.bearer_did ?? ""));
     const userDid = await DidDht.import({ portableDid: portableDid });
 
     const allExchanges = [];
@@ -202,7 +203,7 @@ const closeQuote = catchError(
       reason: string;
     } = req.body;
     const user = req.user;
-    const portableDid = JSON.parse(user?.bearer_did ?? "");
+    const portableDid = JSON.parse(authHelpers.decrypt(user?.bearer_did ?? ""));
     const userDid = await DidDht.import({ portableDid: portableDid });
 
     const close = Close.create({
@@ -238,7 +239,7 @@ const placeOrder = catchError(
     const isWallet = Object.values(body.payin).includes("Wallet");
 
     const user = req.user;
-    const portableDid = JSON.parse(user?.bearer_did ?? "");
+    const portableDid = JSON.parse(authHelpers.decrypt(user?.bearer_did ?? ""));
     const userDid = await DidDht.import({ portableDid: portableDid });
 
     const order = Order.create({

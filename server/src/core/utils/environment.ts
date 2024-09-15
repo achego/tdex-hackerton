@@ -6,6 +6,9 @@ class Environment {
 
   jwtExpiresIn: string = process.env.JWT_EXPIRES_IN ?? "60d";
   jwtSecret: string = process.env.JWT_SECRET ?? "@#";
+  iv: string = process.env.IV ?? "@#";
+  encryptionKey: string = process.env.ENCRYPTION_KEY ?? "";
+  algorithm: string = process.env.ALGORITHM ?? "";
 }
 
 export default Environment;

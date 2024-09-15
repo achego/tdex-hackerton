@@ -1,3 +1,4 @@
+// import { env } from "../../core/globals";
 import bcrypt from "bcrypt";
 import jwt, {
   JsonWebTokenError,
@@ -8,8 +9,12 @@ import Environment from "../../core/utils/environment";
 import { StatusCode } from "../../core/utils/enums";
 import CustomError from "../data/models/custom_error";
 import userRepository from "../repos/user_repo";
+import crypto from "crypto";
+import customResponse from "../data/models/custom_response";
+import { logger } from "../../global_exports";
+import { env } from "../../core/globals";
 
-const env = new Environment();
+// const env = new Environment();
 
 const hashPassword = (password: string): string => {
   const salt = bcrypt.genSaltSync();
@@ -72,11 +77,38 @@ const validatePin = async (user_id: string, password: string) => {
   }
 };
 
+const encrypt = (text: string): string => {
+  logger(Buffer.from(env.encryptionKey), "THis");
+  let cipher = crypto.createCipheriv(
+    env.algorithm,
+    Buffer.from(env.encryptionKey),
+    env.iv
+  );
+  let encrypted = cipher.update(text);
+  encrypted = Buffer.concat([encrypted, cipher.final()]);
+  return encrypted.toString("hex");
+};
+
+const decrypt = (encryptedText: string): string => {
+  let iv = Buffer.from(Buffer.from(env.iv).toString("hex"), "hex");
+  let encText = Buffer.from(encryptedText, "hex");
+  let decipher = crypto.createDecipheriv(
+    env.algorithm,
+    Buffer.from(env.encryptionKey),
+    iv
+  );
+  let decrypted = decipher.update(encText);
+  decrypted = Buffer.concat([decrypted, decipher.final()]);
+  return decrypted.toString();
+};
+
 const authHelpers = {
   hashPassword,
   createJwt,
   verifyJwt,
   validatePin,
+  encrypt,
+  decrypt,
 };
 
 export default authHelpers;
