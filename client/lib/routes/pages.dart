@@ -29,7 +29,11 @@ import '../app/modules/dashboard_module/dashboard_binding.dart';
      import '../app/modules/wallet_enter_amount_module/wallet_enter_amount_page.dart'; 
 
     import '../app/modules/wallet_enter_amount_module/wallet_enter_amount_binding.dart'; 
+     import '../app/modules/swap_currency_module/swap_currency_page.dart'; 
+
+    import '../app/modules/swap_currency_module/swap_currency_binding.dart'; 
  part
+    
     
     
      './route_paths.dart';
@@ -101,7 +105,13 @@ abstract class AppPages {
         page: () => const WalletEnterAmountPage(),
         binding:WalletEnterAmountBinding(),
       ), 
+       GetPage(
+        name: RoutePaths.swapCurrency,
+        page: () => const SwapCurrencyPage(),
+        binding:SwapCurrencyBinding(),
+      ), 
  ]
+      
       
       
       ;

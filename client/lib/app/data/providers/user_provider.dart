@@ -217,4 +217,25 @@ class UserProvider {
 
     return resp;
   }
+
+  static Future<CustomResponse> swapCurrency({
+    required String from,
+    required String to,
+    required double amount,
+  }) async {
+    final resp = await _userClient.request(
+      path: 'user/swap-currency',
+      method: MethodType.post,
+      payload: {
+        "from": from,
+        "to": to,
+        "amount": amount,
+      },
+      headers: {
+        NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+      },
+    );
+
+    return resp;
+  }
 }

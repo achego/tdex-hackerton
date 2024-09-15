@@ -27,7 +27,7 @@ class QuickActionSection extends StatelessWidget {
             _buildAction(
               'Swap \nCurrency',
               iconPath: AppIconSvgs.swap,
-              // onPressed: () => Nav.toNamed(RoutePaths.buyAirtime),
+              onPressed: () => Nav.toNamed(RoutePaths.swapCurrency),
             ),
             _buildAction(
               'Data \nSubscription',

@@ -1,5 +1,4 @@
 import 'package:client/app/components/app_divider.dart';
-import 'package:client/app/components/custom_card.dart';
 import 'package:client/global_exports.dart';
 
 class CustomSeparatedListView extends StatelessWidget {
@@ -19,6 +18,7 @@ class CustomSeparatedListView extends StatelessWidget {
     this.labelStyle,
     this.headerBoxChild,
     this.clipBehavior,
+    this.backgroundColor,
   });
 
   final int itemCount;
@@ -35,6 +35,7 @@ class CustomSeparatedListView extends StatelessWidget {
   final String? label;
   final TextStyle? labelStyle;
   final Clip? clipBehavior;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +71,7 @@ class CustomSeparatedListView extends StatelessWidget {
               children: [
                 if (showHeaderBox) spaceh(headerBoxSize / 2),
                 CustomCard(
+                  backgroundColor: backgroundColor,
                   clipBehavior: clipBehavior,
                   padding: padding ?? EdgeInsets.symmetric(horizontal: 15.w),
                   child: Column(

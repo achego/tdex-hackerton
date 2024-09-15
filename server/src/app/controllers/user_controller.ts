@@ -361,8 +361,8 @@ const swapCurrency = catchError(
 
     const fromBalance = userBalances?.find((bal) => bal.currency == body.from);
     const toBalance = userBalances?.find((bal) => bal.currency == body.to);
-    const fee = authHelpers.getFee(body.amount);
-    const amountPayable = body.amount + fee;
+
+    const amountPayable = body.amount;
 
     if (Number(fromBalance?.balance) < amountPayable) {
       throw new CustomError(
@@ -381,8 +381,10 @@ const swapCurrency = catchError(
         { dev_message: "Balance not found" }
       );
     }
-    const recieverValue =
+    const reieverBal =
       ((toRate?.rate ?? 0) / (fromRate?.rate ?? 1)) * body.amount;
+    const fee = authHelpers.getFee(reieverBal);
+    const recieverValue = reieverBal - fee;
 
     await balancerepository.updateBalance(
       user?.id ?? "",
