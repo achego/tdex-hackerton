@@ -66,6 +66,12 @@ class SendFromWalletController extends GetxController {
     return method;
   }
 
+  MethodsModel get payoutMethod {
+    final method =
+        (offering?.data?.payout?.methods ?? [])[selectedMethods.value];
+    return method;
+  }
+
   pickCurrency() async {
     final selectedCurrecy = await Get.bottomSheet<CurrencyModel>(
         SelectCurrencyModal(
@@ -84,6 +90,8 @@ class SendFromWalletController extends GetxController {
 
   void setpayoutDetails() {
     try {
+      details.clear();
+
       final detailsList =
           (offering?.data?.payout?.methods ?? [])[selectedMethods.value]
               .requiredPaymentDetails
@@ -101,5 +109,18 @@ class SendFromWalletController extends GetxController {
   changePayoutMethod(int val) {
     selectedMethods(val);
     setpayoutDetails();
+  }
+
+  handleContinue() {
+    if (selectedCurrency == null) {
+      AppNotifications.snackbar(
+          message: 'Please select a currency to continue');
+      return;
+    }
+    if (!sendWalletKey.currentState!.validate()) {
+      return;
+    }
+
+    Nav.toNamed(RoutePaths.walletEnterAmount);
   }
 }

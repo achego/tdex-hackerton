@@ -18,18 +18,41 @@ interface CurrencyRate {
   rate: number;
   icon: string;
 }
+interface Currencies {
+  symbol: string;
+  title: string;
+  icon: string;
+  imageUrl: string;
+}
+
+const availableCurrencies: Currencies[] = [
+  {
+    symbol: "usd",
+    title: "United States Dollar",
+    icon: "$",
+    imageUrl:
+      "https://cdn.freebiesupply.com/logos/large/2x/united-states-of-america-logo-png-transparent.png",
+  },
+  {
+    symbol: "ngn",
+    title: "Nigerian Naira",
+    icon: "NGN",
+    imageUrl:
+      "https://cdn.freebiesupply.com/logos/large/2x/nigeriac-logo-png-transparent.png",
+  },
+];
 
 const currencyRates: CurrencyRate[] = [
   {
     symbol: "ngn",
     title: "Nigerian Naira",
-    rate: 1220,
+    rate: 1220.0,
     icon: "NGN",
   },
   {
     symbol: "usd",
     title: "United States Dollar",
-    rate: 1,
+    rate: 1.0,
     icon: "$",
   },
   {
@@ -220,6 +243,48 @@ const getCurrencyrates = catchError(
     });
   }
 );
+const getAvailableCurrencies = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    customResponse(res, {
+      message: "Currency  gotten",
+      data: availableCurrencies,
+    });
+  }
+);
+const addCurrency = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const user = req.user;
+    const body: {
+      currency: string;
+    } = req.body;
+    try {
+      const userCurrency = await prisma.userBalance.findMany({
+        where: {
+          user_id: user?.id,
+          currency: body.currency as any,
+        },
+      });
+
+      if (userCurrency.length > 0) {
+        throw new CustomError(
+          "User already has balanece",
+          StatusCode.badRequest
+        );
+      }
+    } catch (error) {
+      // throw new CustomError("User already has balanece", StatusCode.badRequest);
+    }
+
+    const resp = await balancerepository.createUserBalance(
+      user?.id ?? "",
+      body.currency as any
+    );
+    customResponse(res, {
+      message: "Currency  gotten",
+      data: resp,
+    });
+  }
+);
 
 const userController = {
   getMe,
@@ -229,6 +294,8 @@ const userController = {
   createAndSaveCredential,
   getCredentials,
   getCurrencyrates,
+  getAvailableCurrencies,
+  addCurrency,
 };
 
 export default userController;

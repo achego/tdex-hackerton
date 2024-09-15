@@ -10,6 +10,7 @@ baseRoutes
   .route("/verify-unique")
   .post(authController.verifyUniqueAvailability);
 baseRoutes.route("/currency-rates").get(userController.getCurrencyrates);
+baseRoutes.route("/available-currencies").get(userController.getAvailableCurrencies);
 // baseRoutes
 //   .route("/transaction")
 //   .post(authMiddleWares.checkAuth, userController.getTransactions);

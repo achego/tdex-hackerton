@@ -4,7 +4,6 @@ import 'package:client/app/data/providers/pfi_providers.dart';
 import 'package:client/app/modules/confirm_transaction_module/confirm_transaction_controller.dart';
 import 'package:client/app/modules/enter_pfi_send_amount_module/enter_pfi_send_amount_controller.dart';
 import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_binding.dart';
-import 'package:client/core/utils/globals.dart';
 import 'package:client/global_exports.dart';
 
 class EnterPaymentDetailController extends GetxController {
@@ -113,7 +112,10 @@ class EnterPaymentDetailController extends GetxController {
       RoutePaths.confirmTransaction,
       arguments: ConfirmTransactionArgs(
         onProceed: () => placeOrder(
-            offering.getPfidetails?.uri ?? '', quote.metadata?.id ?? ""),
+            offering.getPfidetails?.uri ?? '',
+            quote.metadata?.id ?? "",
+            quote.privateData?.payin?.paymentDetails ?? {},
+            amount: double.tryParse(quote.data?.payin?.amount ?? '') ?? 0),
         onCancel: () => closeOrder(
             offering.getPfidetails?.uri ?? '', quote.metadata?.id ?? ""),
         amount:

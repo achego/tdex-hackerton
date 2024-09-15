@@ -30,7 +30,7 @@ class _SendFromWalletPageState extends State<SendFromWalletPage> {
           appBar: const CustomAppBar(title: 'Send from Wallet'),
           bottomNavigationBar: BottomNavContainer(
             child: CustomButton(
-              onPressed: () {},
+              onPressed: ctr.handleContinue,
               title: 'Continue',
             ),
           ),

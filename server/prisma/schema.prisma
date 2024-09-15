@@ -38,7 +38,7 @@ model UserBalance {
   currency      BalanceCurrency
   user_currency String          @unique
   user          User            @relation(fields: [user_id], references: [id])
-  user_id       String          @unique
+  user_id       String
   created_at    DateTime        @default(now())
   updated_at    DateTime        @updatedAt
   deleted_at    DateTime?
@@ -110,6 +110,7 @@ enum BalanceType {
 
 enum BalanceCurrency {
   usd
+  ngn
 }
 
 enum CredentialType {

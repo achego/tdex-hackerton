@@ -52,6 +52,8 @@ class AppIconSvgs {
   // static String get search => 'search'.svg;
   static String get send => 'send'.svg;
   static String get success => 'succes'.svg;
+  static String get swap => 'swap'.svg;
+  static String get subscription => 'subscription'.svg;
   static String get transactions => 'transactions'.svg;
 }
 

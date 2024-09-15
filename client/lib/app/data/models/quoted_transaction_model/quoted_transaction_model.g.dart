@@ -17,7 +17,7 @@ _$QuotedTransactionModelImpl _$$QuotedTransactionModelImplFromJson(
       status: json['status'] as String?,
       createdTime: json['createdTime'] as String?,
       expirationTime: json['expirationTime'] as String?,
-      from: json['from'] as String?,
+      from: json['from'] as Map<String, dynamic>?,
       to: json['to'] as Map<String, dynamic>?,
       pfiDid: json['pfiDid'] as String?,
       fee: json['fee'] as String?,

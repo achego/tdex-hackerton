@@ -30,5 +30,8 @@ userRoutes
 userRoutes
   .route("/place-order")
   .post(authMiddleWares.checkAuth, pfiController.placeOrder);
+userRoutes
+  .route("/add-currency")
+  .post(authMiddleWares.checkAuth, userController.addCurrency);
 
 export default userRoutes;

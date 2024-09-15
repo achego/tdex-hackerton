@@ -159,9 +159,7 @@ class __$$PfiOfferingModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PfiOfferingModelImpl
-    with DiagnosticableTreeMixin
-    implements _PfiOfferingModel {
+class _$PfiOfferingModelImpl implements _PfiOfferingModel {
   const _$PfiOfferingModelImpl(
       {@JsonKey(name: 'metadata') this.metadata,
       @JsonKey(name: 'data') this.data,
@@ -181,18 +179,8 @@ class _$PfiOfferingModelImpl
   final String? signature;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'PfiOfferingModel(metadata: $metadata, data: $data, signature: $signature)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PfiOfferingModel'))
-      ..add(DiagnosticsProperty('metadata', metadata))
-      ..add(DiagnosticsProperty('data', data))
-      ..add(DiagnosticsProperty('signature', signature));
   }
 
   @override
@@ -392,9 +380,7 @@ class __$$MetadataModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$MetadataModelImpl
-    with DiagnosticableTreeMixin
-    implements _MetadataModel {
+class _$MetadataModelImpl implements _MetadataModel {
   const _$MetadataModelImpl(
       {@JsonKey(name: 'from') this.from,
       @JsonKey(name: 'protocol') this.protocol,
@@ -422,20 +408,8 @@ class _$MetadataModelImpl
   final String? createdAt;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'MetadataModel(from: $from, protocol: $protocol, kind: $kind, id: $id, createdAt: $createdAt)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'MetadataModel'))
-      ..add(DiagnosticsProperty('from', from))
-      ..add(DiagnosticsProperty('protocol', protocol))
-      ..add(DiagnosticsProperty('kind', kind))
-      ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('createdAt', createdAt));
   }
 
   @override
@@ -691,7 +665,7 @@ class __$$DataModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$DataModelImpl with DiagnosticableTreeMixin implements _DataModel {
+class _$DataModelImpl implements _DataModel {
   const _$DataModelImpl(
       {@JsonKey(name: 'description') this.description,
       @JsonKey(name: 'payoutUnitsPerPayinUnit') this.payoutUnitsPerPayinUnit,
@@ -719,21 +693,8 @@ class _$DataModelImpl with DiagnosticableTreeMixin implements _DataModel {
   final RequiredClaimsModel? requiredClaims;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'DataModel(description: $description, payoutUnitsPerPayinUnit: $payoutUnitsPerPayinUnit, payout: $payout, payin: $payin, requiredClaims: $requiredClaims)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'DataModel'))
-      ..add(DiagnosticsProperty('description', description))
-      ..add(DiagnosticsProperty(
-          'payoutUnitsPerPayinUnit', payoutUnitsPerPayinUnit))
-      ..add(DiagnosticsProperty('payout', payout))
-      ..add(DiagnosticsProperty('payin', payin))
-      ..add(DiagnosticsProperty('requiredClaims', requiredClaims));
   }
 
   @override
@@ -904,7 +865,7 @@ class __$$PayoutModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PayoutModelImpl with DiagnosticableTreeMixin implements _PayoutModel {
+class _$PayoutModelImpl implements _PayoutModel {
   const _$PayoutModelImpl(
       {@JsonKey(name: 'currencyCode') this.currencyCode,
       @JsonKey(name: 'methods') final List<MethodsModel>? methods})
@@ -928,17 +889,8 @@ class _$PayoutModelImpl with DiagnosticableTreeMixin implements _PayoutModel {
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'PayoutModel(currencyCode: $currencyCode, methods: $methods)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PayoutModel'))
-      ..add(DiagnosticsProperty('currencyCode', currencyCode))
-      ..add(DiagnosticsProperty('methods', methods));
   }
 
   @override
@@ -1125,7 +1077,7 @@ class __$$MethodsModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$MethodsModelImpl with DiagnosticableTreeMixin implements _MethodsModel {
+class _$MethodsModelImpl implements _MethodsModel {
   const _$MethodsModelImpl(
       {@JsonKey(name: 'kind') this.kind,
       @JsonKey(name: 'estimatedSettlementTime') this.estimatedSettlementTime,
@@ -1145,20 +1097,8 @@ class _$MethodsModelImpl with DiagnosticableTreeMixin implements _MethodsModel {
   final RequiredPaymentDetailsModel? requiredPaymentDetails;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'MethodsModel(kind: $kind, estimatedSettlementTime: $estimatedSettlementTime, requiredPaymentDetails: $requiredPaymentDetails)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'MethodsModel'))
-      ..add(DiagnosticsProperty('kind', kind))
-      ..add(DiagnosticsProperty(
-          'estimatedSettlementTime', estimatedSettlementTime))
-      ..add(DiagnosticsProperty(
-          'requiredPaymentDetails', requiredPaymentDetails));
   }
 
   @override
@@ -1384,7 +1324,6 @@ class __$$RequiredPaymentDetailsModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$RequiredPaymentDetailsModelImpl
-    with DiagnosticableTreeMixin
     implements _RequiredPaymentDetailsModel {
   const _$RequiredPaymentDetailsModelImpl(
       {@JsonKey(name: '\$schema') this.$schema,
@@ -1435,21 +1374,8 @@ class _$RequiredPaymentDetailsModelImpl
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'RequiredPaymentDetailsModel(\$schema: ${$schema}, title: $title, type: $type, required: $required, additionalProperties: $additionalProperties, properties: $properties)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'RequiredPaymentDetailsModel'))
-      ..add(DiagnosticsProperty('\$schema', $schema))
-      ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('type', type))
-      ..add(DiagnosticsProperty('required', required))
-      ..add(DiagnosticsProperty('additionalProperties', additionalProperties))
-      ..add(DiagnosticsProperty('properties', properties));
   }
 
   @override
@@ -1645,7 +1571,7 @@ class __$$AddressModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AddressModelImpl with DiagnosticableTreeMixin implements _AddressModel {
+class _$AddressModelImpl implements _AddressModel {
   const _$AddressModelImpl(
       {@JsonKey(name: 'title') this.title,
       @JsonKey(name: 'description') this.description,
@@ -1665,18 +1591,8 @@ class _$AddressModelImpl with DiagnosticableTreeMixin implements _AddressModel {
   final String? type;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'AddressModel(title: $title, description: $description, type: $type)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AddressModel'))
-      ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('description', description))
-      ..add(DiagnosticsProperty('type', type));
   }
 
   @override
@@ -1831,7 +1747,7 @@ class __$$PayinModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PayinModelImpl with DiagnosticableTreeMixin implements _PayinModel {
+class _$PayinModelImpl implements _PayinModel {
   const _$PayinModelImpl(
       {@JsonKey(name: 'currencyCode') this.currencyCode,
       @JsonKey(name: 'methods') final List<MethodsModel>? methods})
@@ -1855,17 +1771,8 @@ class _$PayinModelImpl with DiagnosticableTreeMixin implements _PayinModel {
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'PayinModel(currencyCode: $currencyCode, methods: $methods)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PayinModel'))
-      ..add(DiagnosticsProperty('currencyCode', currencyCode))
-      ..add(DiagnosticsProperty('methods', methods));
   }
 
   @override
@@ -2051,9 +1958,7 @@ class __$$RequiredClaimsModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$RequiredClaimsModelImpl
-    with DiagnosticableTreeMixin
-    implements _RequiredClaimsModel {
+class _$RequiredClaimsModelImpl implements _RequiredClaimsModel {
   const _$RequiredClaimsModelImpl(
       {@JsonKey(name: 'id') this.id,
       @JsonKey(name: 'format') this.format,
@@ -2083,18 +1988,8 @@ class _$RequiredClaimsModelImpl
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'RequiredClaimsModel(id: $id, format: $format, inputDescriptors: $inputDescriptors)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'RequiredClaimsModel'))
-      ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('format', format))
-      ..add(DiagnosticsProperty('inputDescriptors', inputDescriptors));
   }
 
   @override
@@ -2254,7 +2149,7 @@ class __$$FormatModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FormatModelImpl with DiagnosticableTreeMixin implements _FormatModel {
+class _$FormatModelImpl implements _FormatModel {
   const _$FormatModelImpl({@JsonKey(name: 'jwt_vc') this.jwtVc});
 
   factory _$FormatModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -2265,16 +2160,8 @@ class _$FormatModelImpl with DiagnosticableTreeMixin implements _FormatModel {
   final JwtVcModel? jwtVc;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FormatModel(jwtVc: $jwtVc)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'FormatModel'))
-      ..add(DiagnosticsProperty('jwtVc', jwtVc));
   }
 
   @override
@@ -2402,7 +2289,7 @@ class __$$JwtVcModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$JwtVcModelImpl with DiagnosticableTreeMixin implements _JwtVcModel {
+class _$JwtVcModelImpl implements _JwtVcModel {
   const _$JwtVcModelImpl({@JsonKey(name: 'alg') final List<String>? alg})
       : _alg = alg;
 
@@ -2421,16 +2308,8 @@ class _$JwtVcModelImpl with DiagnosticableTreeMixin implements _JwtVcModel {
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'JwtVcModel(alg: $alg)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'JwtVcModel'))
-      ..add(DiagnosticsProperty('alg', alg));
   }
 
   @override
@@ -2596,9 +2475,7 @@ class __$$InputDescriptorsModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$InputDescriptorsModelImpl
-    with DiagnosticableTreeMixin
-    implements _InputDescriptorsModel {
+class _$InputDescriptorsModelImpl implements _InputDescriptorsModel {
   const _$InputDescriptorsModelImpl(
       {@JsonKey(name: 'id') this.id,
       @JsonKey(name: 'constraints') this.constraints});
@@ -2614,17 +2491,8 @@ class _$InputDescriptorsModelImpl
   final ConstraintsModel? constraints;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'InputDescriptorsModel(id: $id, constraints: $constraints)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'InputDescriptorsModel'))
-      ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('constraints', constraints));
   }
 
   @override
@@ -2760,9 +2628,7 @@ class __$$ConstraintsModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ConstraintsModelImpl
-    with DiagnosticableTreeMixin
-    implements _ConstraintsModel {
+class _$ConstraintsModelImpl implements _ConstraintsModel {
   const _$ConstraintsModelImpl(
       {@JsonKey(name: 'fields') final List<FieldsModel>? fields})
       : _fields = fields;
@@ -2782,16 +2648,8 @@ class _$ConstraintsModelImpl
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ConstraintsModel(fields: $fields)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'ConstraintsModel'))
-      ..add(DiagnosticsProperty('fields', fields));
   }
 
   @override
@@ -2955,7 +2813,7 @@ class __$$FieldsModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FieldsModelImpl with DiagnosticableTreeMixin implements _FieldsModel {
+class _$FieldsModelImpl implements _FieldsModel {
   const _$FieldsModelImpl(
       {@JsonKey(name: 'path') final List<String>? path,
       @JsonKey(name: 'filter') this.filter})
@@ -2980,17 +2838,8 @@ class _$FieldsModelImpl with DiagnosticableTreeMixin implements _FieldsModel {
   final FilterModel? filter;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FieldsModel(path: $path, filter: $filter)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'FieldsModel'))
-      ..add(DiagnosticsProperty('path', path))
-      ..add(DiagnosticsProperty('filter', filter));
   }
 
   @override
@@ -3140,7 +2989,7 @@ class __$$FilterModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$FilterModelImpl with DiagnosticableTreeMixin implements _FilterModel {
+class _$FilterModelImpl implements _FilterModel {
   const _$FilterModelImpl(
       {@JsonKey(name: 'type') this.type, @JsonKey(name: 'const') this.constI});
 
@@ -3155,17 +3004,8 @@ class _$FilterModelImpl with DiagnosticableTreeMixin implements _FilterModel {
   final String? constI;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'FilterModel(type: $type, constI: $constI)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'FilterModel'))
-      ..add(DiagnosticsProperty('type', type))
-      ..add(DiagnosticsProperty('constI', constI));
   }
 
   @override

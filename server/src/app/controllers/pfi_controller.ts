@@ -20,6 +20,8 @@ import CustomRequest from "../data/models/custom_request";
 import { logger, prisma } from "../../core/globals";
 import CustomError from "../data/models/custom_error";
 import { StatusCode } from "../../core/utils/enums";
+import balancerepository from "../repos/balance_repo";
+import { $Enums } from "@prisma/client";
 
 // 🏦 AquaFinance Capital
 
@@ -108,7 +110,6 @@ const requestQuote = catchError(
     const user = req.user;
     const portableDid = JSON.parse(user?.bearer_did ?? "");
     const userDid = await DidDht.import({ portableDid: portableDid });
-
     const offerings = await TbdexHttpClient.getOfferings({
       pfiDid: body.pfiDid,
     });
@@ -182,7 +183,6 @@ const getExchanges = catchError(
     const portableDid = JSON.parse(user?.bearer_did ?? "");
     const userDid = await DidDht.import({ portableDid: portableDid });
 
-    console.log("Polling exchanges again...");
     const allExchanges = [];
     for (const pfi of selectedPFIs) {
       const exchanges = await getSingleExchanges(userDid, pfi.uri);
@@ -231,7 +231,12 @@ const placeOrder = catchError(
     const body: {
       pfiDid: string;
       exchange_id: string;
+      currency: string;
+      amount: number;
+      payin: object;
     } = req.body;
+    const isWallet = Object.values(body.payin).includes("Wallet");
+
     const user = req.user;
     const portableDid = JSON.parse(user?.bearer_did ?? "");
     const userDid = await DidDht.import({ portableDid: portableDid });
@@ -247,6 +252,18 @@ const placeOrder = catchError(
 
     await order.sign(userDid);
     await TbdexHttpClient.submitOrder(order);
+
+    if (isWallet) {
+      const fee = (1.5 / 100) * body.amount;
+      const amountToDeduct = body.amount + fee;
+
+      await balancerepository.updateBalance(
+        user?.id ?? "",
+        amountToDeduct,
+        body.currency as any,
+        $Enums.TransactionDirection.debit
+      );
+    }
 
     return customResponse(res, {
       message: "Order Submitted",
@@ -287,7 +304,8 @@ const formatExchangesM = (exchanges: Message[][]) => {
     const fee = quoteData["payin"]?.["fee"];
     const payinAmount = quoteData["payin"]?.["amount"];
     const payoutPaymentDetails = (rfqMessage as any).privateData?.payout
-      .paymentDetails as { me: "Hello" };
+      .paymentDetails;
+    const payinDetails = (rfqMessage as any).privateData?.payin.paymentDetails;
     return {
       id: latestMessage.metadata.exchangeId,
       fee: fee,
@@ -304,7 +322,7 @@ const formatExchangesM = (exchanges: Message[][]) => {
       ...(latestMessage.kind === "quote" && {
         expirationTime: quoteData["expiresAt"] ?? null,
       }),
-      from: "You",
+      from: payinDetails,
       to: payoutPaymentDetails,
       pfiDid: rfqMessage?.metadata.to,
     };

@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'currency_rate_model.dart';
+part of 'available_currency_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CurrencyRateModelImpl _$$CurrencyRateModelImplFromJson(
+_$AvailableCurrencyModelImpl _$$AvailableCurrencyModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$CurrencyRateModelImpl(
+    _$AvailableCurrencyModelImpl(
       symbol: json['symbol'] as String?,
       title: json['title'] as String?,
-      rate: (json['rate'] as num?)?.toDouble(),
       icon: json['icon'] as String?,
+      imageUrl: json['imageUrl'] as String?,
     );
 
-Map<String, dynamic> _$$CurrencyRateModelImplToJson(
-        _$CurrencyRateModelImpl instance) =>
+Map<String, dynamic> _$$AvailableCurrencyModelImplToJson(
+        _$AvailableCurrencyModelImpl instance) =>
     <String, dynamic>{
       'symbol': instance.symbol,
       'title': instance.title,
-      'rate': instance.rate,
       'icon': instance.icon,
+      'imageUrl': instance.imageUrl,
     };

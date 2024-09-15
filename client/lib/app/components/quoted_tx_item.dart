@@ -36,8 +36,9 @@ class QuotedTransactionItem extends StatelessWidget {
           arguments: ConfirmTransactionArgs(
             isFromQuotes: true,
             showButtonOptions: status == TransactionStatus.active,
-            onProceed: () =>
-                placeOrder(transaction.pfiDid ?? "", transaction.id ?? ''),
+            onProceed: () => placeOrder(transaction.pfiDid ?? "",
+                transaction.id ?? '', transaction.from ?? {},
+                amount: double.tryParse(transaction.payinAmount ?? '') ?? 0),
             onCancel: () =>
                 closeOrder(transaction.pfiDid ?? "", transaction.id ?? ''),
             // onCancel: showCloseSkipModal,
@@ -208,10 +209,25 @@ enum TransactionStatus {
   }
 }
 
-placeOrder(String pfiDid, String exchangeId) async {
+placeOrder(String pfiDid, String exchangeId, Map payinDetails,
+    {required double amount}) async {
+  final fee = (1.5 / 100) * amount;
+  if ((double.tryParse(appController.selectedBalance.value.balance ?? "") ??
+          0) <
+      (amount + fee)) {
+    AppNotifications.snackbar(
+        message:
+            'You dont have sufficient balance on your ${appController.selectedBalance.value.currency?.toUpperCase()} Account');
+    return;
+  }
   showLoading();
-  final resp =
-      await UserProvider.addOrder(pfiDid: pfiDid, exchangeId: exchangeId);
+  final resp = await UserProvider.addOrder(
+      pfiDid: pfiDid,
+      exchangeId: exchangeId,
+      payin: payinDetails,
+      amount: amount,
+      currency:
+          appController.selectedBalance.value.currency?.toLowerCase() ?? '');
 
   showLoading(show: false);
 

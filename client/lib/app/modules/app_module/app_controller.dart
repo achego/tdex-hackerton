@@ -1,3 +1,4 @@
+import 'package:client/app/data/models/available_currency_model/available_currency_model.dart';
 import 'package:client/app/data/models/balance_model/balance_model.dart';
 import 'package:client/app/data/models/credential_model/credential_model.dart';
 import 'package:client/app/data/models/currency_rate_model/currency_rate_model.dart';
@@ -12,6 +13,7 @@ class AppController extends GetxController {
   final userCredentials = <CredentialModel>[].obs;
   final selectedBalance = const BalanceModel().obs;
   final currencyRates = const <CurrencyRateModel>[].obs;
+  final availableCurrencies = const <AvailableCurrencyModel>[].obs;
 
   final isBalanceShown = localStorage.isBalanceShown.obs;
   Future<void> toogleBalanceMode() async {
@@ -33,6 +35,7 @@ class AppController extends GetxController {
   }
 
   Future<List<CurrencyRateModel>> updateCurrencyrates({String? token}) async {
+    updateAvailbleCurrencies();
     final resp = await UserProvider.getCurrencyRates();
     if (!resp.isOk) {
       return [];
@@ -50,6 +53,17 @@ class AppController extends GetxController {
     if (credResp.data == null) {
       return null;
     }
+    return null;
+  }
+
+  Future<List<AvailableCurrencyModel>?> updateAvailbleCurrencies(
+      {String? token}) async {
+    final resp = await UserProvider.getAvailableCurrencies();
+    if (resp.isOk) {
+      availableCurrencies.value = resp.data ?? [];
+      return availableCurrencies;
+    }
+
     return null;
   }
 

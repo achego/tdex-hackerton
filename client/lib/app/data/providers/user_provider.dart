@@ -1,3 +1,4 @@
+import 'package:client/app/data/models/available_currency_model/available_currency_model.dart';
 import 'package:client/app/data/models/credential_model/credential_model.dart';
 import 'package:client/app/data/models/currency_rate_model/currency_rate_model.dart';
 import 'package:client/app/data/models/quoted_transaction_model/quoted_transaction_model.dart';
@@ -109,11 +110,17 @@ class UserProvider {
   static Future<CustomResponse> addOrder({
     required String pfiDid,
     required String exchangeId,
+    required String currency,
+    required Map payin,
+    required double amount,
   }) async {
     final resp = await _userClient
         .request(path: 'user/place-order', method: MethodType.post, payload: {
       "pfiDid": pfiDid,
       "exchange_id": exchangeId,
+      "payin": payin,
+      "currency": currency,
+      "amount": amount
     }, headers: {
       NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
     });
@@ -130,6 +137,35 @@ class UserProvider {
             fromJson: (json) =>
                 json.map((e) => CurrencyRateModel.fromJson(e)).toList(),
             headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+
+    return resp;
+  }
+
+  static Future<CustomResponse<List<AvailableCurrencyModel>>>
+      getAvailableCurrencies() async {
+    final resp = await _userClient
+        .request<List<AvailableCurrencyModel>, List<dynamic>>(
+            path: 'available-currencies',
+            method: MethodType.get,
+            fromJson: (json) =>
+                json.map((e) => AvailableCurrencyModel.fromJson(e)).toList(),
+            headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+
+    return resp;
+  }
+
+  static Future<CustomResponse> addCurrency({required String currency}) async {
+    final resp = await _userClient.request(
+        path: 'user/add-currency',
+        method: MethodType.post,
+        payload: {
+          'currency': currency
+        },
+        headers: {
           NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
         });
 

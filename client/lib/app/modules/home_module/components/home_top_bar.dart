@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:client/app/components/currency_selector_item.dart';
+import 'package:client/app/components/custom_cached_network_imge.dart';
 import 'package:client/global_exports.dart';
 
 class HomeTopBar extends StatelessWidget {
@@ -72,6 +74,7 @@ class HomeTopBar extends StatelessWidget {
                 ],
               ),
               spacew(10),
+              const CurrencySelectorItem(),
               rectangle(25, 20, child: svgAsset(AppIconSvgs.notification)),
             ],
           ).defPadX,
@@ -80,3 +83,5 @@ class HomeTopBar extends StatelessWidget {
     );
   }
 }
+
+

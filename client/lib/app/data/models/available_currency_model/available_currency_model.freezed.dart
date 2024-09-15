@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'currency_rate_model.dart';
+part of 'available_currency_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,44 +14,46 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-CurrencyRateModel _$CurrencyRateModelFromJson(Map<String, dynamic> json) {
-  return _CurrencyRateModel.fromJson(json);
+AvailableCurrencyModel _$AvailableCurrencyModelFromJson(
+    Map<String, dynamic> json) {
+  return _AvailableCurrencyModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CurrencyRateModel {
+mixin _$AvailableCurrencyModel {
   @JsonKey(name: 'symbol')
   String? get symbol => throw _privateConstructorUsedError;
   @JsonKey(name: 'title')
   String? get title => throw _privateConstructorUsedError;
-  @JsonKey(name: 'rate')
-  double? get rate => throw _privateConstructorUsedError;
   @JsonKey(name: 'icon')
   String? get icon => throw _privateConstructorUsedError;
+  @JsonKey(name: 'imageUrl')
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CurrencyRateModelCopyWith<CurrencyRateModel> get copyWith =>
+  $AvailableCurrencyModelCopyWith<AvailableCurrencyModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CurrencyRateModelCopyWith<$Res> {
-  factory $CurrencyRateModelCopyWith(
-          CurrencyRateModel value, $Res Function(CurrencyRateModel) then) =
-      _$CurrencyRateModelCopyWithImpl<$Res, CurrencyRateModel>;
+abstract class $AvailableCurrencyModelCopyWith<$Res> {
+  factory $AvailableCurrencyModelCopyWith(AvailableCurrencyModel value,
+          $Res Function(AvailableCurrencyModel) then) =
+      _$AvailableCurrencyModelCopyWithImpl<$Res, AvailableCurrencyModel>;
   @useResult
   $Res call(
       {@JsonKey(name: 'symbol') String? symbol,
       @JsonKey(name: 'title') String? title,
-      @JsonKey(name: 'rate') double? rate,
-      @JsonKey(name: 'icon') String? icon});
+      @JsonKey(name: 'icon') String? icon,
+      @JsonKey(name: 'imageUrl') String? imageUrl});
 }
 
 /// @nodoc
-class _$CurrencyRateModelCopyWithImpl<$Res, $Val extends CurrencyRateModel>
-    implements $CurrencyRateModelCopyWith<$Res> {
-  _$CurrencyRateModelCopyWithImpl(this._value, this._then);
+class _$AvailableCurrencyModelCopyWithImpl<$Res,
+        $Val extends AvailableCurrencyModel>
+    implements $AvailableCurrencyModelCopyWith<$Res> {
+  _$AvailableCurrencyModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -63,8 +65,8 @@ class _$CurrencyRateModelCopyWithImpl<$Res, $Val extends CurrencyRateModel>
   $Res call({
     Object? symbol = freezed,
     Object? title = freezed,
-    Object? rate = freezed,
     Object? icon = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       symbol: freezed == symbol
@@ -75,39 +77,42 @@ class _$CurrencyRateModelCopyWithImpl<$Res, $Val extends CurrencyRateModel>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      rate: freezed == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
-              as double?,
       icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$CurrencyRateModelImplCopyWith<$Res>
-    implements $CurrencyRateModelCopyWith<$Res> {
-  factory _$$CurrencyRateModelImplCopyWith(_$CurrencyRateModelImpl value,
-          $Res Function(_$CurrencyRateModelImpl) then) =
-      __$$CurrencyRateModelImplCopyWithImpl<$Res>;
+abstract class _$$AvailableCurrencyModelImplCopyWith<$Res>
+    implements $AvailableCurrencyModelCopyWith<$Res> {
+  factory _$$AvailableCurrencyModelImplCopyWith(
+          _$AvailableCurrencyModelImpl value,
+          $Res Function(_$AvailableCurrencyModelImpl) then) =
+      __$$AvailableCurrencyModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {@JsonKey(name: 'symbol') String? symbol,
       @JsonKey(name: 'title') String? title,
-      @JsonKey(name: 'rate') double? rate,
-      @JsonKey(name: 'icon') String? icon});
+      @JsonKey(name: 'icon') String? icon,
+      @JsonKey(name: 'imageUrl') String? imageUrl});
 }
 
 /// @nodoc
-class __$$CurrencyRateModelImplCopyWithImpl<$Res>
-    extends _$CurrencyRateModelCopyWithImpl<$Res, _$CurrencyRateModelImpl>
-    implements _$$CurrencyRateModelImplCopyWith<$Res> {
-  __$$CurrencyRateModelImplCopyWithImpl(_$CurrencyRateModelImpl _value,
-      $Res Function(_$CurrencyRateModelImpl) _then)
+class __$$AvailableCurrencyModelImplCopyWithImpl<$Res>
+    extends _$AvailableCurrencyModelCopyWithImpl<$Res,
+        _$AvailableCurrencyModelImpl>
+    implements _$$AvailableCurrencyModelImplCopyWith<$Res> {
+  __$$AvailableCurrencyModelImplCopyWithImpl(
+      _$AvailableCurrencyModelImpl _value,
+      $Res Function(_$AvailableCurrencyModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -115,10 +120,10 @@ class __$$CurrencyRateModelImplCopyWithImpl<$Res>
   $Res call({
     Object? symbol = freezed,
     Object? title = freezed,
-    Object? rate = freezed,
     Object? icon = freezed,
+    Object? imageUrl = freezed,
   }) {
-    return _then(_$CurrencyRateModelImpl(
+    return _then(_$AvailableCurrencyModelImpl(
       symbol: freezed == symbol
           ? _value.symbol
           : symbol // ignore: cast_nullable_to_non_nullable
@@ -127,13 +132,13 @@ class __$$CurrencyRateModelImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      rate: freezed == rate
-          ? _value.rate
-          : rate // ignore: cast_nullable_to_non_nullable
-              as double?,
       icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -141,17 +146,17 @@ class __$$CurrencyRateModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CurrencyRateModelImpl
+class _$AvailableCurrencyModelImpl
     with DiagnosticableTreeMixin
-    implements _CurrencyRateModel {
-  const _$CurrencyRateModelImpl(
+    implements _AvailableCurrencyModel {
+  const _$AvailableCurrencyModelImpl(
       {@JsonKey(name: 'symbol') this.symbol,
       @JsonKey(name: 'title') this.title,
-      @JsonKey(name: 'rate') this.rate,
-      @JsonKey(name: 'icon') this.icon});
+      @JsonKey(name: 'icon') this.icon,
+      @JsonKey(name: 'imageUrl') this.imageUrl});
 
-  factory _$CurrencyRateModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CurrencyRateModelImplFromJson(json);
+  factory _$AvailableCurrencyModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AvailableCurrencyModelImplFromJson(json);
 
   @override
   @JsonKey(name: 'symbol')
@@ -160,67 +165,69 @@ class _$CurrencyRateModelImpl
   @JsonKey(name: 'title')
   final String? title;
   @override
-  @JsonKey(name: 'rate')
-  final double? rate;
-  @override
   @JsonKey(name: 'icon')
   final String? icon;
+  @override
+  @JsonKey(name: 'imageUrl')
+  final String? imageUrl;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CurrencyRateModel(symbol: $symbol, title: $title, rate: $rate, icon: $icon)';
+    return 'AvailableCurrencyModel(symbol: $symbol, title: $title, icon: $icon, imageUrl: $imageUrl)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CurrencyRateModel'))
+      ..add(DiagnosticsProperty('type', 'AvailableCurrencyModel'))
       ..add(DiagnosticsProperty('symbol', symbol))
       ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('rate', rate))
-      ..add(DiagnosticsProperty('icon', icon));
+      ..add(DiagnosticsProperty('icon', icon))
+      ..add(DiagnosticsProperty('imageUrl', imageUrl));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CurrencyRateModelImpl &&
+            other is _$AvailableCurrencyModelImpl &&
             (identical(other.symbol, symbol) || other.symbol == symbol) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.rate, rate) || other.rate == rate) &&
-            (identical(other.icon, icon) || other.icon == icon));
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, symbol, title, rate, icon);
+  int get hashCode => Object.hash(runtimeType, symbol, title, icon, imageUrl);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CurrencyRateModelImplCopyWith<_$CurrencyRateModelImpl> get copyWith =>
-      __$$CurrencyRateModelImplCopyWithImpl<_$CurrencyRateModelImpl>(
-          this, _$identity);
+  _$$AvailableCurrencyModelImplCopyWith<_$AvailableCurrencyModelImpl>
+      get copyWith => __$$AvailableCurrencyModelImplCopyWithImpl<
+          _$AvailableCurrencyModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CurrencyRateModelImplToJson(
+    return _$$AvailableCurrencyModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _CurrencyRateModel implements CurrencyRateModel {
-  const factory _CurrencyRateModel(
-      {@JsonKey(name: 'symbol') final String? symbol,
-      @JsonKey(name: 'title') final String? title,
-      @JsonKey(name: 'rate') final double? rate,
-      @JsonKey(name: 'icon') final String? icon}) = _$CurrencyRateModelImpl;
+abstract class _AvailableCurrencyModel implements AvailableCurrencyModel {
+  const factory _AvailableCurrencyModel(
+          {@JsonKey(name: 'symbol') final String? symbol,
+          @JsonKey(name: 'title') final String? title,
+          @JsonKey(name: 'icon') final String? icon,
+          @JsonKey(name: 'imageUrl') final String? imageUrl}) =
+      _$AvailableCurrencyModelImpl;
 
-  factory _CurrencyRateModel.fromJson(Map<String, dynamic> json) =
-      _$CurrencyRateModelImpl.fromJson;
+  factory _AvailableCurrencyModel.fromJson(Map<String, dynamic> json) =
+      _$AvailableCurrencyModelImpl.fromJson;
 
   @override
   @JsonKey(name: 'symbol')
@@ -229,13 +236,13 @@ abstract class _CurrencyRateModel implements CurrencyRateModel {
   @JsonKey(name: 'title')
   String? get title;
   @override
-  @JsonKey(name: 'rate')
-  double? get rate;
-  @override
   @JsonKey(name: 'icon')
   String? get icon;
   @override
+  @JsonKey(name: 'imageUrl')
+  String? get imageUrl;
+  @override
   @JsonKey(ignore: true)
-  _$$CurrencyRateModelImplCopyWith<_$CurrencyRateModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$AvailableCurrencyModelImplCopyWith<_$AvailableCurrencyModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

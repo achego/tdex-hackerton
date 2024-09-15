@@ -38,7 +38,7 @@ mixin _$QuotedTransactionModel {
   @JsonKey(name: 'expirationTime')
   String? get expirationTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'from')
-  String? get from => throw _privateConstructorUsedError;
+  Map<String, dynamic>? get from => throw _privateConstructorUsedError;
   @JsonKey(name: 'to')
   Map<String, dynamic>? get to => throw _privateConstructorUsedError;
   @JsonKey(name: 'pfiDid')
@@ -67,7 +67,7 @@ abstract class $QuotedTransactionModelCopyWith<$Res> {
       @JsonKey(name: 'status') String? status,
       @JsonKey(name: 'createdTime') String? createdTime,
       @JsonKey(name: 'expirationTime') String? expirationTime,
-      @JsonKey(name: 'from') String? from,
+      @JsonKey(name: 'from') Map<String, dynamic>? from,
       @JsonKey(name: 'to') Map<String, dynamic>? to,
       @JsonKey(name: 'pfiDid') String? pfiDid,
       @JsonKey(name: 'fee') String? fee});
@@ -136,7 +136,7 @@ class _$QuotedTransactionModelCopyWithImpl<$Res,
       from: freezed == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Map<String, dynamic>?,
       to: freezed == to
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
@@ -171,7 +171,7 @@ abstract class _$$QuotedTransactionModelImplCopyWith<$Res>
       @JsonKey(name: 'status') String? status,
       @JsonKey(name: 'createdTime') String? createdTime,
       @JsonKey(name: 'expirationTime') String? expirationTime,
-      @JsonKey(name: 'from') String? from,
+      @JsonKey(name: 'from') Map<String, dynamic>? from,
       @JsonKey(name: 'to') Map<String, dynamic>? to,
       @JsonKey(name: 'pfiDid') String? pfiDid,
       @JsonKey(name: 'fee') String? fee});
@@ -237,9 +237,9 @@ class __$$QuotedTransactionModelImplCopyWithImpl<$Res>
           : expirationTime // ignore: cast_nullable_to_non_nullable
               as String?,
       from: freezed == from
-          ? _value.from
+          ? _value._from
           : from // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Map<String, dynamic>?,
       to: freezed == to
           ? _value._to
           : to // ignore: cast_nullable_to_non_nullable
@@ -270,11 +270,12 @@ class _$QuotedTransactionModelImpl
       @JsonKey(name: 'status') this.status,
       @JsonKey(name: 'createdTime') this.createdTime,
       @JsonKey(name: 'expirationTime') this.expirationTime,
-      @JsonKey(name: 'from') this.from,
+      @JsonKey(name: 'from') final Map<String, dynamic>? from,
       @JsonKey(name: 'to') final Map<String, dynamic>? to,
       @JsonKey(name: 'pfiDid') this.pfiDid,
       @JsonKey(name: 'fee') this.fee})
-      : _to = to;
+      : _from = from,
+        _to = to;
 
   factory _$QuotedTransactionModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$QuotedTransactionModelImplFromJson(json);
@@ -303,9 +304,17 @@ class _$QuotedTransactionModelImpl
   @override
   @JsonKey(name: 'expirationTime')
   final String? expirationTime;
+  final Map<String, dynamic>? _from;
   @override
   @JsonKey(name: 'from')
-  final String? from;
+  Map<String, dynamic>? get from {
+    final value = _from;
+    if (value == null) return null;
+    if (_from is EqualUnmodifiableMapView) return _from;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   final Map<String, dynamic>? _to;
   @override
   @JsonKey(name: 'to')
@@ -367,7 +376,7 @@ class _$QuotedTransactionModelImpl
                 other.createdTime == createdTime) &&
             (identical(other.expirationTime, expirationTime) ||
                 other.expirationTime == expirationTime) &&
-            (identical(other.from, from) || other.from == from) &&
+            const DeepCollectionEquality().equals(other._from, _from) &&
             const DeepCollectionEquality().equals(other._to, _to) &&
             (identical(other.pfiDid, pfiDid) || other.pfiDid == pfiDid) &&
             (identical(other.fee, fee) || other.fee == fee));
@@ -385,7 +394,7 @@ class _$QuotedTransactionModelImpl
       status,
       createdTime,
       expirationTime,
-      from,
+      const DeepCollectionEquality().hash(_from),
       const DeepCollectionEquality().hash(_to),
       pfiDid,
       fee);
@@ -415,7 +424,7 @@ abstract class _QuotedTransactionModel implements QuotedTransactionModel {
       @JsonKey(name: 'status') final String? status,
       @JsonKey(name: 'createdTime') final String? createdTime,
       @JsonKey(name: 'expirationTime') final String? expirationTime,
-      @JsonKey(name: 'from') final String? from,
+      @JsonKey(name: 'from') final Map<String, dynamic>? from,
       @JsonKey(name: 'to') final Map<String, dynamic>? to,
       @JsonKey(name: 'pfiDid') final String? pfiDid,
       @JsonKey(name: 'fee') final String? fee}) = _$QuotedTransactionModelImpl;
@@ -449,7 +458,7 @@ abstract class _QuotedTransactionModel implements QuotedTransactionModel {
   String? get expirationTime;
   @override
   @JsonKey(name: 'from')
-  String? get from;
+  Map<String, dynamic>? get from;
   @override
   @JsonKey(name: 'to')
   Map<String, dynamic>? get to;

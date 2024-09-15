@@ -15,7 +15,7 @@ class QuotedTransactionModel with _$QuotedTransactionModel {
     @JsonKey(name: 'status') String? status,
     @JsonKey(name: 'createdTime') String? createdTime,
     @JsonKey(name: 'expirationTime') String? expirationTime,
-    @JsonKey(name: 'from') String? from,
+    @JsonKey(name: 'from') Map<String, dynamic>? from,
     @JsonKey(name: 'to') Map<String, dynamic>? to,
     @JsonKey(name: 'pfiDid') String? pfiDid,
     @JsonKey(name: 'fee') String? fee,

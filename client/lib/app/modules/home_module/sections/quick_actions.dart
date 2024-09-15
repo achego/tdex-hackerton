@@ -26,16 +26,15 @@ class QuickActionSection extends StatelessWidget {
           children: [
             _buildAction(
               'Swap \nCurrency',
-              // iconPath: AppIconSvgs.buyAirtime,
+              iconPath: AppIconSvgs.swap,
               // onPressed: () => Nav.toNamed(RoutePaths.buyAirtime),
             ),
             _buildAction(
-              'Buy \nData',
-              // iconPath: AppIconSvgs.buyData,
-              // onPressed: () {
-              //   AppNotifications.snackbar(message: 'Comming soon');
-              // },
-              // onPressed: () => Nav.toNamed(RoutePaths.buyData),
+              'Data \nSubscription',
+              iconPath: AppIconSvgs.subscription,
+              onPressed: () {
+                AppNotifications.snackbar(message: 'Comming soon');
+              },
             ),
             _buildAction('Other \nServices', onPressed: () {
               AppNotifications.snackbar(message: 'Comming soon');

@@ -1,5 +1,6 @@
 import 'package:client/app/data/models/selected_pfis/selected_pfis_model.dart';
-import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_binding.dart';
+import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_controller.dart';
+import 'package:client/global_exports.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -8,7 +9,8 @@ part 'pfi_offering_model.g.dart';
 
 extension PfiOfferingModelX on PfiOfferingModel {
   SelectedPfisModel? get getPfidetails {
-    final pfis = sendByPfiController.selectedPfis
+    final contoller = Get.find<SendByPfiController>();
+    final pfis = contoller.selectedPfis
         .where((e) => e.uri?.toLowerCase() == metadata?.from?.toLowerCase());
     if (pfis.isEmpty) {
       return null;
