@@ -77,9 +77,7 @@ class SwapCurrencyController extends GetxController {
       return;
     }
     appController.updateUserBalances();
-    await AppNotifications.snackbar(
-        message: 'Swap success', type: NotificationType.success);
-    appWait(300);
+
     Get.back();
   }
 }

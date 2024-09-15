@@ -360,7 +360,6 @@ const swapCurrency = catchError(
     );
 
     const fromBalance = userBalances?.find((bal) => bal.currency == body.from);
-    const toBalance = userBalances?.find((bal) => bal.currency == body.to);
 
     const amountPayable = body.amount;
 
@@ -382,7 +381,7 @@ const swapCurrency = catchError(
       );
     }
     const reieverBal =
-      ((toRate?.rate ?? 0) / (fromRate?.rate ?? 1)) * body.amount;
+      ((toRate?.rate ?? 0) / (fromRate?.rate ?? 1)) * amountPayable;
     const fee = authHelpers.getFee(reieverBal);
     const recieverValue = reieverBal - fee;
 
