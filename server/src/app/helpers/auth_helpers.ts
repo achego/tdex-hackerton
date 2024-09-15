@@ -102,6 +102,10 @@ const decrypt = (encryptedText: string): string => {
   return decrypted.toString();
 };
 
+const getFee = (amount: number): number => {
+  const fee = (1.5 / 100) * amount;
+  return fee;
+};
 const authHelpers = {
   hashPassword,
   createJwt,
@@ -109,6 +113,7 @@ const authHelpers = {
   validatePin,
   encrypt,
   decrypt,
+  getFee,
 };
 
 export default authHelpers;

@@ -13,7 +13,6 @@ baseRoutes.route("/currency-rates").get(userController.getCurrencyrates);
 baseRoutes
   .route("/available-currencies")
   .get(userController.getAvailableCurrencies);
-baseRoutes.route("/test2").get(userController.test);
 // baseRoutes
 //   .route("/transaction")
 //   .post(authMiddleWares.checkAuth, userController.getTransactions);

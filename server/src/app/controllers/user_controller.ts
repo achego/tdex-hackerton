@@ -346,25 +346,60 @@ const addDemoFunds = catchError(
   }
 );
 
-const test = catchError(
+const swapCurrency = catchError(
   async (req: CustomRequest, res: Response, next: NextFunction) => {
     const user = req.user;
-    logger(env.iv, "TH IV");
-    logger(env.encryptionKey, "TH IV");
-    const text = "Helo wold";
-    logger("1", "TH IV");
-    const ecv = authHelpers.encrypt(text);
-    logger("2", "TH IV");
-    const dec = authHelpers.decrypt(ecv);
-    logger("3", "TH IV");
+    const body: {
+      from: string;
+      to: string;
+      amount: number;
+    } = req.body;
+
+    const userBalances = await balancerepository.getUserBalances(
+      user?.id ?? ""
+    );
+
+    const fromBalance = userBalances?.find((bal) => bal.currency == body.from);
+    const toBalance = userBalances?.find((bal) => bal.currency == body.to);
+    const fee = authHelpers.getFee(body.amount);
+    const amountPayable = body.amount + fee;
+
+    if (Number(fromBalance?.balance) < amountPayable) {
+      throw new CustomError(
+        "You dont have enough balance",
+        StatusCode.badRequest
+      );
+    }
+
+    const fromRate = currencyRates.find((curr) => curr.symbol == body.from);
+
+    const toRate = currencyRates.find((curr) => curr.symbol == body.to);
+    if (!fromRate || !toRate) {
+      throw new CustomError(
+        "An error occured",
+        StatusCode.internalServerError,
+        { dev_message: "Balance not found" }
+      );
+    }
+    const recieverValue =
+      ((toRate?.rate ?? 0) / (fromRate?.rate ?? 1)) * body.amount;
+
+    await balancerepository.updateBalance(
+      user?.id ?? "",
+      amountPayable,
+      fromRate.symbol as any,
+      $Enums.TransactionDirection.debit
+    );
+    await balancerepository.updateBalance(
+      user?.id ?? "",
+      recieverValue,
+      toRate.symbol as any,
+      $Enums.TransactionDirection.credit
+    );
 
     customResponse(res, {
-      message: "Ratings Gotten",
-      data: {
-        ecv,
-        dec,
-        // dec2,
-      },
+      message: "Swap Successfull",
+      // data: resp,
     });
   }
 );
@@ -382,7 +417,7 @@ const userController = {
   ratePfi,
   getPfiRatings,
   addDemoFunds,
-  test,
+  swapCurrency,
 };
 
 export default userController;
