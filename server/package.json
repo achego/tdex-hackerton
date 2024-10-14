@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
-    "deve": "npx tsx src/index.ts"
+    "postinstall": "prisma generate"
   },
   "type": "module",
   "keywords": [
