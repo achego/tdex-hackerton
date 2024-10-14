@@ -45,5 +45,8 @@ userRoutes
 userRoutes
   .route("/swap-currency")
   .post(authMiddleWares.checkAuth, userController.swapCurrency);
+// userRoutes
+//   .route("/send")
+//   .post(authMiddleWares.checkAuth, userController.sendByUsername);
 
 export default userRoutes;

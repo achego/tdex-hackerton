@@ -24,6 +24,7 @@ class SendMethodPage extends StatelessWidget {
             spaceh(30),
             ReceiveMethodItem(
               onPressed: () {
+                // Nav.toNamed(RoutePaths.sendToUsername);
                 appController.commingSoon();
               },
               title: 'By username',

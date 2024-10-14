@@ -43,7 +43,7 @@ class _SendFromWalletPageState extends State<SendFromWalletPage> {
                   const BalanceSnippetContainer(),
                   spaceh(20),
                   CustomTextFormField(
-                    hintText: 'Select a currency you want to send from',
+                    hintText: 'Select the recipient currency',
                     labelText: 'Send Currency',
                     readOnly: true,
                     onTap: ctr.pickCurrency,

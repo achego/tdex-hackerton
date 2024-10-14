@@ -1,9 +1,10 @@
+import 'package:client/app/components/custom_cached_network_imge.dart';
+import 'package:client/app/data/countries.dart';
 import 'package:client/app/data/models/pfi_offering_model/pfi_offering_model.dart';
 import 'package:client/app/data/models/selected_pfis/selected_pfis_model.dart';
 import 'package:client/app/data/providers/pfi_providers.dart';
 import 'package:client/app/data/providers/user_provider.dart';
 import 'package:client/app/modules/enter_pfi_send_amount_module/enter_pfi_send_amount_page.dart';
-import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_binding.dart';
 import 'package:client/global_exports.dart';
 
 class SendByPfiController extends GetxController {
@@ -280,8 +281,19 @@ class SelectCurrencyModal extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       square(40,
-                                          color: AppColors.color.border,
-                                          borderRadius: 6),
+                                          // color: AppColors.color.border
+                                          //     .withOpacity(0.2),
+                                          borderRadius: 6,
+                                          child: FittedBox(
+                                              child: CustomCachedImage(
+                                            imageUrl: (code.details?['image']
+                                                    as String?) ??
+                                                '',
+                                          )
+                                              // child: Text((code.details?['emoji']
+                                              //         as String?) ??
+                                              //     ""),
+                                              )),
                                       spacew(20),
                                       Column(
                                         mainAxisSize: MainAxisSize.min,
@@ -289,14 +301,16 @@ class SelectCurrencyModal extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            code.name.capitalizeFirst ?? "",
+                                            (code.details?['name']
+                                                    as String?) ??
+                                                '',
                                             style: TextStyles.base(),
                                           ),
                                           Text(
                                             code.code.toUpperCase(),
                                             style: TextStyles.base(
                                                 primary: false,
-                                                fontSizeDiff: 5),
+                                                fontSizeDiff: 3),
                                           )
                                         ],
                                       )
@@ -324,5 +338,12 @@ class CurrencyModel {
   });
 
   String get name => '';
-  String get flagUrl => '';
+  // String get flagUrl => '';
+  Map<String, Object>? get details {
+    try {
+      return kAllCurrencies[code.toUpperCase()];
+    } catch (e) {
+      return null;
+    }
+  }
 }

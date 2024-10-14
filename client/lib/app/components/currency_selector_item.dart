@@ -138,7 +138,7 @@ class UserCurrenciesModal extends StatelessWidget {
                             style: TextStyles.base(fontSizeDiff: 2),
                           ),
                           Text(
-                            '${element.getAvailableCurrency?.icon ?? ""}${element.balance ?? ""}',
+                            '${element.getAvailableCurrency?.icon ?? ""}${double.tryParse(element.balance ?? '')?.toStringAsFixed(2) ?? ""}',
                             style: TextStyles.base(
                                 fontSizeDiff: -2, primary: false),
                           ),

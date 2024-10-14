@@ -23,7 +23,9 @@ class WalletEnterAmountController extends GetxController {
 
   calculate() {
     final amountD = double.tryParse(amount.text) ?? 0;
-    theyGet.text = (amountD * rate).toString();
+    final newAmount = amountD * rate;
+    // final fee = getAppFee(newAmount);
+    theyGet.text = (newAmount).toStringAsFixed(2);
   }
 
   handleProceed() async {

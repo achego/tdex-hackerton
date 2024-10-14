@@ -85,7 +85,10 @@ class ProfileItem extends StatelessWidget {
                 children: [
                   square(52,
                       borderRadius: AppConstatnts.defBorderRadius,
-                      color: colors?.containerColor ?? AppColors.color.border),
+                      color: colors?.containerColor ?? AppColors.color.border,
+                      padding: EdgeInsets.all(15.w),
+                      child: svgAsset(iconPath ?? "",
+                          color: colors?.iconColor ?? AppColors.color.primary)),
                   spacew(15),
                   Flexible(
                     child: Text(

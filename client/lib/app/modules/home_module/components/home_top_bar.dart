@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:client/app/components/currency_selector_item.dart';
-import 'package:client/app/components/custom_cached_network_imge.dart';
 import 'package:client/global_exports.dart';
 
 class HomeTopBar extends StatelessWidget {
@@ -50,7 +48,7 @@ class HomeTopBar extends StatelessWidget {
                     height: 40.w,
                     width: 40.w,
                     decoration: BoxDecoration(
-                      color: AppColors.color.primary,
+                      color: AppColors.color.primary.withOpacity(0.2),
                       borderRadius: AppConstatnts.bordeRadius,
                     ),
                   ),
@@ -83,5 +81,3 @@ class HomeTopBar extends StatelessWidget {
     );
   }
 }
-
-

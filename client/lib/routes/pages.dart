@@ -20,23 +20,22 @@ import 'package:client/app/modules/transaction_success_module/transaction_succes
 import 'package:get/get.dart';
 
 import '../app/modules/dashboard_module/dashboard_binding.dart';
-    import '../app/modules/send_by_pfi_module/send_by_pfi_page.dart'; 
+import '../app/modules/send_by_pfi_module/send_by_pfi_page.dart';
 
-    import '../app/modules/send_by_pfi_module/send_by_pfi_binding.dart'; 
-     import '../app/modules/send_from_wallet_module/send_from_wallet_page.dart'; 
+import '../app/modules/send_by_pfi_module/send_by_pfi_binding.dart';
+import '../app/modules/send_from_wallet_module/send_from_wallet_page.dart';
 
-    import '../app/modules/send_from_wallet_module/send_from_wallet_binding.dart'; 
-     import '../app/modules/wallet_enter_amount_module/wallet_enter_amount_page.dart'; 
+import '../app/modules/send_from_wallet_module/send_from_wallet_binding.dart';
+import '../app/modules/wallet_enter_amount_module/wallet_enter_amount_page.dart';
 
-    import '../app/modules/wallet_enter_amount_module/wallet_enter_amount_binding.dart'; 
-     import '../app/modules/swap_currency_module/swap_currency_page.dart'; 
+import '../app/modules/wallet_enter_amount_module/wallet_enter_amount_binding.dart';
+import '../app/modules/swap_currency_module/swap_currency_page.dart';
 
-    import '../app/modules/swap_currency_module/swap_currency_binding.dart'; 
- part
-    
-    
-    
-     './route_paths.dart';
+import '../app/modules/swap_currency_module/swap_currency_binding.dart';
+import '../app/modules/send_to_username_module/send_to_username_page.dart';
+
+import '../app/modules/send_to_username_module/send_to_username_binding.dart';
+part './route_paths.dart';
 
 abstract class AppPages {
   static final List<GetPage> pages = [
@@ -90,29 +89,30 @@ abstract class AppPages {
       page: () => const SendMethodPage(),
       binding: SendMethodBinding(),
     ),
-        GetPage(
-        name: RoutePaths.sendByPfi,
-        page: () => const SendByPfiPage(),
-        binding:SendByPfiBinding(),
-      ), 
-       GetPage(
-        name: RoutePaths.sendFromWallet,
-        page: () => const SendFromWalletPage(),
-        binding:SendFromWalletBinding(),
-      ), 
-       GetPage(
-        name: RoutePaths.walletEnterAmount,
-        page: () => const WalletEnterAmountPage(),
-        binding:WalletEnterAmountBinding(),
-      ), 
-       GetPage(
-        name: RoutePaths.swapCurrency,
-        page: () => const SwapCurrencyPage(),
-        binding:SwapCurrencyBinding(),
-      ), 
- ]
-      
-      
-      
-      ;
+    GetPage(
+      name: RoutePaths.sendByPfi,
+      page: () => const SendByPfiPage(),
+      binding: SendByPfiBinding(),
+    ),
+    GetPage(
+      name: RoutePaths.sendFromWallet,
+      page: () => const SendFromWalletPage(),
+      binding: SendFromWalletBinding(),
+    ),
+    GetPage(
+      name: RoutePaths.walletEnterAmount,
+      page: () => const WalletEnterAmountPage(),
+      binding: WalletEnterAmountBinding(),
+    ),
+    GetPage(
+      name: RoutePaths.swapCurrency,
+      page: () => const SwapCurrencyPage(),
+      binding: SwapCurrencyBinding(),
+    ),
+    GetPage(
+      name: RoutePaths.sendToUsername,
+      page: () => const SendToUsernamePage(),
+      binding: SendToUsernameBinding(),
+    ),
+  ];
 }

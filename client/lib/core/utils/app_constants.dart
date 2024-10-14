@@ -16,3 +16,9 @@ const kDefPadding = AppConstatnts.defPadding;
 const kDefBorderRadius = AppConstatnts.defBorderRadius;
 const kButtonHeight = AppConstatnts.buttonHeight;
 const kDefPaddingX = EdgeInsets.symmetric(horizontal: AppConstatnts.defPadding);
+const kAppFee = 1.5; // in percentage
+
+double getAppFee(num amount) {
+  final fee = (kAppFee / 100) * amount;
+  return fee;
+}

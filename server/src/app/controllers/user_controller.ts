@@ -47,7 +47,7 @@ const currencyRates: CurrencyRate[] = [
   {
     symbol: "ngn",
     title: "Nigerian Naira",
-    rate: 1220.0,
+    rate: 1635.2,
     icon: "NGN",
   },
   {
@@ -59,20 +59,14 @@ const currencyRates: CurrencyRate[] = [
   {
     symbol: "gbp",
     title: "British Pound Sterling",
-    rate: 0.84,
+    rate: 0.77,
     icon: "£",
   },
   {
     symbol: "eur",
     title: "European Euro",
-    rate: 0.96,
+    rate: 0.92,
     icon: "€",
-  },
-  {
-    symbol: "ghs",
-    title: "Ghanaian Cedi",
-    rate: 13.3,
-    icon: "GHC",
   },
 ];
 
@@ -419,6 +413,7 @@ const userController = {
   getPfiRatings,
   addDemoFunds,
   swapCurrency,
+  // sendByUsername,
 };
 
 export default userController;

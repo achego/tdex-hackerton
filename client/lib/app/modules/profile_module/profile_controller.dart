@@ -1,4 +1,3 @@
-
 import 'package:client/app/modules/dashboard_module/dashboard_binding.dart';
 import 'package:client/global_exports.dart';
 
@@ -7,18 +6,21 @@ class ProfileController extends GetxController {
         'Account': [
           ProfileItemModel(
             title: 'Profile',
+            iconPath: AppIconSvgs.profile,
             onPressed: () {
               Nav.toNamed(RoutePaths.myProfile);
             },
           ),
           ProfileItemModel(
             title: 'Transactions',
+            iconPath: AppIconSvgs.transactions,
             onPressed: () {
               dashboardController.currentIndex(1);
             },
           ),
           ProfileItemModel(
               title: 'Notifications',
+              iconPath: AppIconSvgs.notification,
               onPressed: () {
                 AppNotifications.snackbar(
                     type: NotificationType.success, message: 'Comming Soon');
@@ -27,6 +29,7 @@ class ProfileController extends GetxController {
         'SECURITY': [
           ProfileItemModel(
               title: 'Change Password',
+              iconPath: AppIconSvgs.swap,
               onPressed: () {
                 AppNotifications.snackbar(
                     type: NotificationType.success, message: 'Comming Soon');
@@ -35,6 +38,7 @@ class ProfileController extends GetxController {
         'DANGER': [
           ProfileItemModel(
             title: 'Logout',
+            iconPath: AppIconSvgs.logout,
             onPressed: logOut,
             colors: ProfileItemColorsModel(
                 textColor: AppColors.color.error,
