@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 import http from "http";
-import app from "./app";
-import logger from "./core/utils/logger";
-import Environment from "./core/utils/environment";
+import app from "./app.ts";
+import logger from "./core/utils/logger.ts";
+import Environment from "./core/utils/environment.ts";
 
 dotenv.config({ path: ".env" });
 
