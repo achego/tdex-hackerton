@@ -1,19 +1,14 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "esModuleInterop": true,
-    "target": "ES2016",
-    "moduleResolution": "Node",
+    "target": "es2016",
+    "module": "commonjs",
     "outDir": "dist",
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "isolatedModules": false,
     "strict": true,
-    "noImplicitAny": true,
-    "useUnknownInCatchVariables": false,
-    "inlineSourceMap": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "noImplicitAny": true
   },
   "include": ["src/**/*"]
 }

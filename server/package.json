@@ -6,9 +6,9 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "build": "tsc"
   },
-  "type": "module",
   "keywords": [
     "tbdex",
     "web5",
@@ -33,6 +33,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/readable-stream": "^4.0.15",
     "nodemon": "^3.1.4",
     "prisma": "^5.19.1",
     "ts-node": "^10.9.2",
