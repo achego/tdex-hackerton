@@ -13,12 +13,7 @@
     "useUnknownInCatchVariables": false,
     "inlineSourceMap": true,
     "allowImportingTsExtensions": true,
-    "noEmit": true,
+    "noEmit": true
   },
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node"
-  },
-  "lib": ["esnext"],
   "include": ["src/**/*"]
 }

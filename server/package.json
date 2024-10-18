@@ -8,7 +8,6 @@
     "dev": "nodemon src/index.ts",
     "postinstall": "prisma generate"
   },
-  "type": "module",
   "keywords": [
     "tbdex",
     "web5",
