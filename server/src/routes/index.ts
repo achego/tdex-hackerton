@@ -1,8 +1,8 @@
-import Strings from "../core/values/strings";
-import baseRoutes from "./base_routes";
-import { express } from "../global_exports";
-import authRoutes from "./auth_routes";
-import userRoutes from "./user_routes";
+import Strings from "../core/values/strings.js";
+import baseRoutes from "./base_routes.js";
+import { express } from "../global_exports.js";
+import authRoutes from "./auth_routes.js";
+import userRoutes from "./user_routes.js";
 
 const useAllRoutes = (app: express.Express) => {
   useApp(app, "", baseRoutes);

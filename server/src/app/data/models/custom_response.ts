@@ -1,6 +1,6 @@
 import { Response } from "express";
-import { StatusCode } from "../../../core/utils/enums";
-import Strings from "../../../core/values/strings";
+import { StatusCode } from "../../../core/utils/enums.js";
+import Strings from "../../../core/values/strings.js";
 
 const customResponse = (
   res: Response,

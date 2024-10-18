@@ -1,4 +1,4 @@
-import { env } from "../globals";
+import { env } from "../globals.js";
 
 const logger = (text: any, title?: any, ...[maxChars = 100]) => {
   if (env.isDev) {

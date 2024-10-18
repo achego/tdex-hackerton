@@ -1,7 +1,7 @@
-import { prisma } from "../../core/globals";
+import { prisma } from "../../core/globals.js";
 import { $Enums, Prisma, PrismaClient } from "@prisma/client";
-import CustomError from "../data/models/custom_error";
-import { StatusCode } from "../../core/utils/enums";
+import CustomError from "../data/models/custom_error.js";
+import { StatusCode } from "../../core/utils/enums.js";
 import { number } from "zod";
 
 interface OmitIncudeParams<K> {

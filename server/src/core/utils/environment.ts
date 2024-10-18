@@ -1,4 +1,4 @@
-import { EnvironmentType } from "./enums";
+import { EnvironmentType } from "./enums.js";
 
 class Environment {
   port: string = process.env.PORT ?? "6000";

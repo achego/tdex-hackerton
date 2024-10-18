@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import catchError from "../../core/utils/error_handler";
-import customResponse from "../data/models/custom_response";
+import catchError from "../../core/utils/error_handler.js";
+import customResponse from "../data/models/custom_response.js";
 import {
   Balance,
   Close,
@@ -16,13 +16,13 @@ import {
   PresentationDefinitionV2,
   PresentationExchange,
 } from "@web5/credentials";
-import CustomRequest from "../data/models/custom_request";
-import { logger, prisma } from "../../core/globals";
-import CustomError from "../data/models/custom_error";
-import { StatusCode } from "../../core/utils/enums";
-import balancerepository from "../repos/balance_repo";
+import CustomRequest from "../data/models/custom_request.js";
+import { logger, prisma } from "../../core/globals.js";
+import CustomError from "../data/models/custom_error.js";
+import { StatusCode } from "../../core/utils/enums.js";
+import balancerepository from "../repos/balance_repo.js";
 import { $Enums } from "@prisma/client";
-import authHelpers from "../helpers/auth_helpers";
+import authHelpers from "../helpers/auth_helpers.js";
 
 // 🏦 AquaFinance Capital
 

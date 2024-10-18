@@ -9,6 +9,7 @@
     "postinstall": "prisma generate",
     "build": "tsc"
   },
+  "type": "module",
   "keywords": [
     "tbdex",
     "web5",

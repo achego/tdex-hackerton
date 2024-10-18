@@ -1,9 +1,9 @@
 import { default as express, Express } from "express";
-import Environment from "./utils/environment";
+import Environment from "./utils/environment.js";
 import { PrismaClient } from "@prisma/client";
-import authHelpers from "../app/helpers/auth_helpers";
+import authHelpers from "../app/helpers/auth_helpers.js";
 
-export { logger } from "../global_exports";
+export { logger } from "../global_exports.js";
 
 export const app: Express = express();
 

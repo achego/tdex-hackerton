@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import catchError from "../../core/utils/error_handler";
-import customResponse from "../data/models/custom_response";
+import catchError from "../../core/utils/error_handler.js";
+import customResponse from "../data/models/custom_response.js";
 import { DidDht } from "@web5/dids";
-import userRepository from "../repos/user_repo";
-import CustomError from "../data/models/custom_error";
-import { StatusCode } from "../../core/utils/enums";
-import authHelpers from "../helpers/auth_helpers";
+import userRepository from "../repos/user_repo.js";
+import CustomError from "../data/models/custom_error.js";
+import { StatusCode } from "../../core/utils/enums.js";
+import authHelpers from "../helpers/auth_helpers.js";
 import { Prisma } from "@prisma/client";
 
 import bcrypt from "bcrypt";

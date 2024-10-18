@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
-import { prisma } from "../../core/globals";
-import { OmitIncudeParams } from "../../core/utils/interface";
-import balancerepository from "./balance_repo";
+import { prisma } from "../../core/globals.js";
+import { OmitIncudeParams } from "../../core/utils/interface.js";
+import balancerepository from "./balance_repo.js";
 
 const globalOmit: Prisma.UserOmit = {
   password: true,

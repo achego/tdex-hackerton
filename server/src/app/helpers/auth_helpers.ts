@@ -1,18 +1,18 @@
-// import { env } from "../../core/globals";
+// import { env } from "../../core/globals.js";
 import bcrypt from "bcrypt";
 import jwt, {
   JsonWebTokenError,
   NotBeforeError,
   TokenExpiredError,
 } from "jsonwebtoken";
-import Environment from "../../core/utils/environment";
-import { StatusCode } from "../../core/utils/enums";
-import CustomError from "../data/models/custom_error";
-import userRepository from "../repos/user_repo";
+import Environment from "../../core/utils/environment.js";
+import { StatusCode } from "../../core/utils/enums.js";
+import CustomError from "../data/models/custom_error.js";
+import userRepository from "../repos/user_repo.js";
 import crypto from "crypto";
-import customResponse from "../data/models/custom_response";
-import { logger } from "../../global_exports";
-import { env } from "../../core/globals";
+import customResponse from "../data/models/custom_response.js";
+import { logger } from "../../global_exports.js";
+import { env } from "../../core/globals.js";
 
 // const env = new Environment();
 

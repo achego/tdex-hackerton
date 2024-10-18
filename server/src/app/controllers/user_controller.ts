@@ -1,17 +1,17 @@
 import { NextFunction, Request, Response } from "express";
 import { $Enums, Prisma } from "@prisma/client";
 import { ParsedQs } from "qs";
-import catchError from "../../core/utils/error_handler";
-import CustomRequest from "../data/models/custom_request";
-import CustomError from "../data/models/custom_error";
-import { StatusCode } from "../../core/utils/enums";
-import userRepository from "../repos/user_repo";
-import customResponse from "../data/models/custom_response";
-import transactionRepository from "../repos/transaction_repository";
-import balancerepository from "../repos/balance_repo";
-import { logger } from "../../global_exports";
-import { env, prisma } from "../../core/globals";
-import authHelpers from "../helpers/auth_helpers";
+import catchError from "../../core/utils/error_handler.js";
+import CustomRequest from "../data/models/custom_request.js";
+import CustomError from "../data/models/custom_error.js";
+import { StatusCode } from "../../core/utils/enums.js";
+import userRepository from "../repos/user_repo.js";
+import customResponse from "../data/models/custom_response.js";
+import transactionRepository from "../repos/transaction_repository.js";
+import balancerepository from "../repos/balance_repo.js";
+import { logger } from "../../global_exports.js";
+import { env, prisma } from "../../core/globals.js";
+import authHelpers from "../helpers/auth_helpers.js";
 
 interface CurrencyRate {
   symbol: string;

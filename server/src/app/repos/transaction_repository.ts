@@ -1,5 +1,5 @@
 import { $Enums, Prisma, PrismaClient, User } from "@prisma/client";
-import { prisma } from "../../core/globals";
+import { prisma } from "../../core/globals.js";
 
 const globalOmit: Prisma.TransactionOmit = {};
 

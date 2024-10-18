@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { env, logger } from "../../core/globals";
-import CustomError from "../data/models/custom_error";
-import { StatusCode } from "../../core/utils/enums";
+import { env, logger } from "../../core/globals.js";
+import CustomError from "../data/models/custom_error.js";
+import { StatusCode } from "../../core/utils/enums.js";
 import { ZodError } from "zod";
 
 const handleGlobalError = async (

@@ -1,7 +1,7 @@
 import express from "express";
-import authMiddleWares from "../app/middlewares/auth_middle_wares";
-import userController from "../app/controllers/user_controller";
-import pfiController from "../app/controllers/pfi_controller";
+import authMiddleWares from "../app/middlewares/auth_middle_wares.js";
+import userController from "../app/controllers/user_controller.js";
+import pfiController from "../app/controllers/pfi_controller.js";
 
 const userRoutes = express.Router();
 
