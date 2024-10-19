@@ -1,5 +1,10 @@
+// import 'dart:convert';
+
+import 'dart:convert';
+
 import 'package:client/core/utils/logger.dart';
 import 'package:client/global_exports.dart';
+import 'package:encrypt/encrypt.dart' as enc;
 import 'aaexp.clients.dart';
 
 class NetworkClient implements ApiClient {
@@ -46,6 +51,8 @@ class NetworkClient implements ApiClient {
         queryParameters: queryParameters,
         headers: headers?.map((key, value) => MapEntry(key.text, value)),
       );
+      logger(response, 'raw response ==>> $path');
+
       final resp = _parseResponse<T, M>(
         response: response,
         fromJson: fromJson,
@@ -118,7 +125,7 @@ class NetworkClient implements ApiClient {
     M Function(Map<String, dynamic> json)? dataPath,
     bool decrypt = false,
   }) {
-    dynamic decodedData = response.data;
+    dynamic decodedData = jsonDecode(_decryptData(response.data));
 
     if (![200, 201, 202].contains(response.statusCode)) {
       throw AppException(
@@ -146,5 +153,38 @@ class NetworkClient implements ApiClient {
     } else {
       return '/$route';
     }
+  }
+}
+
+String _decryptData(String encryptedData) {
+  try {
+    final aesKey = enc.Key.fromUtf8('68fd9ae3d57c0cfcf76b0e8f3ff68d76');
+    final ivBytes = enc.IV.fromUtf8('a88f1a91db32c4f7');
+
+    final encrypter = enc.Encrypter(enc.AES(aesKey, mode: enc.AESMode.cbc));
+
+    final encrypted = enc.Encrypted.fromBase16(encryptedData);
+    logger(encryptedData, 'Encrypted data');
+    logger(encrypter.decrypt(encrypted, iv: ivBytes), 'Decrypted data');
+    return encrypter.decrypt(encrypted, iv: ivBytes);
+  } catch (e) {
+    logger(e, "Error decrypting: $e");
+    return '';
+  }
+}
+
+String _encryptData(String plaintext) {
+  try {
+    final aesKey = enc.Key.fromUtf8('68fd9ae3d57c0cfcf76b0e8f3ff68d76');
+    final ivBytes = enc.IV.fromUtf8('a88f1a91db32c4f7');
+
+    final encrypter = enc.Encrypter(enc.AES(aesKey, mode: enc.AESMode.cbc));
+
+    final encrypted = encrypter.encrypt(plaintext, iv: ivBytes);
+
+    return encrypted.base16;
+  } catch (e) {
+    logger(e, "Error encrypting: $e");
+    return '';
   }
 }

@@ -7,7 +7,7 @@ class AppStrings {
   String get apiBaseUrl => _isDevMode ? emulatorAddress : prodUrl;
 
   String get emulatorAddress => 'http://10.0.2.2:$port';
-  String get prodUrl => '';
+  String get prodUrl => 'https://tdex-hackerton.vercel.app';
   String get port => '3500';
 
   final errorText = ErrorText();

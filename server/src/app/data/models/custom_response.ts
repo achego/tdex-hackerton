@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { StatusCode } from "../../../core/utils/enums.js";
 import Strings from "../../../core/values/strings.js";
+import authHelpers from "../../helpers/auth_helpers.js";
 
 const customResponse = (
   res: Response,
@@ -13,12 +14,13 @@ const customResponse = (
 ) => {
   const { code, message, data, error } = options ?? {};
   const statusCode = code ?? StatusCode.ok;
-  res.status(statusCode).send({
+  const resp = {
     status: _getStatus(statusCode),
     is_ok: statusCode > 103 && statusCode <= 226 ? true : false,
     message,
     data,
-  });
+  };
+  res.status(statusCode).send(authHelpers.encrypt(JSON.stringify(resp)));
 };
 
 export default customResponse;
