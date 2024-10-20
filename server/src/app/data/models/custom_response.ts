@@ -20,7 +20,9 @@ const customResponse = (
     message,
     data,
   };
-  res.status(statusCode).send(authHelpers.encrypt(JSON.stringify(resp)));
+  const finalResp = resp;
+  // const finalResp = authHelpers.encrypt(JSON.stringify(resp));
+  res.status(statusCode).send(finalResp);
 };
 
 export default customResponse;
