@@ -6,6 +6,7 @@ import 'package:client/app/data/models/pfi_rate_model/pfi_rate_model.dart';
 import 'package:client/app/data/models/user_model/user_model.dart';
 import 'package:client/app/data/providers/user_provider.dart';
 import 'package:client/app/modules/log_in_module/log_in_controller.dart';
+import 'package:client/app/modules/pin_module/pin_page.dart';
 import 'package:client/global_exports.dart';
 
 class AppController extends GetxController {
@@ -109,8 +110,30 @@ class AppController extends GetxController {
     Nav.offAllNamed(RoutePaths.logIn);
   }
 
+  deleteAccount() async {
+    showLoading();
+    final resp = await AuthProvider.deleteAccount();
+    showLoading(show: false);
+    if (!resp.isOk) {
+      AppNotifications.snackbar(message: resp.message);
+      return;
+    }
+    await localStorage.setCurrentUser(null);
+    await localStorage.auth.setToken('');
+    Nav.offAllNamed(RoutePaths.logIn);
+  }
+
   commingSoon() async {
     AppNotifications.snackbar(message: 'Comming soon');
     return;
+  }
+
+  void getPinInput({Function(int pin)? onCompleted}) async {
+    await Nav.to(PinPage(
+      title: 'Confirm your pin',
+      subTitle:
+          'Please confirm this transaction with your 6 digit pin to continue',
+      onCompleted: (pin) => onCompleted?.call(int.parse(pin)),
+    ));
   }
 }

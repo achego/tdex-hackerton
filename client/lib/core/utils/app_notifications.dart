@@ -7,6 +7,7 @@ class NotificationConfig {
   final String? iconPath;
   final Widget? footer;
   final String btnTitle;
+  final Color? btnColor;
   final NotificationType type;
 
   const NotificationConfig({
@@ -15,6 +16,7 @@ class NotificationConfig {
     this.subTitle,
     this.footer,
     this.iconPath,
+    this.btnColor,
     this.btnTitle = 'Okay',
     this.type = NotificationType.failure,
   });
@@ -30,17 +32,18 @@ class AppNotifications {
     String? subTitle,
     Widget? footer,
     String btnTitle = 'Okay',
+    Color? btnColor,
     NotificationType type = NotificationType.failure,
   }) {
     final config = NotificationConfig(
-      onPressed: onPressed,
-      title: title,
-      subTitle: subTitle,
-      footer: footer,
-      btnTitle: btnTitle,
-      type: type,
-      iconPath: iconPath,
-    );
+        onPressed: onPressed,
+        title: title,
+        subTitle: subTitle,
+        footer: footer,
+        btnTitle: btnTitle,
+        type: type,
+        iconPath: iconPath,
+        btnColor: btnColor);
     Get.bottomSheet(
       child ?? BottomModalSheet(config: config),
       isDismissible: isDismisible,
@@ -178,6 +181,7 @@ class _BottomModalSheetState extends State<BottomModalSheet> {
             ),
             spaceh(30),
             CustomButton(
+                backgroundColor: widget.config.btnColor,
                 onPressed: () {
                   if (widget.config.onPressed == null) {
                     Nav.back();

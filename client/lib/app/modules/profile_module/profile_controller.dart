@@ -45,6 +45,15 @@ class ProfileController extends GetxController {
                 iconColor: AppColors.color.error,
                 containerColor: const Color(0xFF6B4545)),
           ),
+          ProfileItemModel(
+            title: 'Delete Account',
+            iconPath: AppIconSvgs.delete,
+            onPressed: deleteAccount,
+            colors: ProfileItemColorsModel(
+                textColor: AppColors.color.error,
+                iconColor: AppColors.color.error,
+                containerColor: const Color(0xFF6B4545)),
+          ),
         ],
       };
 
@@ -55,6 +64,29 @@ class ProfileController extends GetxController {
             'You will loose your current session and would have to re login to get access to the app',
         onPressed: () {
           appController.logOut();
+        },
+        footer: Column(
+          children: [
+            spaceh(20),
+            CustomButton(
+              onPressed: () {
+                Nav.back();
+              },
+              filled: false,
+              title: 'Cancel',
+            )
+          ],
+        ));
+  }
+
+  deleteAccount() async {
+    AppNotifications.showModal(
+        btnColor: AppColors.color.error,
+        title: 'Are you sure you want to Delete your account ?',
+        subTitle:
+            'In compliance with Data protection laws, all your data would be deleted after 30days and you will loose access to the app',
+        onPressed: () {
+          appController.deleteAccount();
         },
         footer: Column(
           children: [

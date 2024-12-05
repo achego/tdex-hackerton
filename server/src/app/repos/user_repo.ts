@@ -2,6 +2,9 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "../../core/globals.js";
 import { OmitIncudeParams } from "../../core/utils/interface.js";
 import balancerepository from "./balance_repo.js";
+import authHelpers from "../helpers/auth_helpers.js";
+import bcrypt from "bcrypt";
+import CustomError from "../data/models/custom_error.js";
 
 const globalOmit: Prisma.UserOmit = {
   password: true,
@@ -93,12 +96,54 @@ const findByUsername = async <K extends keyof Prisma.UserOmit>(
   return user;
 };
 
+const createPin = async <K extends keyof Prisma.UserOmit>(
+  id: string,
+  pin: number,
+  option?: OmitIncudeParams<K>
+): Promise<Prisma.UserCreateInput | null> => {
+  const omit = { ...globalOmit };
+  option?.include?.forEach((key) => {
+    delete omit[key];
+  });
+  const user = await prisma.user.update({
+    data: {
+      pin: authHelpers.hashPassword(pin.toString()),
+    },
+    where: {
+      id: id,
+    },
+  });
+
+  return user;
+};
+const deleteAccount = async <K extends keyof Prisma.UserOmit>(
+  id: string,
+  option?: OmitIncudeParams<K>
+): Promise<Prisma.UserCreateInput | null> => {
+  const omit = { ...globalOmit };
+  option?.include?.forEach((key) => {
+    delete omit[key];
+  });
+  const user = await prisma.user.update({
+    data: {
+      is_account_deleted: true,
+    },
+    where: {
+      id: id,
+    },
+  });
+
+  return user;
+};
+
 const userRepository = {
+  createPin,
   createUser,
   findById,
   findByEmail,
   findByPhone,
   findByUsername,
+  deleteAccount,
 };
 
 export default userRepository;

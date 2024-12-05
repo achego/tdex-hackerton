@@ -3,6 +3,7 @@ import { env, logger } from "../../core/globals.js";
 import CustomError from "../data/models/custom_error.js";
 import { StatusCode } from "../../core/utils/enums.js";
 import { ZodError } from "zod";
+import authHelpers from "../helpers/auth_helpers.js";
 
 const handleGlobalError = async (
   err: Error,
@@ -63,8 +64,8 @@ function _sendErrorResponse<K extends keyof CustomErrorR>(
   option?.omit?.forEach((key) => {
     delete result[key];
   });
-
-  res.status(statusCode).json(result);
+  const finalResp = authHelpers.encrypt(JSON.stringify(result));
+  res.status(statusCode).json(finalResp);
 }
 function _convertError(err: Error): CustomError {
   if (err instanceof CustomError) {

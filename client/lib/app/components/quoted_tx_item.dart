@@ -236,37 +236,43 @@ enum TransactionStatus {
 
 placeOrder(String pfiDid, String exchangeId, Map payinDetails,
     {required double amount}) async {
-  final fee = (1.5 / 100) * amount;
-  final fromWallet = payinDetails.isNotEmpty &&
-      payinDetails.values.first.toString().toLowerCase() == 'wallet';
-  if ((double.tryParse(appController.selectedBalance.value.balance ?? "") ??
-              0) <
-          (amount + fee) &&
-      fromWallet) {
-    AppNotifications.snackbar(
-        message:
-            'You dont have sufficient balance on your ${appController.selectedBalance.value.currency?.toUpperCase()} Account');
-    return;
-  }
-  showLoading();
-  final resp = await UserProvider.addOrder(
-      pfiDid: pfiDid,
-      exchangeId: exchangeId,
-      payin: payinDetails,
-      amount: amount,
-      currency:
-          appController.selectedBalance.value.currency?.toLowerCase() ?? '');
+  appController.getPinInput(onCompleted: (pin) async {
+    // logger(pin, 'The pin 00');
+    // return;
 
-  showLoading(show: false);
+    final fee = (1.5 / 100) * amount;
+    final fromWallet = payinDetails.isNotEmpty &&
+        payinDetails.values.first.toString().toLowerCase() == 'wallet';
+    if ((double.tryParse(appController.selectedBalance.value.balance ?? "") ??
+                0) <
+            (amount + fee) &&
+        fromWallet) {
+      AppNotifications.snackbar(
+          message:
+              'You dont have sufficient balance on your ${appController.selectedBalance.value.currency?.toUpperCase()} Account');
+      return;
+    }
+    showLoading();
+    final resp = await UserProvider.addOrder(
+        pfiDid: pfiDid,
+        exchangeId: exchangeId,
+        payin: payinDetails,
+        pin: pin,
+        amount: amount,
+        currency:
+            appController.selectedBalance.value.currency?.toLowerCase() ?? '');
 
-  if (!resp.isOk) {
-    AppNotifications.snackbar(message: 'An error occured adding order');
-    return;
-  }
+    showLoading(show: false);
 
-  Nav.toNamed<TransactionSuccessArgs>(RoutePaths.transactionSuccess,
-      arguments: TransactionSuccessArgs(
-          title: 'Success', subTitle: 'Order has been placed successfully'));
+    if (!resp.isOk) {
+      AppNotifications.snackbar(message: resp.message);
+      return;
+    }
+
+    Nav.toNamed<TransactionSuccessArgs>(RoutePaths.transactionSuccess,
+        arguments: TransactionSuccessArgs(
+            title: 'Success', subTitle: 'Order has been placed successfully'));
+  });
 }
 
 closeOrder(String pfiDid, String exchangeId,

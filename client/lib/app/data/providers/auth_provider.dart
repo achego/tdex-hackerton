@@ -92,4 +92,30 @@ class AuthProvider {
         headers: {NetworkHeader.authorization: localStorage.auth.token});
     return resp;
   }
+
+  static Future<CustomResponse> setUpPin({
+    required int pin,
+  }) async {
+    final resp = await _authClient.request(
+        path: 'auth/create-pin',
+        method: MethodType.post,
+        dataPath: (response) => response['data'],
+        payload: {
+          "pin": pin
+        },
+        headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+    return resp;
+  }
+
+  static Future<CustomResponse> deleteAccount() async {
+    final resp = await _authClient.request(
+        path: 'auth/delete-account',
+        method: MethodType.post,
+        headers: {
+          NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+        });
+    return resp;
+  }
 }

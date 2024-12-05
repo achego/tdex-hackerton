@@ -6,10 +6,12 @@ import userRepository from "../repos/user_repo.js";
 import { StatusCode } from "../../core/utils/enums.js";
 import CustomRequest from "../data/models/custom_request.js";
 import { logger } from "../../global_exports.js";
+import bcrypt from "bcrypt";
 
 const checkAuth = catchError(
   async (req: CustomRequest, res: Response, next: NextFunction) => {
     const authorization = req.headers.authorization;
+    logger(authorization, "THe Auth");
     if (
       !authorization ||
       !authorization.startsWith("Bearer") ||
@@ -32,13 +34,53 @@ const checkAuth = catchError(
         StatusCode.unauthorized
       );
     }
+
+    if (user.is_account_deleted) {
+      throw new CustomError("An error occured", StatusCode.badRequest);
+    }
     req.user = user;
+    next();
+  }
+);
+const validatePin = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const body: { pin: number } = req.body;
+    if (!req.body) {
+      throw new CustomError("No argument was passed", StatusCode.badRequest);
+    }
+    const userParam = req.user;
+    if (!userParam || !userParam.id) {
+      throw new CustomError(
+        "An error occured with this account",
+        StatusCode.unauthorized
+      );
+    }
+
+    if (!userParam.pin) {
+      next();
+    }
+    const pinMatched = await bcrypt.compare(
+      userParam.pin!,
+      body.pin.toString()
+    );
+    logger(pinMatched, "Pin matcged");
+    logger(body.pin, "Pin matcged");
+    logger(userParam.pin, "Suera matcged");
+    logger(authHelpers.hashPassword(body.pin.toString()), "Pin matcged");
+    if (!pinMatched) {
+      throw new CustomError(
+        "Please enter a correct pin to continue",
+        StatusCode.badRequest
+      );
+    }
+    req.user = userParam;
     next();
   }
 );
 
 const authMiddleWares = {
   checkAuth,
+  validatePin,
 };
 
 export default authMiddleWares;

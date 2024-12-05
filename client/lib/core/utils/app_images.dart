@@ -56,6 +56,7 @@ class AppIconSvgs {
   static String get subscription => 'subscription'.svg;
   static String get transactions => 'transactions'.svg;
   static String get logout => 'logout'.svg;
+  static String get delete => 'delete'.svg;
 }
 
 class AppLottie {

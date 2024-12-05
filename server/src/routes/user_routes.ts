@@ -29,7 +29,11 @@ userRoutes
 
 userRoutes
   .route("/place-order")
-  .post(authMiddleWares.checkAuth, pfiController.placeOrder);
+  .post(
+    authMiddleWares.checkAuth,
+    authMiddleWares.validatePin,
+    pfiController.placeOrder
+  );
 userRoutes
   .route("/add-currency")
   .post(authMiddleWares.checkAuth, userController.addCurrency);

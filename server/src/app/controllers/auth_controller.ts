@@ -9,6 +9,7 @@ import authHelpers from "../helpers/auth_helpers.js";
 import { Prisma } from "@prisma/client";
 
 import bcrypt from "bcrypt";
+import CustomRequest from "../data/models/custom_request.js";
 
 const signUp = catchError(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -51,6 +52,60 @@ const signUp = catchError(
   }
 );
 
+const createPin = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const body: { pin: number } = req.body;
+    if (!req.body) {
+      throw new CustomError("No argument was passed", StatusCode.badRequest);
+    }
+    const userParam = req.user;
+    if (!userParam || !userParam.id) {
+      throw new CustomError(
+        "An error occured with this account",
+        StatusCode.unauthorized
+      );
+    }
+
+    const resp = await userRepository.createPin(userParam.id, body.pin);
+    if (!resp) {
+      throw new CustomError(
+        "An error occurred",
+        StatusCode.internalServerError
+      );
+    }
+
+    customResponse(res, {
+      code: StatusCode.created,
+      message: "Pin created successfully",
+    });
+  }
+);
+const deleteAccount = catchError(
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const userParam = req.user;
+    if (!userParam || !userParam.id) {
+      throw new CustomError(
+        "An error occured with this account",
+        StatusCode.unauthorized
+      );
+    }
+
+    const resp = await userRepository.deleteAccount(userParam.id);
+
+    if (!resp) {
+      throw new CustomError(
+        "An error occurred deleting account",
+        StatusCode.internalServerError
+      );
+    }
+
+    customResponse(res, {
+      code: StatusCode.ok,
+      message: "Account deleted successfully",
+    });
+  }
+);
+
 const login = catchError(
   async (req: Request, res: Response, next: NextFunction) => {
     const body = req.body;
@@ -64,9 +119,10 @@ const login = catchError(
       body.password,
       user?.password ?? ""
     );
-    if (!user || !passwordMatches) {
+    if (!user || !passwordMatches || user.is_account_deleted) {
       throw new CustomError("incorrect email or password", 400);
     }
+
     const token = authHelpers.createJwt(user.id ?? "");
     customResponse(res, { message: "User Login successfull", data: { token } });
   }
@@ -116,6 +172,8 @@ const verifyUniqueAvailability = catchError(
 const authController = {
   signUp,
   login,
+  createPin,
+  deleteAccount,
   verifyUniqueAvailability,
 };
 

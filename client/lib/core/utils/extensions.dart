@@ -36,17 +36,6 @@ extension NumX on num? {
   }
 }
 
-extension TextStyleX on TextStyle {
-  double getTextHeight(String text) {
-    final textPainter = TextPainter(
-      text: TextSpan(text: text, style: copyWith(height: 0.8)),
-      textDirection: ui.TextDirection.ltr,
-    );
-    textPainter.layout();
-    return textPainter.height;
-  }
-}
-
 extension MapX on Map {
   List<List<MapEntry<S, T>>> parition<S, T>(int chunkSize) {
     List<MapEntry<S, T>> entries =
@@ -60,6 +49,17 @@ extension MapX on Map {
     }
 
     return chunks;
+  }
+}
+
+extension TextStyleX on TextStyle {
+  double getTextHeight(String text) {
+    final textPainter = TextPainter(
+      text: TextSpan(text: text, style: copyWith(height: 0.8)),
+      textDirection: ui.TextDirection.ltr,
+    );
+    textPainter.layout();
+    return textPainter.height;
   }
 }
 

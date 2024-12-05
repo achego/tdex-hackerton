@@ -114,6 +114,7 @@ class UserProvider {
     required String currency,
     required Map payin,
     required double amount,
+    required int pin,
   }) async {
     final resp = await _userClient
         .request(path: 'user/place-order', method: MethodType.post, payload: {
@@ -121,7 +122,8 @@ class UserProvider {
       "exchange_id": exchangeId,
       "payin": payin,
       "currency": currency,
-      "amount": amount
+      "amount": amount,
+      "pin": pin
     }, headers: {
       NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
     });
