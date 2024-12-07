@@ -1,5 +1,4 @@
 import 'package:client/app/modules/wallet_enter_amount_module/wallet_enter_amount_controller.dart';
-import 'package:client/core/utils/app_styles.dart';
 import 'package:client/global_exports.dart';
 
 class WalletEnterAmountPage extends StatefulWidget {

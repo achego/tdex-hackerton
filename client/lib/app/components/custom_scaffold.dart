@@ -1,6 +1,4 @@
 import 'package:client/global_exports.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomScaffold extends StatelessWidget {
   const CustomScaffold({
@@ -52,11 +50,13 @@ class CustomAppBar extends StatelessWidget {
                 color: AppColors.color.grey400,
                 child: svgAsset(AppIconSvgs.back)),
           ),
-          spaceh(10),
-          Text(
-            title,
-            style: TextStyles.heading(),
-          )
+          if (title.isNotEmpty) ...[
+            spaceh(10),
+            Text(
+              title,
+              style: TextStyles.heading(),
+            )
+          ]
         ],
       ).defPadX,
     );

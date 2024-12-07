@@ -10,13 +10,17 @@ import 'package:client/app/modules/pin_module/pin_page.dart';
 import 'package:client/global_exports.dart';
 
 class AppController extends GetxController {
-  final user = const UserModel().obs;
+  final user = localStorage.currentUser?.obs ?? const UserModel().obs;
   final userBalances = <BalanceModel>[].obs;
   final userCredentials = <CredentialModel>[].obs;
   final selectedBalance = const BalanceModel().obs;
   final currencyRates = const <CurrencyRateModel>[].obs;
   final availableCurrencies = const <AvailableCurrencyModel>[].obs;
   final pfiRatings = const <PfiRateModel>[].obs;
+
+  bool shouldLockApp = false;
+
+  get enableLockApp => shouldLockApp = true;
 
   final isBalanceShown = localStorage.isBalanceShown.obs;
   Future<void> toogleBalanceMode() async {
@@ -130,10 +134,15 @@ class AppController extends GetxController {
 
   void getPinInput({Function(int pin)? onCompleted}) async {
     await Nav.to(PinPage(
+      canGoBack: true,
       title: 'Confirm your pin',
       subTitle:
           'Please confirm this transaction with your 6 digit pin to continue',
       onCompleted: (pin) => onCompleted?.call(int.parse(pin)),
     ));
+  }
+
+  String getProviderImageFromName(String name) {
+    return '';
   }
 }

@@ -18,11 +18,13 @@ import {
 } from "@web5/credentials";
 import CustomRequest from "../data/models/custom_request.js";
 import { logger, prisma } from "../../core/globals.js";
-import CustomError from "../data/models/custom_error.js";
+import CustomError, { ErrorType } from "../data/models/custom_error.js";
 import { StatusCode } from "../../core/utils/enums.js";
 import balancerepository from "../repos/balance_repo.js";
 import { $Enums } from "@prisma/client";
 import authHelpers from "../helpers/auth_helpers.js";
+import aiService, { TransactionSpecification } from "../services/ai_service.js";
+import fraudService from "../services/fraud_service.js";
 
 // 🏦 AquaFinance Capital
 
@@ -120,6 +122,20 @@ const requestQuote = catchError(
 
     if (!offering) {
       throw new CustomError("Offering not available", StatusCode.badRequest);
+    }
+
+    const isFraud = await fraudService.checkAccountForFraud({
+      type: "test",
+      sendAddress: Object.keys(body.payout_details).includes("accountNumber")
+        ? (body.payout_details as any).accountNumber ?? ""
+        : "",
+      symbol: "usd",
+    });
+    if (isFraud.status) {
+      throw new CustomError(isFraud.message ?? "", StatusCode.badRequest, {
+        type: ErrorType.showModal,
+        title: isFraud.title,
+      });
     }
 
     const credentials = await prisma.userCredentials.findMany({
@@ -235,8 +251,39 @@ const placeOrder = catchError(
       currency: string;
       amount: number;
       payin: object;
+      transactions: TransactionSpecification[];
     } = req.body;
     const isWallet = Object.values(body.payin).includes("Wallet");
+
+    const confidence = await aiService.analyzeUserFromTransactions(
+      body.transactions,
+      {
+        amount: body.amount,
+        date: new Date(Date.now()).toString(),
+        pfi: body.pfiDid,
+        type: isWallet ? "wallet" : "pfi",
+        status: "new",
+      }
+    );
+
+    if (!confidence) {
+      throw new CustomError(
+        "An error occured processing you rrequest, plesase try again later",
+        StatusCode.badRequest,
+        {
+          type: ErrorType.aiUserTransaction,
+        }
+      );
+    }
+    if (confidence < 0.65) {
+      throw new CustomError(
+        "We noticed an issue with this transaction, you would need to verify that this is you, an otp has been sent to your email",
+        StatusCode.badRequest,
+        {
+          type: ErrorType.transactionNotUser,
+        }
+      );
+    }
 
     const user = req.user;
     const portableDid = JSON.parse(authHelpers.decrypt(user?.bearer_did ?? ""));

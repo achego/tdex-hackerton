@@ -2,6 +2,7 @@ import 'package:client/app/components/quoted_tx_item.dart';
 import 'package:client/app/data/models/pfi_offering_model/pfi_offering_model.dart';
 import 'package:client/app/data/providers/pfi_providers.dart';
 import 'package:client/app/data/providers/user_provider.dart';
+import 'package:client/app/data/services/api_client/custom_response.dart';
 import 'package:client/app/modules/confirm_transaction_module/confirm_transaction_controller.dart';
 import 'package:client/app/modules/send_from_wallet_module/send_from_wallet_controller.dart';
 import 'package:client/global_exports.dart';
@@ -46,6 +47,8 @@ class WalletEnterAmountController extends GetxController {
   requestQuote() async {
     final controller = Get.find<SendFromWalletController>();
 
+    // return;
+
     final requiresVerifcation =
         (controller.offering?.data?.requiredClaims?.id ?? "").isNotEmpty;
 
@@ -58,9 +61,10 @@ class WalletEnterAmountController extends GetxController {
         return;
       }
 
-      showLoading();
       final payoutDetails = controller.details.map((key, value) =>
           MapEntry(key, (value['controller'] as TextEditingController).text));
+      // logger(payoutDetails, 'Payout');
+      // return;
 
       final payinDetails = (controller.offering?.data?.payin?.methods ?? [])
               .first
@@ -68,6 +72,7 @@ class WalletEnterAmountController extends GetxController {
               ?.properties
               ?.map((key, value) => MapEntry(key, 'Wallet')) ??
           {};
+      showLoading();
       final resp = await PfiProvider.requestQuote(
         amount: (double.tryParse(amount.text) ?? 0).toString(),
         offeringId: controller.offering?.metadata?.id ?? "",
@@ -81,10 +86,17 @@ class WalletEnterAmountController extends GetxController {
 
       showLoading(show: false);
       if (!resp.isOk) {
+        if (resp.errorAction == ErrorAction.showModal) {
+          AppNotifications.showModal(
+              title: resp.errorData?['title'] ?? 'An Error occured',
+              subTitle: resp.message);
+          return;
+        }
         AppNotifications.showModal(
             title: 'An Error occured',
             subTitle:
                 'An error occured placing a quote, please tru again later');
+        return;
       }
 
       final quote = resp.data;
@@ -96,6 +108,7 @@ class WalletEnterAmountController extends GetxController {
       Nav.toNamed<ConfirmTransactionArgs>(
         RoutePaths.confirmTransaction,
         arguments: ConfirmTransactionArgs(
+          provider: controller.offering?.getPfidetails?.name,
           onProceed: () => placeOrder(
               controller.offering?.getPfidetails?.uri ?? '',
               quote.metadata?.id ?? "",

@@ -57,7 +57,8 @@ class TransactionItem extends StatelessWidget {
                               color: AppColors.color.border, width: 2),
                           borderRadius: AppConstatnts.defBorderRadius,
                           child: CustomCachedImage(
-                              imageUrl: transaction.prividerLogo ?? '')),
+                              imageUrl: appController.getProviderImageFromName(
+                                  transaction.from ?? ""))),
                       Positioned(
                         bottom: -(15.w / 2) + 2.w,
                         right: 0,

@@ -5,6 +5,8 @@ class CustomError extends Error {
   is_ok?: boolean;
   sever_dev_message?: any;
   stack_custom?: any;
+  type?: ErrorType;
+  title?: string;
   private is_server_dev: boolean;
 
   constructor(
@@ -16,6 +18,8 @@ class CustomError extends Error {
       is_server_dev?: boolean;
       sever_dev_message?: any;
       stack_custom?: any;
+      type?: ErrorType;
+      title?: string;
     }
   ) {
     super(message);
@@ -27,6 +31,8 @@ class CustomError extends Error {
     this.name = options?.name ?? "CustomError";
     this.dev_message = options?.dev_message;
     this.stack_custom = options?.stack_custom;
+    this.type = options?.type;
+    this.title = options?.title;
 
     Error.captureStackTrace(this, this.constructor);
   }
@@ -42,3 +48,9 @@ class CustomError extends Error {
 }
 
 export default CustomError;
+
+export enum ErrorType {
+  aiUserTransaction = "ai_user_transaction_failed",
+  transactionNotUser = "not_user_transaction",
+  showModal = "show_modal",
+}

@@ -111,6 +111,7 @@ class EnterPaymentDetailController extends GetxController {
     Nav.toNamed<ConfirmTransactionArgs>(
       RoutePaths.confirmTransaction,
       arguments: ConfirmTransactionArgs(
+        provider: controller.offering.getPfidetails?.name,
         onProceed: () => placeOrder(
             offering.getPfidetails?.uri ?? '',
             quote.metadata?.id ?? "",

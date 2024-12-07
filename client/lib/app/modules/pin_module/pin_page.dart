@@ -3,51 +3,63 @@ import 'package:client/global_exports.dart';
 import 'package:pinput/pinput.dart';
 
 class PinPage extends StatelessWidget {
-  const PinPage({super.key, this.title, this.subTitle, this.onCompleted});
+  const PinPage(
+      {super.key,
+      this.title,
+      this.subTitle,
+      this.onCompleted,
+      this.canGoBack = false});
 
   final String? title;
   final String? subTitle;
   final Function(String pin)? onCompleted;
+  final bool canGoBack;
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController pinText = TextEditingController();
-    return CustomScaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          spaceh(65),
-          Text(
-            title ?? '',
-            style: TextStyles.heading(),
-            textAlign: TextAlign.left,
-          ),
-          spaceh(10),
-          Text(
-            subTitle ?? '',
-            style: TextStyles.subHeading(),
-          ),
-          spaceh(30),
-          PinContainer(
-            controller: pinText,
-            onCompleted: (pin) {
-              onCompleted?.call(pin);
-              pinText.clear();
-            },
-          ),
-          spaceh(88),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 14.w),
-            child: CustomNumberPad(
-              expand: false,
-              rowSpacing: 25.h,
-              onPressed: (modItem) {
-                pinText.text += modItem.value ?? '';
+    return PopScope(
+      canPop: canGoBack,
+      child: CustomScaffold(
+        appBar: canGoBack ? const CustomAppBar(title: '') : null,
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            spaceh(65),
+            Text(
+              title ?? '',
+              style: TextStyles.heading(),
+              textAlign: TextAlign.left,
+            ),
+            spaceh(10),
+            Text(
+              subTitle ?? '',
+              style: TextStyles.subHeading(),
+            ),
+            spaceh(30),
+            PinContainer(
+              controller: pinText,
+              onCompleted: (pin) {
+                onCompleted?.call(pin);
+                pinText.clear();
               },
             ),
-          ),
-        ],
-      ).defPadX,
+            spaceh(88),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 14.w),
+              child: CustomNumberPad(
+                expand: false,
+                rowSpacing: 25.h,
+                onPressed: (modItem) {
+                  pinText.text += modItem.value ?? '';
+                },
+              ),
+            ),
+          ],
+        ).defPadX,
+      ),
     );
   }
 }

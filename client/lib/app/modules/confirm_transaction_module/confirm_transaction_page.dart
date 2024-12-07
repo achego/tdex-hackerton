@@ -1,5 +1,3 @@
-import 'package:client/app/components/custom_gesture_detector.dart';
-import 'package:client/core/utils/app_styles.dart';
 import 'package:client/global_exports.dart';
 
 import 'confirm_transaction_binding.dart';
@@ -61,7 +59,8 @@ class ConfirmTransactionPage extends StatelessWidget {
                 showHeaderBox: true,
                 clipBehavior: Clip.antiAlias,
                 headerBoxChild: Image.asset(
-                  ctr.args.providerLogo ?? "",
+                  appController
+                      .getProviderImageFromName(ctr.args.provider ?? ''),
                   fit: BoxFit.cover,
                 ),
                 padding: EdgeInsets.zero,

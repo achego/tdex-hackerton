@@ -107,18 +107,22 @@ Future<bool> getDetelet<S>(S dependency, {bool force = true}) {
   return Get.delete<S>(force: force);
 }
 
-void showLoading({bool show = true, int durationTimeout = 20}) {
-  // _dialogCronJob(durationTimeout);
-  if (show && (Get.isDialogOpen ?? false) == false) {
+void showLoading({bool show = true, int durationTimeout = 20}) async {
+  if (Get.isSnackbarOpen) {
+    Get.closeAllSnackbars();
+  }
+
+  if (show && ((Get.isDialogOpen ?? false) == false || !Get.isSnackbarOpen)) {
     AppNotifications.showLoadingDialog();
     return;
   } else if (!show && (Get.isDialogOpen ?? false) == true) {
     Nav.back();
+
+    for (var i = 0; i < 5; i++) {
+      await Future.delayed(500.milliseconds);
+      if (Get.isDialogOpen ?? false) {
+        Nav.back();
+      }
+    }
   }
 }
-
-// _dialogCronJob(int durationTimeout) {
-//   Timer(Duration(seconds: durationTimeout), () {
-//     if(Get)
-//   });
-// }

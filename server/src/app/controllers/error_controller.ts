@@ -49,6 +49,8 @@ function _sendErrorResponse<K extends keyof CustomErrorR>(
   let statusCode = err.statusCode;
   let sever_dev_message = err.sever_dev_message;
   let name = err.name;
+  let type = err.type;
+  let title = err.title;
 
   let errorJson: CustomErrorR = {
     status,
@@ -58,6 +60,8 @@ function _sendErrorResponse<K extends keyof CustomErrorR>(
     name,
     stack,
     sever_dev_message,
+    type,
+    title,
   };
 
   const result = { ...errorJson };

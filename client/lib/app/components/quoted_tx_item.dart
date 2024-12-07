@@ -2,10 +2,7 @@ import 'package:client/app/components/custom_cached_network_imge.dart';
 import 'package:client/app/data/models/quoted_transaction_model/quoted_transaction_model.dart';
 import 'package:client/app/data/providers/user_provider.dart';
 import 'package:client/app/modules/transaction_success_module/transaction_success_controller.dart';
-import 'package:client/core/utils/globals.dart';
 import 'package:client/global_exports.dart';
-import 'package:flutter/cupertino.dart';
-
 import '../modules/confirm_transaction_module/confirm_transaction_controller.dart';
 
 class QuotedTransactionItem extends StatelessWidget {
@@ -122,8 +119,9 @@ class QuotedTransactionItem extends StatelessWidget {
                           border: Border.all(
                               color: AppColors.color.border, width: 2),
                           borderRadius: AppConstatnts.defBorderRadius,
-                          child: const CustomCachedImage(
-                              imageUrl: 'transaction.prividerLogo' ?? '')),
+                          child: CustomCachedImage(
+                              imageUrl: appController.getProviderImageFromName(
+                                  transaction.pfiDid ?? ""))),
                       Positioned(
                         bottom: -(15.w / 2) + 2.w,
                         right: 0,
@@ -237,9 +235,6 @@ enum TransactionStatus {
 placeOrder(String pfiDid, String exchangeId, Map payinDetails,
     {required double amount}) async {
   appController.getPinInput(onCompleted: (pin) async {
-    // logger(pin, 'The pin 00');
-    // return;
-
     final fee = (1.5 / 100) * amount;
     final fromWallet = payinDetails.isNotEmpty &&
         payinDetails.values.first.toString().toLowerCase() == 'wallet';
@@ -265,6 +260,13 @@ placeOrder(String pfiDid, String exchangeId, Map payinDetails,
     showLoading(show: false);
 
     if (!resp.isOk) {
+      logger(resp.data, 'The response');
+      if (resp.errorData?['type'] == 'not_user_transaction') {
+        AppNotifications.showModal(
+            title: '🚨 Transaction Alert: Suspicious Activity Detected',
+            subTitle: resp.message);
+        return;
+      }
       AppNotifications.snackbar(message: resp.message);
       return;
     }

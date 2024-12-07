@@ -22,8 +22,9 @@ class TransactionDetailPage extends StatelessWidget {
             Obx(
               () => CustomSeparatedListView(
                 showHeaderBox: true,
-                headerBoxChild:
-                    CustomCachedImage(imageUrl: transaction.prividerLogo ?? ""),
+                headerBoxChild: CustomCachedImage(
+                    imageUrl: appController
+                        .getProviderImageFromName(transaction.from ?? "")),
                 padding: kDefPaddingX,
                 header: Column(
                   children: [

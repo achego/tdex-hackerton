@@ -16,10 +16,12 @@ class ConfirmTransactionArgs {
   final List<KeyValueModel> moreData;
   final bool isFromQuotes;
   final bool showButtonOptions;
+  final String? provider;
   ConfirmTransactionArgs({
     this.onProceedBtnText,
     this.onProceed,
     this.onCancel,
+    this.provider,
     required this.amount,
     this.balBefore,
     this.balAfter,

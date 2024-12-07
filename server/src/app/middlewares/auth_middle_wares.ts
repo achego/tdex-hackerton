@@ -58,10 +58,11 @@ const validatePin = catchError(
 
     if (!userParam.pin) {
       next();
+      return;
     }
     const pinMatched = await bcrypt.compare(
-      userParam.pin!,
-      body.pin.toString()
+      body.pin.toString(),
+      userParam.pin!
     );
     logger(pinMatched, "Pin matcged");
     logger(body.pin, "Pin matcged");

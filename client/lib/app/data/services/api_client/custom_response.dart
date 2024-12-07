@@ -1,11 +1,27 @@
-import 'package:client/core/utils/globals.dart';
-import 'package:client/core/utils/logger.dart';
 import 'package:client/global_exports.dart';
 
 import 'aaexp.clients.dart';
 
+enum ErrorAction {
+  aiUserTransaction(name: 'ai_user_transaction_failed'),
+  transactionNotUser(name: 'not_user_transaction'),
+  showModal(name: 'show_modal');
+
+  const ErrorAction({required this.name});
+
+  final String name;
+
+  static ErrorAction? fromString(String name) {
+    final founds = ErrorAction.values.where((element) =>
+        element.name.removeAllWhitespace.contains(name.removeAllWhitespace));
+    return founds.isEmpty ? null : founds.first;
+  }
+}
+
 class CustomResponse<T> {
   final T? data;
+  final Map<String, dynamic>? errorData;
+  final ErrorAction? errorAction;
   final String message;
   // final String? submessage;
   final int? statusCode;
@@ -16,6 +32,8 @@ class CustomResponse<T> {
       required this.message,
       // this.submessage,
       this.statusCode,
+      this.errorData,
+      this.errorAction,
       this.customOkCondition});
   bool get isOk =>
       customOkCondition ??
@@ -25,8 +43,9 @@ class CustomResponse<T> {
     return {
       'data': data,
       'message': message,
-      // 'submessage': submessage,
+      'errorAction': errorAction,
       'statusCode': statusCode,
+      'errorData': errorData,
       'isOk': isOk,
     }.toString();
   }
@@ -58,7 +77,10 @@ class CustomResponse<T> {
     }
     if (error is AppException) {
       logger(error.message, 'App Exception');
-      return CustomResponse(message: error.message);
+      return CustomResponse(
+          message: error.message,
+          errorAction: ErrorAction.fromString(error.data?['type'] ?? ""),
+          errorData: error.data);
     }
 
     if (error is DioException) {
