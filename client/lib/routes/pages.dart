@@ -35,7 +35,11 @@ import '../app/modules/swap_currency_module/swap_currency_binding.dart';
 import '../app/modules/send_to_username_module/send_to_username_page.dart';
 
 import '../app/modules/send_to_username_module/send_to_username_binding.dart';
-part './route_paths.dart';
+    import '../app/modules/donate_overview_module/donate_overview_page.dart'; 
+
+    import '../app/modules/donate_overview_module/donate_overview_binding.dart'; 
+ part
+     './route_paths.dart';
 
 abstract class AppPages {
   static final List<GetPage> pages = [
@@ -114,5 +118,11 @@ abstract class AppPages {
       page: () => const SendToUsernamePage(),
       binding: SendToUsernameBinding(),
     ),
-  ];
+        GetPage(
+        name: RoutePaths.donateOverview,
+        page: () => const DonateOverviewPage(),
+        binding:DonateOverviewBinding(),
+      ), 
+ ]
+      ;
 }

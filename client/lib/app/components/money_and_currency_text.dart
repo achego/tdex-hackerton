@@ -33,7 +33,7 @@ class MoneyAndCurrencyText extends StatelessWidget {
                 key: Key('$key balance-shown'),
                 children: [
                   Text(
-                    '${theCurrency.getAvailableCurrency?.icon}${amount.formatCurrency}',
+                    '${theCurrency.getAvailableCurrency?.icon ?? ''}${amount.formatCurrency}',
                     style: baseStyle,
                   ),
                 ],

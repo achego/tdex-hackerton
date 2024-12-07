@@ -47,9 +47,16 @@ class HomeTopBar extends StatelessWidget {
                   Container(
                     height: 40.w,
                     width: 40.w,
+                    clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
                       color: AppColors.color.primary.withOpacity(0.2),
+                      border: Border.all(
+                          color: AppColors.color.primary.withOpacity(0.7)),
                       borderRadius: AppConstatnts.bordeRadius,
+                    ),
+                    child: Image.asset(
+                      appController.avatarFromName(user.fullName ?? ""),
+                      fit: BoxFit.cover,
                     ),
                   ),
                   spacew(10),

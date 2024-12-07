@@ -1,8 +1,21 @@
 import 'package:client/app/modules/transaction_success_module/transaction_success_binding.dart';
+import 'package:client/app/modules/transactions_module/transactions_controller.dart';
 import 'package:client/global_exports.dart';
 
-class TransactionSuccessPage extends StatelessWidget {
+class TransactionSuccessPage extends StatefulWidget {
   const TransactionSuccessPage({super.key});
+
+  @override
+  State<TransactionSuccessPage> createState() => _TransactionSuccessPageState();
+}
+
+class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
+  @override
+  void initState() {
+    super.initState();
+    transactionsController.getQuotedTransaction();
+    transactionsController.getTransactions();
+  }
 
   @override
   Widget build(BuildContext context) {

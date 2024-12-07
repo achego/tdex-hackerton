@@ -16,4 +16,5 @@ abstract class RoutePaths {
   static const walletEnterAmount = "/wallet_enter_amount";
   static const swapCurrency = "/swap_currency";
   static const sendToUsername = "/send_to_username";
-}
+  static const donateOverview = "/donate_overview"; 
+ }

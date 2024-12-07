@@ -4,10 +4,8 @@ import 'package:client/app/components/custom_switcher.dart';
 import 'package:client/app/components/quoted_tx_item.dart';
 import 'package:client/app/components/transaction_item.dart';
 import 'package:client/app/modules/dashboard_module/dashboard_binding.dart';
-import 'package:client/app/modules/transaction_detail_module/transaction_detail_binding.dart';
 import 'package:client/app/modules/transactions_module/transactions_controller.dart';
 import 'package:client/global_exports.dart';
-import 'package:get/get.dart';
 
 class RecentTransactionSection extends StatelessWidget {
   const RecentTransactionSection({super.key});

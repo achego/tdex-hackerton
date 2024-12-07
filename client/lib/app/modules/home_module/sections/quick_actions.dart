@@ -1,4 +1,4 @@
-import 'package:client/core/utils/app_notifications.dart';
+import 'package:client/app/modules/donate_overview_module/donate_overview_page.dart';
 import 'package:client/global_exports.dart';
 
 class QuickActionSection extends StatelessWidget {
@@ -30,10 +30,10 @@ class QuickActionSection extends StatelessWidget {
               onPressed: () => Nav.toNamed(RoutePaths.swapCurrency),
             ),
             _buildAction(
-              'Data \nSubscription',
-              iconPath: AppIconSvgs.subscription,
+              'Donation \n& Support',
+              iconPath: AppIconSvgs.donate,
               onPressed: () {
-                AppNotifications.snackbar(message: 'Comming soon');
+                Nav.to(const DonateOverviewPage());
               },
             ),
             _buildAction('Other \nServices', onPressed: () {

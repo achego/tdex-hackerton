@@ -143,6 +143,28 @@ class AppController extends GetxController {
   }
 
   String getProviderImageFromName(String name) {
-    return '';
+    final pfiImages = [
+      AppImages.pfi2,
+      AppImages.pfi1,
+    ];
+    return pfiImages[_generateNumberFromString(name, pfiImages.length - 1)];
   }
+
+  String avatarFromName(String name) {
+    final list = [
+      AppImages.userOne,
+      AppImages.userTwo,
+      AppImages.userThree,
+      AppImages.userFour,
+    ];
+    return list[_generateNumberFromString(name, list.length - 1)];
+  }
+}
+
+int _generateNumberFromString(String input, int maxNumber) {
+  if (maxNumber <= 0) {
+    return 0;
+  }
+  int hash = input.codeUnits.fold(0, (prev, elem) => prev + elem);
+  return hash % (maxNumber + 1);
 }

@@ -1,8 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:client/app/components/custom_cached_network_imge.dart';
 import 'package:client/app/data/models/quoted_transaction_model/quoted_transaction_model.dart';
 import 'package:client/app/data/providers/user_provider.dart';
 import 'package:client/app/modules/transaction_success_module/transaction_success_controller.dart';
+import 'package:client/app/modules/transactions_module/transactions_controller.dart';
 import 'package:client/global_exports.dart';
+
 import '../modules/confirm_transaction_module/confirm_transaction_controller.dart';
 
 class QuotedTransactionItem extends StatelessWidget {
@@ -115,12 +120,13 @@ class QuotedTransactionItem extends StatelessWidget {
                     clipBehavior: Clip.none,
                     children: [
                       square(40,
-                          color: AppColors.color.textLight,
+                          color: AppColors.color.border,
                           border: Border.all(
-                              color: AppColors.color.border, width: 2),
+                              color: AppColors.color.primary.withOpacity(0.2),
+                              width: 2),
                           borderRadius: AppConstatnts.defBorderRadius,
-                          child: CustomCachedImage(
-                              imageUrl: appController.getProviderImageFromName(
+                          child: Image.asset(
+                              appController.getProviderImageFromName(
                                   transaction.pfiDid ?? ""))),
                       Positioned(
                         bottom: -(15.w / 2) + 2.w,
@@ -247,6 +253,15 @@ placeOrder(String pfiDid, String exchangeId, Map payinDetails,
               'You dont have sufficient balance on your ${appController.selectedBalance.value.currency?.toUpperCase()} Account');
       return;
     }
+    final transactions = transactionsController.quotedTransaction
+        .map((element) => TransactionSpecification(
+                amount: element.payinAmount ?? "",
+                date: element.createdTime ?? "",
+                pfi: element.pfiDid ?? "",
+                status: element.status ?? "",
+                type: fromWallet ? 'wallet' : 'pfi')
+            .toMap())
+        .toList();
     showLoading();
     final resp = await UserProvider.addOrder(
         pfiDid: pfiDid,
@@ -254,6 +269,7 @@ placeOrder(String pfiDid, String exchangeId, Map payinDetails,
         payin: payinDetails,
         pin: pin,
         amount: amount,
+        transactions: transactions,
         currency:
             appController.selectedBalance.value.currency?.toLowerCase() ?? '');
 
@@ -524,5 +540,87 @@ class QuoteCancelDialog extends StatelessWidget {
         ).defPadX,
       ),
     );
+  }
+}
+
+class TransactionSpecification {
+  final String amount;
+  final String date;
+  final String pfi;
+  final String type;
+  final String status;
+  TransactionSpecification({
+    required this.amount,
+    required this.date,
+    required this.pfi,
+    required this.type,
+    required this.status,
+  });
+
+  TransactionSpecification copyWith({
+    String? amount,
+    String? date,
+    String? pfi,
+    String? type,
+    String? status,
+  }) {
+    return TransactionSpecification(
+      amount: amount ?? this.amount,
+      date: date ?? this.date,
+      pfi: pfi ?? this.pfi,
+      type: type ?? this.type,
+      status: status ?? this.status,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'amount': amount,
+      'date': date,
+      'pfi': pfi,
+      'type': type,
+      'status': status,
+    };
+  }
+
+  factory TransactionSpecification.fromMap(Map<String, dynamic> map) {
+    return TransactionSpecification(
+      amount: map['amount'] as String,
+      date: map['date'] as String,
+      pfi: map['pfi'] as String,
+      type: map['type'] as String,
+      status: map['status'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory TransactionSpecification.fromJson(String source) =>
+      TransactionSpecification.fromMap(
+          json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'TransactionSpecification(amount: $amount, date: $date, pfi: $pfi, type: $type, status: $status)';
+  }
+
+  @override
+  bool operator ==(covariant TransactionSpecification other) {
+    if (identical(this, other)) return true;
+
+    return other.amount == amount &&
+        other.date == date &&
+        other.pfi == pfi &&
+        other.type == type &&
+        other.status == status;
+  }
+
+  @override
+  int get hashCode {
+    return amount.hashCode ^
+        date.hashCode ^
+        pfi.hashCode ^
+        type.hashCode ^
+        status.hashCode;
   }
 }

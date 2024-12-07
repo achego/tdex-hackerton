@@ -15,11 +15,13 @@ extension ImageExtension on String {
 }
 
 class AppImages {
-  // static String get mtn => 'mtn'.png;
-  // static String get airtel => 'airtel'.png;
-  // static String get glo => 'glo'.jpeg;
-  // static String get nineMobile => 'nine_mobile'.png;
-  // static String get noNetwork => 'no_network'.png;
+  static String get userOne => '1'.png;
+  static String get userTwo => '2'.png;
+  static String get userThree => '4'.png;
+  static String get userFour => '5'.png;
+  static String get onB => 'onB'.png;
+  static String get pfi2 => 'pfi1'.png;
+  static String get pfi1 => 'pfi2'.png;
 }
 
 class AppGif {
@@ -57,6 +59,7 @@ class AppIconSvgs {
   static String get transactions => 'transactions'.svg;
   static String get logout => 'logout'.svg;
   static String get delete => 'delete'.svg;
+  static String get donate => 'donate'.svg;
 }
 
 class AppLottie {

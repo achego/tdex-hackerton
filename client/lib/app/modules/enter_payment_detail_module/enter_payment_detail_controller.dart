@@ -1,6 +1,7 @@
 import 'package:client/app/components/quoted_tx_item.dart';
 import 'package:client/app/data/models/pfi_offering_model/pfi_offering_model.dart';
 import 'package:client/app/data/providers/pfi_providers.dart';
+import 'package:client/app/data/services/api_client/custom_response.dart';
 import 'package:client/app/modules/confirm_transaction_module/confirm_transaction_controller.dart';
 import 'package:client/app/modules/enter_pfi_send_amount_module/enter_pfi_send_amount_controller.dart';
 import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_binding.dart';
@@ -97,6 +98,12 @@ class EnterPaymentDetailController extends GetxController {
 
     showLoading(show: false);
     if (!resp.isOk) {
+      if (resp.errorAction == ErrorAction.showModal) {
+        AppNotifications.showModal(
+            title: resp.errorData?['title'] ?? 'An Error occured',
+            subTitle: resp.message);
+        return;
+      }
       AppNotifications.showModal(
           title: 'An Error occured',
           subTitle: 'An error occured placing a quote, please tru again later');
