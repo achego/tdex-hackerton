@@ -5,6 +5,7 @@ import 'package:client/app/data/models/pfi_rate_model/pfi_rate_model.dart';
 import 'package:client/app/data/models/quoted_transaction_model/quoted_transaction_model.dart';
 import 'package:client/app/data/models/transaction_model/transaction_model.dart';
 import 'package:client/app/data/services/api_client/aaexp.clients.dart';
+import 'package:client/app/modules/features/donation/models/donation/donation_model.dart';
 import 'package:client/global_exports.dart';
 
 final _userClient = NetworkClient();
@@ -273,6 +274,18 @@ class UserProvider {
       },
     );
 
+    return resp;
+  }
+
+  static Future<CustomResponse<List<DonationModel>>> getDontaions() async {
+    final resp = await _userClient.request<List<DonationModel>, List<dynamic>>(
+      path: 'donation/get-donations',
+      method: MethodType.get,
+      fromJson: (json) => json.map((e) => DonationModel.fromMap(e)).toList(),
+      headers: {
+        NetworkHeader.authorization: 'Bearer ${localStorage.auth.token}'
+      },
+    );
     return resp;
   }
 }

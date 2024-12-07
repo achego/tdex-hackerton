@@ -1,12 +1,9 @@
-  import 'package:get/get.dart';
-
-import 'donate_overview_controller.dart';
+import 'package:get/get.dart';
 
 class DonateOverviewBinding extends Bindings {
   @override
   void dependencies() {
     // TODO: implement dependencies
-    Get.put(DonateOverviewController());
+    // Get.put(DonateOverviewController());
   }
 }
-

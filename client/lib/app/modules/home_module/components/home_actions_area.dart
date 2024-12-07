@@ -1,5 +1,6 @@
 import 'package:client/app/components/balance_visibility_toogle.dart';
 import 'package:client/app/data/providers/user_provider.dart';
+import 'package:client/app/modules/features/donation/services/donate_service.dart.dart';
 import 'package:client/app/modules/send_by_pfi_module/send_by_pfi_controller.dart';
 import 'package:client/app/modules/transactions_module/transactions_controller.dart';
 import 'package:client/global_exports.dart';
@@ -23,6 +24,7 @@ class _HomeActionAreaState extends State<HomeActionArea> {
     appController.updateUserBalances();
     appController.updateCredentials();
     transactionsController.getTransactions();
+    donateService.getDonationsRequest();
     Get.put(SendByPfiController()).getOfferings();
   }
 

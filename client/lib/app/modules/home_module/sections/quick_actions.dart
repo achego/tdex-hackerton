@@ -1,4 +1,4 @@
-import 'package:client/app/modules/donate_overview_module/donate_overview_page.dart';
+import 'package:client/app/modules/features/donation/presentation/donate_overview_page.dart';
 import 'package:client/global_exports.dart';
 
 class QuickActionSection extends StatelessWidget {
