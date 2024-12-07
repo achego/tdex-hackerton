@@ -35,61 +35,64 @@ class _SendByPfiPageState extends State<SendByPfiPage> {
               title: 'Proceed',
             ),
           ),
-          body: Form(
-            key: sendByPfiController.sendPfiKey,
-            child: Column(
-              children: [
-                spaceh(20),
-                CustomTextFormField(
-                  hintText: 'Select a currency you want to send from',
-                  labelText: 'Send from',
-                  readOnly: true,
-                  onTap: sendByPfiController.pickFromCurrency,
-                  controller: sendByPfiController.from,
-                  validator: Validator.validateFieldNotEmpty,
-                  trailling: Transform.rotate(
-                      angle: pi / 2, child: const Icon(Icons.chevron_right)),
-                ),
-                spaceh(35),
-                CustomTextFormField(
-                  hintText: 'Select a currency you want to send to',
-                  labelText: 'Send to',
-                  readOnly: true,
-                  onTap: sendByPfiController.pickToCurrency,
-                  controller: sendByPfiController.to,
-                  validator: Validator.validateFieldNotEmpty,
-                  trailling: Transform.rotate(
-                      angle: pi / 2, child: const Icon(Icons.chevron_right)),
-                ),
-                spaceh(60),
-                AnimatedSwitcher(
-                  duration: 1000.milliseconds,
-                  child: sendByPfiController.matchingofferings.isNotEmpty
-                      ? CustomSeparatedListView(
-                          label: 'PFI offerings',
-                          clipBehavior: Clip.antiAlias,
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (conetxt, index) {
-                            final pfi =
-                                sendByPfiController.matchingofferings[index];
-                            final isSelected = selectedOffering.metadata?.id ==
-                                pfi.metadata?.id;
-                            return CustomGestureDetector(
-                              onTap: () =>
-                                  sendByPfiController.selecetedOffering(pfi),
-                              child: PFIOfferingItem(
-                                pfi: pfi,
-                                isSelected: isSelected,
-                              ),
-                            );
-                          },
-                          itemCount:
-                              sendByPfiController.matchingofferings.length)
-                      : const SizedBox.shrink(),
-                )
-              ],
-            ),
-          ).defPadX,
+          body: SingleChildScrollView(
+            child: Form(
+              key: sendByPfiController.sendPfiKey,
+              child: Column(
+                children: [
+                  spaceh(20),
+                  CustomTextFormField(
+                    hintText: 'Select a currency you want to send from',
+                    labelText: 'Send from',
+                    readOnly: true,
+                    onTap: sendByPfiController.pickFromCurrency,
+                    controller: sendByPfiController.from,
+                    validator: Validator.validateFieldNotEmpty,
+                    trailling: Transform.rotate(
+                        angle: pi / 2, child: const Icon(Icons.chevron_right)),
+                  ),
+                  spaceh(35),
+                  CustomTextFormField(
+                    hintText: 'Select a currency you want to send to',
+                    labelText: 'Send to',
+                    readOnly: true,
+                    onTap: sendByPfiController.pickToCurrency,
+                    controller: sendByPfiController.to,
+                    validator: Validator.validateFieldNotEmpty,
+                    trailling: Transform.rotate(
+                        angle: pi / 2, child: const Icon(Icons.chevron_right)),
+                  ),
+                  spaceh(60),
+                  AnimatedSwitcher(
+                    duration: 1000.milliseconds,
+                    child: sendByPfiController.matchingofferings.isNotEmpty
+                        ? CustomSeparatedListView(
+                            label: 'PFI offerings',
+                            clipBehavior: Clip.antiAlias,
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (conetxt, index) {
+                              final pfi =
+                                  sendByPfiController.matchingofferings[index];
+                              final isSelected =
+                                  selectedOffering.metadata?.id ==
+                                      pfi.metadata?.id;
+                              return CustomGestureDetector(
+                                onTap: () =>
+                                    sendByPfiController.selecetedOffering(pfi),
+                                child: PFIOfferingItem(
+                                  pfi: pfi,
+                                  isSelected: isSelected,
+                                ),
+                              );
+                            },
+                            itemCount:
+                                sendByPfiController.matchingofferings.length)
+                        : const SizedBox.shrink(),
+                  )
+                ],
+              ),
+            ).defPadX,
+          ),
         );
       },
     );

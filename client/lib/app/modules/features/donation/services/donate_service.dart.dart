@@ -9,9 +9,7 @@ class DonateService extends GetxController {
   final allDonationsRequest = <DonationModel>[].obs;
 
   getDonationsRequest() async {
-    showLoading();
     final resp = await UserProvider.getDontaions();
-    showLoading(show: false);
     if (!resp.isOk) {
       AppNotifications.snackbar(message: 'An error occurred getting donations');
       return;

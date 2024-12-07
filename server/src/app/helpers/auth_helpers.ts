@@ -78,7 +78,6 @@ const validatePin = async (user_id: string, password: string) => {
 };
 
 const encrypt = (text: string): string => {
-  logger(Buffer.from(env.encryptionKey), "THis");
   let cipher = crypto.createCipheriv(
     env.algorithm,
     Buffer.from(env.encryptionKey),

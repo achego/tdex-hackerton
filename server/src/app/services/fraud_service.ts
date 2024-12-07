@@ -70,7 +70,7 @@ const _handleTestRiskValidation = async (
       status: true,
       reason: FraudResultReaon.illegal,
       message:
-        "Our system has flagged the recipient's account as fraudulent. For your safety, this transaction cannot be completed.",
+        "Our system has flagged the recipient's account as fraudulent. For your safety, this transaction cannot be completed. Please contact support",
       title: "❌ Transaction Blocked: Fraudulent Account Detected",
     };
   }

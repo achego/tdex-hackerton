@@ -60,6 +60,7 @@ class PasswordSubController extends GetxController {
       return;
     }
     await AppNotifications.snackbar(
+        type: NotificationType.success,
         message: 'Pin has been created successfully');
 
     Nav.offAllNamed(RoutePaths.dashboard);

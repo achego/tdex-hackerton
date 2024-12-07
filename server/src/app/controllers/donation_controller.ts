@@ -23,7 +23,7 @@ interface Donations {
 const donations: Donations[] = [
   {
     title: "Flood Relief for Nigerian States",
-    image_url: "https://example.com/flood-relief.jpg",
+    image_url: "https://www.globalgiving.org/pfil/66687/pict_large.jpg",
     content_sub:
       "The devastating floods in Nigeria have displaced thousands. Families are in urgent need of food, water, and shelter. Join us in restoring hope to affected communities.",
     content: `
@@ -41,7 +41,8 @@ Every donation helps bring relief to those affected, offering them a chance to r
   },
   {
     title: "Hunger Crisis in Northern Nigeria",
-    image_url: "https://cdn.punchng.com/wp-content/uploads/2024/12/06175547/0b94071f-1066-4281-a089-86a8f39b4c0e.jpeg",
+    image_url:
+      "https://cdn.punchng.com/wp-content/uploads/2024/12/06175547/0b94071f-1066-4281-a089-86a8f39b4c0e.jpeg",
     content_sub:
       "Northern Nigeria faces an escalating hunger crisis. Millions, including children, are at risk of malnutrition. Immediate support is crucial to save lives.",
     content: `
@@ -59,7 +60,8 @@ By acting now, you can help alleviate this dire situation and bring hope to fami
   },
   {
     title: "Health Care Support in Southern Nigeria",
-    image_url: "https://example.com/health-support.jpg",
+    image_url:
+      "https://guardian.ng/wp-content/uploads/2024/10/Nigerian-hospitals-1424x802.jpg",
     content_sub:
       "Healthcare gaps in Southern Nigeria leave countless lives at risk. Many lack access to basic medical services. Join us in bringing healthcare to the underserved.",
     content: `
@@ -77,7 +79,8 @@ Your support can save lives, restore health, and ensure a brighter future for ma
   },
   {
     title: "Mosquito Outbreak Relief Fund",
-    image_url: "https://example.com/mosquito-relief.jpg",
+    image_url:
+      "https://www.gavi.org/sites/default/files/vaccineswork/2024/Header/wef-blood-sample-nurse-patient-arm-nhiep-unsplash.jpg",
     content_sub:
       "A mosquito outbreak has led to surging malaria cases. Immediate action is needed to prevent further loss of life. Join us in the fight against this deadly disease.",
     content: `
@@ -95,7 +98,8 @@ Your donation can play a crucial role in saving lives and reducing the spread of
   },
   {
     title: "Clean Water Initiative for Rural Communities",
-    image_url: "https://example.com/clean-water.jpg",
+    image_url:
+      "https://sdgs.un.org/sites/default/files/2023-03/IMG_3528_0.jpeg",
     content_sub:
       "Many rural communities in Nigeria lack access to clean water. This causes widespread disease and suffering. Your help can bring clean water and hope to these communities.",
     content: `

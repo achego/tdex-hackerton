@@ -40,6 +40,7 @@ class NetworkClient implements ApiClient {
       final resp = CustomResponse<T>.fromError(error: SocketException);
       return resp;
     }
+    logger(AppStrings().apiBaseUrl, '<<<<====base url======>>>');
     logger(
         'Path: $path ===>> PayLoad: $payload  ====>>> Params: $queryParameters ======>>> Methodd: $method',
         '<<<<====request to======>>>');
