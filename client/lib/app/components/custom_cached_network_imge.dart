@@ -11,15 +11,17 @@ class CustomCachedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: imageUrl,
-      fit: BoxFit.cover,
-      errorWidget: (context, url, error) {
-        return const SizedBox.shrink();
-      },
-      progressIndicatorBuilder: (context, url, progress) {
-        return const CupertinoActivityIndicator();
-      },
-    );
+    return true
+        ? Image.network(imageUrl)
+        : CachedNetworkImage(
+            imageUrl: imageUrl,
+            fit: BoxFit.cover,
+            errorWidget: (context, url, error) {
+              return const SizedBox.shrink();
+            },
+            progressIndicatorBuilder: (context, url, progress) {
+              return const CupertinoActivityIndicator();
+            },
+          );
   }
 }

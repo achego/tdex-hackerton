@@ -32,9 +32,12 @@ class OnboardingPage extends StatelessWidget {
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Expanded(child: SizedBox()),
-          spaceh(50),
+          spaceh(context.paddingTop + 10),
+          SizedBox(height: 30, child: Image.asset(AppImages.logo)),
+          Expanded(child: SizedBox(child: Image.asset(AppImages.onB))),
+          // spaceh(50),
           Text.rich(
             TextSpan(children: [
               const TextSpan(text: 'Welcome to'),

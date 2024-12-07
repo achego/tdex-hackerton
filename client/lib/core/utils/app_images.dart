@@ -22,6 +22,7 @@ class AppImages {
   static String get onB => 'onB'.png;
   static String get pfi2 => 'pfi1'.png;
   static String get pfi1 => 'pfi2'.png;
+  static String get logo => 'logo'.png;
 }
 
 class AppGif {
