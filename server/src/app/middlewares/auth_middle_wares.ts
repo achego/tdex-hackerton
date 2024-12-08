@@ -64,10 +64,6 @@ const validatePin = catchError(
       body.pin.toString(),
       userParam.pin!
     );
-    logger(pinMatched, "Pin matcged");
-    logger(body.pin, "Pin matcged");
-    logger(userParam.pin, "Suera matcged");
-    logger(authHelpers.hashPassword(body.pin.toString()), "Pin matcged");
     if (!pinMatched) {
       throw new CustomError(
         "Please enter a correct pin to continue",

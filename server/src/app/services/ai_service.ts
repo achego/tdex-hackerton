@@ -1,6 +1,8 @@
 import Groq from "groq-sdk";
 import axios from "axios";
 import { env, logger } from "../../core/globals.js";
+import CustomError from "../data/models/custom_error.js";
+import { StatusCode } from "../../core/utils/enums.js";
 
 const groq = new Groq({
   apiKey: env.grokApiKey,
@@ -15,6 +17,7 @@ const prompt: Groq.Chat.Completions.ChatCompletionMessageParam[] = [
 
 export interface TransactionSpecification {
   amount: number;
+  currency: string;
   date: string;
   pfi: string;
   type: string;

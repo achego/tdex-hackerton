@@ -263,12 +263,15 @@ const placeOrder = catchError(
         pfi: body.pfiDid,
         type: isWallet ? "wallet" : "pfi",
         status: "new",
+        currency: body.currency,
       }
     );
 
-    if (!confidence) {
+    logger(confidence, "AI Confidence level");
+
+    if (confidence == null) {
       throw new CustomError(
-        "An error occured processing you rrequest, plesase try again later",
+        "An error occured processing you request, plesase try again later",
         StatusCode.badRequest,
         {
           type: ErrorType.aiUserTransaction,

@@ -255,12 +255,13 @@ placeOrder(String pfiDid, String exchangeId, Map payinDetails,
     }
     final transactions = transactionsController.quotedTransaction
         .map((element) => TransactionSpecification(
-                amount: element.payinAmount ?? "",
-                date: element.createdTime ?? "",
-                pfi: element.pfiDid ?? "",
-                status: element.status ?? "",
-                type: fromWallet ? 'wallet' : 'pfi')
-            .toMap())
+              amount: element.payinAmount ?? "",
+              date: element.createdTime ?? "",
+              pfi: element.pfiDid ?? "",
+              status: element.status ?? "",
+              type: fromWallet ? 'wallet' : 'pfi',
+              currency: element.payinCurrency ?? '',
+            ).toMap())
         .toList();
     showLoading();
     final resp = await UserProvider.addOrder(
@@ -549,12 +550,14 @@ class TransactionSpecification {
   final String pfi;
   final String type;
   final String status;
+  final String currency;
   TransactionSpecification({
     required this.amount,
     required this.date,
     required this.pfi,
     required this.type,
     required this.status,
+    required this.currency,
   });
 
   TransactionSpecification copyWith({
@@ -563,6 +566,7 @@ class TransactionSpecification {
     String? pfi,
     String? type,
     String? status,
+    String? currency,
   }) {
     return TransactionSpecification(
       amount: amount ?? this.amount,
@@ -570,6 +574,7 @@ class TransactionSpecification {
       pfi: pfi ?? this.pfi,
       type: type ?? this.type,
       status: status ?? this.status,
+      currency: currency ?? this.currency,
     );
   }
 
@@ -580,6 +585,7 @@ class TransactionSpecification {
       'pfi': pfi,
       'type': type,
       'status': status,
+      'currency': currency,
     };
   }
 
@@ -590,6 +596,7 @@ class TransactionSpecification {
       pfi: map['pfi'] as String,
       type: map['type'] as String,
       status: map['status'] as String,
+      currency: map['currency'] as String,
     );
   }
 
@@ -601,7 +608,7 @@ class TransactionSpecification {
 
   @override
   String toString() {
-    return 'TransactionSpecification(amount: $amount, date: $date, pfi: $pfi, type: $type, status: $status)';
+    return 'TransactionSpecification(amount: $amount, date: $date, pfi: $pfi, type: $type, status: $status, currency: $currency)';
   }
 
   @override
@@ -612,7 +619,8 @@ class TransactionSpecification {
         other.date == date &&
         other.pfi == pfi &&
         other.type == type &&
-        other.status == status;
+        other.status == status &&
+        other.currency == currency;
   }
 
   @override
@@ -621,6 +629,7 @@ class TransactionSpecification {
         date.hashCode ^
         pfi.hashCode ^
         type.hashCode ^
-        status.hashCode;
+        status.hashCode ^
+        currency.hashCode;
   }
 }
