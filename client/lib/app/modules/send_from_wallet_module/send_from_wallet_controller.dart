@@ -39,16 +39,18 @@ class SendFromWalletController extends GetxController {
 
   List<CurrencyModel> get currencies {
     final curr = sendBytC.offerings
+        .where((element) => (element.data?.payin?.currencyCode ?? '')
+            .toLowerCase()
+            .removeAllWhitespace
+            .contains(appController.selectedBalance.value.currency
+                    ?.toLowerCase()
+                    .removeAllWhitespace ??
+                ''))
         .map((e) => CurrencyModel(code: e.data?.payout?.currencyCode ?? ""))
         .toList();
     final ids = curr.map((e) => e.code).toSet();
     curr.retainWhere((x) => ids.remove(x.code));
-
-    final ratesString =
-        appController.currencyRates.map((element) => element.symbol);
-    return curr
-        .where((element) => ratesString.contains(element.code.toLowerCase()))
-        .toList();
+    return curr;
   }
 
   PfiOfferingModel? get offering {

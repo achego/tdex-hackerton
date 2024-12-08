@@ -38,7 +38,7 @@ class _SendFromWalletPageState extends State<SendFromWalletPage> {
             child: Form(
               key: ctr.sendWalletKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const BalanceSnippetContainer(),
                   spaceh(20),
