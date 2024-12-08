@@ -58,6 +58,7 @@ const analyzeUserFromTransactions = async (
 
     return result.confidence;
   } catch (error) {
+    logger(error, 'Teh AI eroror')
     return null;
   }
 };
